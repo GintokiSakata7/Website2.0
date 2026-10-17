@@ -1,0 +1,157 @@
+import { create } from 'zustand';
+
+export type SceneState = 
+  | 'CORE'
+  | 'CAPABILITIES'
+  | 'SYSTEMS'
+  | 'AGENTS'
+  | 'PRODUCTS'
+  | 'TEAM'
+  | 'WHY_MAJIN'
+  | 'CONTACT';
+
+export type InteractionState = 
+  | 'DEFAULT'
+  | 'HOVER'
+  | 'FOCUS'
+  | 'ACTIVE'
+  | 'TRANSITIONING';
+
+export type AccentColor = 
+  | 'MONOCHROME'
+  | 'LIME'
+  | 'CYAN'
+  | 'AMBER'
+  | 'VIOLET';
+
+export type WhyStage =
+  | 'complexity'
+  | 'systems'
+  | 'build'
+  | 'ai'
+  | 'problem'
+  | 'resolve';
+
+export type CapabilitiesStage = 'ai' | 'agents' | 'products' | 'custom' | 'data' | 'cloud' | null;
+
+interface GlobalState {
+  // Scene
+  currentScene: SceneState;
+  setScene: (scene: SceneState) => void;
+  
+  // Interaction
+  interactionState: InteractionState;
+  setInteractionState: (state: InteractionState) => void;
+  
+  // Contextual Styling
+  activeAccent: AccentColor;
+  setAccent: (accent: AccentColor) => void;
+  
+  // Why Majin specific stage
+  whyStage: WhyStage;
+  setWhyStage: (stage: WhyStage) => void;
+
+  // Capabilities stage
+  capabilitiesStage: CapabilitiesStage;
+  setCapabilitiesStage: (stage: CapabilitiesStage) => void;
+
+  // Progress (0 to 1 across the whole universe)
+  scrollProgress: number;
+  setScrollProgress: (progress: number) => void;
+
+  // Boot sequence state
+  hasBooted: boolean;
+  setHasBooted: (status: boolean) => void;
+
+  // Tutorial state
+  hasSeenTutorial: boolean;
+  setHasSeenTutorial: (status: boolean) => void;
+
+  // Global AI Agent state
+  agentIsVisible: boolean;
+  setAgentIsVisible: (visible: boolean) => void;
+  agentTarget: { x: number, y: number } | null;
+  setAgentTarget: (target: { x: number, y: number } | null) => void;
+  agentMessage: string | null;
+  setAgentMessage: (message: string | null) => void;
+
+  // Agent Target Registry
+  activeTargetId: string | null;
+  setActiveTargetId: (id: string | null) => void;
+  targetRegistry: Record<string, { 
+    ref: any; 
+    message: string; 
+    offsetX?: number; 
+    offsetY?: number; 
+    vanishAfterMs?: number;
+  }>;
+  registerTarget: (id: string, ref: any, message: string, offsetX?: number, offsetY?: number, vanishAfterMs?: number) => void;
+  unregisterTarget: (id: string) => void;
+}
+
+export const useGlobalState = create<GlobalState>((set) => ({
+  currentScene: 'CORE',
+  setScene: (scene) => set({ currentScene: scene }),
+  
+  interactionState: 'DEFAULT',
+  setInteractionState: (state) => set({ interactionState: state }),
+  
+  activeAccent: 'MONOCHROME',
+  setAccent: (accent) => {
+    // Keep DOM attribute in sync with Zustand state
+    if (typeof document !== 'undefined') {
+      const normalizedAccent = String(accent).toLowerCase();
+      document.documentElement.setAttribute('data-accent', normalizedAccent);
+    }
+    set({ activeAccent: accent });
+  },
+
+  whyStage: 'systems',
+  setWhyStage: (stage) => set({ whyStage: stage }),
+  
+  capabilitiesStage: 'ai',
+  setCapabilitiesStage: (stage) => set({ capabilitiesStage: stage }),
+  
+  scrollProgress: 0,
+  setScrollProgress: (progress) => set({ scrollProgress: progress }),
+  
+  hasBooted: false,
+  setHasBooted: (status) => set({ hasBooted: status }),
+
+  hasSeenTutorial: false,
+  setHasSeenTutorial: (status) => set({ hasSeenTutorial: status }),
+
+  agentIsVisible: true,
+  setAgentIsVisible: (visible) => set({ agentIsVisible: visible }),
+  agentTarget: null,
+  setAgentTarget: (target) => set({ agentTarget: target }),
+  agentMessage: null,
+  setAgentMessage: (message) => set({ agentMessage: message }),
+
+  activeTargetId: null,
+  setActiveTargetId: (id) => set({ activeTargetId: id }),
+  targetRegistry: {},
+  registerTarget: (id, ref, message, offsetX, offsetY, vanishAfterMs) => set((state) => ({
+    targetRegistry: {
+      ...state.targetRegistry,
+      [id]: { ref, message, offsetX, offsetY, vanishAfterMs }
+    }
+  })),
+  unregisterTarget: (id) => set((state) => {
+    const newRegistry = { ...state.targetRegistry };
+    delete newRegistry[id];
+    return { targetRegistry: newRegistry };
+  }),
+}));
+
+// Helper to get CSS variable for active accent
+export const getAccentVar = (accent: AccentColor): string => {
+  switch(accent) {
+    case 'LIME': return '#9dff00';
+    case 'CYAN': return '#9dff00';
+    case 'AMBER': return '#9dff00';
+    case 'VIOLET': return '#9dff00';
+    case 'MONOCHROME':
+    default: return '#9dff00';
+  }
+};

@@ -1,0 +1,289 @@
+.footer {
+  position: relative;
+
+  padding:
+    var(--space-20)
+    0
+    var(--space-8);
+
+  background:
+    #030403;
+
+  border-top:
+    1px solid
+    var(--line-structural);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--space-16);
+}
+
+.brand {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--space-5);
+}
+
+.brandRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+.brandLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.formContainer {
+  position: relative;
+  width: 100%;
+  padding: var(--space-8);
+  border: 1px solid var(--line-active);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-metadata);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 14px 16px;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  border-bottom: 1px solid var(--line-structural);
+  outline: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  transition: all 300ms var(--ease-out);
+}
+
+.input:focus,
+.textarea:focus {
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom-color: var(--accent-current);
+}
+
+.textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.brandImage {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: screen;
+}
+
+.brandContact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.services {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 10px;
+
+  font-family: var(--font-mono);
+
+  font-size: 8px;
+
+  letter-spacing: 0.14em;
+
+  color: var(--text-metadata);
+
+  text-transform: uppercase;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--line-active);
+}
+
+.bottom {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  gap: var(--space-8);
+
+  align-items: end;
+
+  padding-top: var(--space-8);
+
+  border-top:
+    1px solid
+    var(--line-structural);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  font-family: var(--font-mono);
+
+  font-size: 8px;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  color: var(--text-metadata);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+
+  gap: var(--space-8);
+}
+
+.link {
+  font-family: var(--font-mono);
+
+  font-size: 8px;
+
+  letter-spacing: 0.13em;
+
+  text-transform: uppercase;
+
+  color: var(--text-secondary);
+
+  transition:
+    color 250ms
+    var(--ease-out);
+}
+
+.link:hover {
+  color: var(--accent-current);
+}
+
+.right {
+  text-align: right;
+}
+
+@media (max-width: 700px) {
+  .bottom {
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .right {
+    text-align: center;
+  }
+  
+  .services {
+    gap: 6px;
+  }
+
+  .meta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .links {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .container {
+    gap: var(--space-8);
+  }
+
+  .brandRow {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-8);
+  }
+
+  .brandLeft {
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .brandContact {
+    align-items: center;
+    text-align: center;
+  }
+
+  .brandImage {
+    margin-top: -3rem;
+    margin-bottom: -2rem;
+  }
+}
+
+
+.formError {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 115, 115, .35);
+  background: rgba(120, 24, 24, .12);
+  color: #ffb2a8;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.formError a {
+  color: var(--accent-current);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.formPrivacy {
+  margin: -8px 0 0;
+  color: var(--text-metadata);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.optional {
+  color: var(--text-metadata);
+  font-size: 8px;
+  letter-spacing: .06em;
+}

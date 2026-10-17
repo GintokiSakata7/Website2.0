@@ -5,7 +5,7 @@
   --sf-ink: #f4f6f8;
   --sf-muted: #808996;
   --sf-line: rgba(255, 255, 255, 0.095);
-  --sf-lime: #9dff00;
+  --sf-lime: #ff6719;
 
   background: var(--sf-bg);
   color: var(--sf-ink);

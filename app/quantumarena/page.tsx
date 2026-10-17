@@ -1,5 +1,5 @@
 import React from 'react';
-import CaseStudyPage from '@/components/studio-site/CaseStudyPage';
+import { QuantumArena } from '@/components/productpages/QuantumArena';
 
 import type { Metadata } from 'next';
 
@@ -47,7 +47,7 @@ export default function QuantumArenaPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <CaseStudyPage product="quantumarena" />
+      <QuantumArena />
     </>
   );
 }

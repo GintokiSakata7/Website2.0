@@ -5,6 +5,7 @@ import Image from 'next/image';
 import emailjs from '@emailjs/browser';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import HeroThreeCanvas from './HeroThreeCanvas';
 import styles from './StudioHome.module.css';
 
 function ArrowIcon({ diagonal = false, className = '' }: { diagonal?: boolean; className?: string }) {
@@ -75,22 +76,44 @@ function HeroSystem() {
           <span className={styles.boardStatus}><i /> IN MOTION</span>
         </div>
         <div className={styles.boardCanvas}>
+          <div className={styles.heroThreeLayer}>
+            <HeroThreeCanvas />
+          </div>
           <svg className={styles.boardConnections} viewBox="0 0 620 380" preserveAspectRatio="none" aria-hidden="true">
             <defs>
-              <linearGradient id="flowLine" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#c8f36b" stopOpacity=".15" /><stop offset=".48" stopColor="#c8f36b" /><stop offset="1" stopColor="#9ae3b4" stopOpacity=".4" /></linearGradient>
+              <linearGradient id="flowLine" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#00ff85" stopOpacity=".18" />
+                <stop offset=".48" stopColor="#00ff85" />
+                <stop offset="1" stopColor="#00e676" stopOpacity=".45" />
+              </linearGradient>
+              <linearGradient id="flowPulseGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#00ff85" stopOpacity="0" />
+                <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
+                <stop offset="100%" stopColor="#00ff85" stopOpacity="0" />
+              </linearGradient>
               <filter id="softGlow"><feGaussianBlur stdDeviation="3.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <filter id="neonGlow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             </defs>
             <path className={styles.connectionBase} d="M310 188 C235 188 232 91 140 91 S55 154 85 218 S194 306 306 264 S458 322 515 255 S476 100 405 108 S361 188 310 188" />
             <path data-draw-line className={styles.connectionTrace} pathLength="1" d="M310 188 C235 188 232 91 140 91 S55 154 85 218 S194 306 306 264 S458 322 515 255 S476 100 405 108 S361 188 310 188" />
             <path data-draw-line pathLength="1" className={styles.connectionBranch} d="M140 91 C142 150 201 188 310 188 S444 186 515 255" />
-            <circle className={styles.signalDot} cx="140" cy="91" r="4" filter="url(#softGlow)" />
-            <circle className={styles.signalDot} cx="515" cy="255" r="4" filter="url(#softGlow)" />
+            <path className={styles.connectionPulse} d="M310 188 C235 188 232 91 140 91 S55 154 85 218 S194 306 306 264 S458 322 515 255 S476 100 405 108 S361 188 310 188" />
+            <circle className={styles.signalDot} cx="140" cy="91" r="4.5" filter="url(#neonGlow)" />
+            <circle className={styles.signalDot} cx="515" cy="255" r="4.5" filter="url(#neonGlow)" />
+            <circle className={styles.signalPulseRing} cx="140" cy="91" r="8" />
+            <circle className={styles.signalPulseRing} cx="515" cy="255" r="8" />
           </svg>
           <div className={`${styles.orbitNode} ${styles.orbitStrategy}`} data-float="1"><span className={styles.nodeNumber}>01</span><span className={styles.nodeCopy}><b>Understand</b><small>Strategy & direction</small></span><span className={styles.nodeStatus}>↗</span></div>
           <div className={`${styles.orbitNode} ${styles.orbitDesign}`} data-float="2"><span className={styles.nodeNumber}>02</span><span className={styles.nodeCopy}><b>Shape</b><small>Brand & experience</small></span><span className={styles.nodeStatus}>↗</span></div>
           <div className={`${styles.orbitNode} ${styles.orbitBuild}`} data-float="3"><span className={styles.nodeNumber}>03</span><span className={styles.nodeCopy}><b>Build</b><small>Product & systems</small></span><span className={styles.nodeStatus}>↗</span></div>
           <div className={`${styles.orbitNode} ${styles.orbitGrow}`} data-float="4"><span className={styles.nodeNumber}>04</span><span className={styles.nodeCopy}><b>Move forward</b><small>Launch & growth</small></span><span className={styles.nodeStatus}>↗</span></div>
-          <div className={styles.systemCore} data-float="core"><span className={styles.coreRing} aria-hidden="true" /><span className={styles.coreMark}><BrandMark inverse /></span><small>THE IDEA</small><strong>Made useful.</strong></div>
+          <div className={styles.systemCore} data-float="core">
+            <span className={styles.coreRing} aria-hidden="true" />
+            <span className={styles.coreMark}><BrandMark inverse /></span>
+            <small>THE 3D SYSTEM</small>
+            <strong>Made useful.</strong>
+            <span className={styles.coreTag}>KINETIC CORE</span>
+          </div>
           <div className={styles.boardAnnotation}><span>CONNECTED BY DESIGN</span><span>MS—01 / 04</span></div>
         </div>
         <div className={styles.boardBottom}><span>PRODUCT <i>×</i> CREATIVE <i>×</i> ENGINEERING <i>×</i> GROWTH</span><span className={styles.boardBottomMark}>↗</span></div>

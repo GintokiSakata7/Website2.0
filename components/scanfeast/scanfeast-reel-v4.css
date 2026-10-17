@@ -7,7 +7,7 @@
    ========================================================= */
 
 .sf-r4-product {
-    --r4-lime: #9dff00;
+    --r4-lime: #ff6719;
     --r4-white: #f5f7f8;
     --r4-muted: #7f8995;
 }
@@ -309,7 +309,7 @@
 }
 
 .sf-r4-phone-label span:last-child {
-    color: #9dff00;
+    color: #ff6719;
 }
 
 .sf-r4-menu {
@@ -385,7 +385,7 @@
     width: 20px;
     height: 20px;
     border-radius: 7px;
-    background: #9dff00;
+    background: #ff6719;
     color: white;
     font-size: 12px;
 }
@@ -448,7 +448,7 @@
 }
 
 .sf-r4-track-head b {
-    color: #9dff00;
+    color: #ff6719;
 }
 
 .sf-r4-track-bar {
@@ -462,7 +462,7 @@
 .sf-r4-track-bar span {
     display: block;
     height: 100%;
-    background: #9dff00;
+    background: #ff6719;
     border-radius: inherit;
 }
 
@@ -500,7 +500,7 @@
 }
 
 .sf-r4-phone-nav .is-active {
-    color: #9dff00;
+    color: #ff6719;
 }
 
 .sf-r4-chip,
@@ -891,7 +891,7 @@
 }
 
 .sf-r4-kds-body aside .is-active {
-    color: #9dff00;
+    color: #ff6719;
     background: rgba(255, 255, 255, .045);
 }
 
@@ -925,7 +925,7 @@
 }
 
 .sf-r4-kds-heading>strong {
-    color: #9dff00;
+    color: #ff6719;
     font:
         13px ui-monospace,
         SFMono-Regular,
@@ -962,7 +962,7 @@
 }
 
 .sf-r4-order-top span {
-    color: #9dff00;
+    color: #ff6719;
     font:
         8px ui-monospace,
         SFMono-Regular,
@@ -1061,7 +1061,7 @@
 }
 
 .sf-r4-timer-card strong {
-    color: #9dff00;
+    color: #ff6719;
     font-size: 32px;
     letter-spacing: -.06em;
 }
@@ -1136,7 +1136,7 @@
 
 .sf-r4-metrics small {
     margin-top: 6px;
-    color: #9dff00;
+    color: #ff6719;
 }
 
 .sf-r4-chart-panel {
@@ -1235,7 +1235,7 @@
 }
 
 .sf-r4-rush strong {
-    color: #9dff00;
+    color: #ff6719;
     font-size: 22px;
 }
 

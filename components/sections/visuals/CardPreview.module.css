@@ -79,17 +79,31 @@
 }
 
 .tabActiveCyan {
-  color: #9dff00 !important;
-  background: rgba(157, 255, 0, 0.1) !important;
-  border-color: rgba(157, 255, 0, 0.4) !important;
-  box-shadow: 0 0 12px rgba(157, 255, 0, 0.15);
+  color: #ff6719 !important;
+  background: rgba(255, 103, 25, 0.12) !important;
+  border-color: rgba(255, 103, 25, 0.4) !important;
+  box-shadow: 0 0 12px rgba(255, 103, 25, 0.2);
+}
+
+.tabActiveOrange {
+  color: #ff6719 !important;
+  background: rgba(255, 103, 25, 0.14) !important;
+  border-color: rgba(255, 103, 25, 0.45) !important;
+  box-shadow: 0 0 12px rgba(255, 103, 25, 0.25);
 }
 
 .tabActiveLime {
-  color: #9dff00 !important;
-  background: rgba(157, 255, 0, 0.1) !important;
-  border-color: rgba(157, 255, 0, 0.4) !important;
-  box-shadow: 0 0 12px rgba(157, 255, 0, 0.15);
+  color: #ff2538 !important;
+  background: rgba(255, 37, 56, 0.12) !important;
+  border-color: rgba(255, 37, 56, 0.4) !important;
+  box-shadow: 0 0 12px rgba(255, 37, 56, 0.2);
+}
+
+.tabActiveRed {
+  color: #ff2538 !important;
+  background: rgba(255, 37, 56, 0.14) !important;
+  border-color: rgba(255, 37, 56, 0.45) !important;
+  box-shadow: 0 0 12px rgba(255, 37, 56, 0.25);
 }
 
 .urlBar {
@@ -139,7 +153,7 @@
   pointer-events: none;
 }
 
-/* Mobile Frame Overlay */
+/* Mobile Frame Overlay (ScanFeast - Orange) */
 .mobileOverlay {
   position: absolute;
   bottom: -15px;
@@ -147,9 +161,9 @@
   width: 140px;
   height: 250px;
   border-radius: 16px;
-  border: 2px solid rgba(157, 255, 0, 0.4);
+  border: 2px solid rgba(255, 103, 25, 0.5);
   background: #000;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(157, 255, 0, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 103, 25, 0.25);
   overflow: hidden;
   z-index: 10;
   transition: transform 0.3s ease;
@@ -166,7 +180,7 @@
   object-position: top center;
 }
 
-/* Inset Glass Detail Frame (Quantum Arena) */
+/* Inset Glass Detail Frame (Quantum Arena - Crimson Red) */
 .glassDetailFrame {
   position: absolute;
   bottom: 15px;
@@ -174,9 +188,9 @@
   width: 150px;
   height: 95px;
   border-radius: 6px;
-  border: 1px solid rgba(157, 255, 0, 0.4);
+  border: 1px solid rgba(255, 37, 56, 0.5);
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(157, 255, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 37, 56, 0.25);
   z-index: 10;
   transition: transform 0.3s ease;
 }
@@ -212,19 +226,19 @@
   white-space: nowrap;
 }
 
-.badgeCyan {
-  border-color: rgba(157, 255, 0, 0.3);
-  color: #9dff00;
+.badgeCyan, .badgeOrange {
+  border-color: rgba(255, 103, 25, 0.4);
+  color: #ff6719;
 }
 
-.badgeLime {
-  border-color: rgba(157, 255, 0, 0.3);
-  color: #9dff00;
+.badgeLime, .badgeRed {
+  border-color: rgba(255, 37, 56, 0.4);
+  color: #ff2538;
 }
 
 .badgeAmber {
-  border-color: rgba(157, 255, 0, 0.3);
-  color: #9dff00;
+  border-color: rgba(255, 103, 25, 0.4);
+  color: #ff6719;
 }
 
 /* Bottom Telemetry Footer */
@@ -253,21 +267,21 @@
   white-space: nowrap;
 }
 
-.pulseDotCyan {
+.pulseDotCyan, .pulseDotOrange {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #9dff00;
-  box-shadow: 0 0 8px #9dff00;
+  background: #ff6719;
+  box-shadow: 0 0 8px #ff6719;
   animation: pulseDot 1.6s infinite ease-in-out;
 }
 
-.pulseDotLime {
+.pulseDotLime, .pulseDotRed {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #9dff00;
-  box-shadow: 0 0 8px #9dff00;
+  background: #ff2538;
+  box-shadow: 0 0 8px #ff2538;
   animation: pulseDot 1.6s infinite ease-in-out;
 }
 

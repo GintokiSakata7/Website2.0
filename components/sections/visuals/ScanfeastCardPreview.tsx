@@ -21,7 +21,7 @@ export function ScanfeastCardPreview({ className = '' }: { className?: string })
           <div className={styles.winDotRed} />
           <div className={styles.winDotYellow} />
           <div className={styles.winDotGreen} />
-          <span style={{ fontSize: '0.62rem', color: '#9dff00', fontWeight: 700, marginLeft: '0.4rem' }}>
+          <span style={{ fontSize: '0.62rem', color: '#ff6719', fontWeight: 700, marginLeft: '0.4rem' }}>
             SCANFEAST OS
           </span>
         </div>
@@ -32,7 +32,7 @@ export function ScanfeastCardPreview({ className = '' }: { className?: string })
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab)}
-              className={`${styles.tabButton} ${activeTab.id === tab.id ? styles.tabActiveCyan : ''}`}
+              className={`${styles.tabButton} ${activeTab.id === tab.id ? styles.tabActiveOrange : ''}`}
             >
               {tab.label}
             </button>
@@ -67,12 +67,12 @@ export function ScanfeastCardPreview({ className = '' }: { className?: string })
         </div>
 
         {/* Floating Telemetry Badges */}
-        <div className={`${styles.floatingBadge} ${styles.badgeCyan}`} style={{ top: '15px', right: '15px' }}>
-          <div className={styles.pulseDotCyan} />
+        <div className={`${styles.floatingBadge} ${styles.badgeOrange}`} style={{ top: '15px', right: '15px' }}>
+          <div className={styles.pulseDotOrange} />
           <span>REALTIME WS SYNC</span>
         </div>
 
-        <div className={`${styles.floatingBadge} ${styles.badgeAmber}`} style={{ bottom: '20px', right: '20px' }}>
+        <div className={`${styles.floatingBadge} ${styles.badgeOrange}`} style={{ bottom: '20px', right: '20px' }}>
           <span>ORDER TIME &lt; 60s</span>
         </div>
       </div>
@@ -80,12 +80,12 @@ export function ScanfeastCardPreview({ className = '' }: { className?: string })
       {/* Bottom Telemetry Footer */}
       <div className={styles.bottomFooter}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-          <span style={{ color: '#9dff00', fontWeight: 700 }}>ARCHITECTURE:</span>
+          <span style={{ color: '#ff6719', fontWeight: 700 }}>ARCHITECTURE:</span>
           <span>WEBSOCKET BROADCAST + HTTP FALLBACK</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
           <span>FIFO QUEUE + LIVE ETA</span>
-          <span style={{ color: '#9dff00', fontWeight: 700 }}>RUSH HOUR CONTROL: ACTIVE</span>
+          <span style={{ color: '#ff6719', fontWeight: 700 }}>RUSH HOUR CONTROL: ACTIVE</span>
         </div>
       </div>
     </div>

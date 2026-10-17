@@ -1,48 +1,55 @@
-# Majin Studios — Cinematic Digital Studio
+# Majin Studios — Studio Website 4.0
 
-The primary Majin Studios website pairs a black, white and electric-green brand system with detailed service content, product case studies, and scroll-responsive visual storytelling.
+A full responsive website refresh for Majin Studios, built around a **light editorial canvas, deep forest-green surfaces, and controlled lime accents**. The hero illustration is a bespoke interface diagram authored in SVG/HTML/CSS; it does not use the supplied reference artwork as a hero image. Real product screenshots are used only in the selected-work and case-study sections.
 
-## Architecture
+## Experience overview
 
-The experience is built on a layered visual system:
+- **Homepage:** clear studio positioning, four service groups, a connected-workflow visual, real product work, a four-stage delivery process, studio principles, FAQs, and a project enquiry form.
+- **Scanfeast case study (`/scanfeast/`):** QR ordering, kitchen display, manager workflow, real product screenshots, service flow, architecture notes, and the relevant technology stack.
+- **Quantum Arena case study (`/quantumarena/`):** participant intake, QR check-in, judging and outcomes, real product screenshots, workflow and architecture content.
+- **Builder redirect (`/tools/builder`):** retained as a separate branded tool/redirect experience.
 
-1. **Brand hero**: Cropped Majin wordmark, neon chevron geometry, and build/create/automate/grow sequence.
-2. **Content**: Detailed services, interactive system architecture, selected product work, tools, process, studio and contact.
-3. **Three.js**: Persistent WebGL scene that changes composition with scroll and section state.
-4. **GSAP / ScrollTrigger**: Entrance choreography, scroll-linked hero parallax, heading reveals, content assembly and a process timeline.
-5. **Responsive fallback**: The service content remains readable on smaller screens; reduced-motion preferences remove scroll choreography and reveal all essential content.
+## Design system
 
-## Tech Stack
+- **Canvas:** warm off-white (`#f7f8f4`) with white and pale-sage section surfaces.
+- **Core surfaces:** deep forest green (`#123b2d` / related tones) for the studio system visual, selected cards, studio panel, and enquiry form.
+- **Accent:** soft electric lime (`#c8f36b`) for small markers, animated connector lines, and important states.
+- **Typography:** oversized editorial headlines, restrained uppercase metadata, and more readable body copy.
+- **Responsive behaviour:** desktop uses richer split layouts and scroll-linked visual movement; mobile uses single-column/stacked layouts without pinned scrolling.
 
-- **Framework**: Next.js (App Router)
-- **Styling**: Tailwind CSS + Custom CSS Modules (Vanilla)
-- **3D Engine**: Three.js + React Three Fiber + Drei
-- **Animation**: GSAP + ScrollTrigger
-- **State**: Zustand
+## Motion and interaction
 
-## Design notes
+The homepage uses GSAP and ScrollTrigger for one-time section reveals, hero depth/parallax, path tracing, image movement, a scroll-drawn workflow connector, service-card entrance, and an active process timeline. The case-study pages use their own scroll-triggered reveals, image framing/zoom, and a workflow line. Motion respects `prefers-reduced-motion`; essential content does not depend on animation. There is no scroll hijacking.
 
-- Palette: near-black, off-white, and electric lime green.
-- Service groups include AI systems and agents, digital products, custom software, brand/creative design, and digital marketing.
-- Existing `/scanfeast`, `/quantumarena`, and `/tools/builder` routes are retained.
-- The homepage scroll movement is scrubbed to normal scrolling; it does not lock or hijack the browser scroll position.
+## Tech stack
 
-## Getting Started
+- Next.js App Router / React / TypeScript
+- CSS Modules and existing Tailwind setup
+- GSAP + ScrollTrigger for motion
+- `next/image` for product screenshots
+- EmailJS for the existing project-enquiry workflow, with a mailto fallback shown after a failed send
+- Existing original product assets and routes retained
 
-1. Install dependencies:
+## Run locally
+
+Requirements: Node.js compatible with the `package.json` and access to the npm registry for dependency installation.
+
 ```bash
-npm install
-```
-
-2. Run the development server:
-```bash
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`. To run a production build after dependencies are installed:
 
-## Majin 3.0 interaction notes
+```bash
+npm run build
+npm run start
+```
 
-The homepage's four-stage **BUILD / CREATE / AUTOMATE / GROW** chapter uses GSAP ScrollTrigger on desktop and a regular stacked experience on smaller screens. Its active stage drives the capability state in the retained Three.js scene. `ParticleField` and `NeonChevron` add low-cost brand-specific depth to the persistent WebGL world.
+## QA status and important note
 
-Both existing product case-study routes are retained and now share the electric-lime accent system. See [the implementation notes](docs/MAJIN-3.0-IMPLEMENTATION-NOTES.md) for reference research, architecture details and validation limitations.
+Static source checks were run after the redesign: 82 TypeScript/TSX files parsed without syntax diagnostics; all CSS-module references in the new homepage/case-study modules resolved; local imports and literal public-asset references in those components were checked; and all CSS stylesheets parsed without CSS syntax errors.
+
+A full Next.js production build and browser interaction test **could not be completed in the current environment**. The npm registry repeatedly returned `EAI_AGAIN`, and the offline cache is missing at least one locked package. Treat this as a source-validated handoff, not a claimed production build. After running locally, test the menu, scrolling at desktop/tablet/mobile widths, product screenshots and the live enquiry form.
+
+See [`docs/MAJIN-4.0-RELEASE-NOTES.md`](docs/MAJIN-4.0-RELEASE-NOTES.md) for a summary and reference notes.

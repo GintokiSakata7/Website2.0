@@ -1,86 +1,153 @@
-import type { Metadata, Viewport } from 'next';
+import type {
+  Metadata,
+  Viewport,
+} from 'next';
+
 import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Majin Studios — Build. Create. Automate. Grow.',
-    template: '%s | Majin Studios',
+    default:
+      'Majin Studios — Digital products, design & growth',
+
+    template:
+      '%s | Majin Studios',
   },
+
   description:
-    'Majin Studios is an independent digital studio engineering high-performance web applications, autonomous AI systems, high-converting digital marketing, and world-class brand creative.',
+    'Majin Studios is an independent digital studio in Hyderabad, India, bringing digital products, custom software, AI automation, creative design and digital marketing together.',
+
   keywords: [
     'Majin Studios',
-    'Web Development',
     'AI Systems',
     'AI Agents',
-    'Digital Marketing',
-    'Paid Ads',
-    'Meta Ads',
-    'Google Ads',
-    'Product Studio',
+    'LLM Applications',
+    'Agentic AI',
+    'Full-Stack Development',
+    'Digital Products',
     'Custom Software',
-    'Full-Stack Engineering',
+    'Software Engineering',
+    'Product Studio',
+    'Web Design',
+    'Digital Marketing',
     'Brand Identity',
-    'Scanfeast',
-    'Quantum Arena',
-    'Hyderabad Software Studio',
+    'Paid Ads',
+    'Creative Studio',
   ],
-  authors: [{ name: 'Majin Studios' }],
+
+  authors: [
+    {
+      name: 'Majin Studios',
+    },
+  ],
+
   creator: 'Majin Studios',
-  metadataBase: new URL('https://www.majinstudios.tech'),
+
+  metadataBase: new URL(
+    'https://www.majinstudios.tech'
+  ),
+
   icons: {
     icon: [
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      {
+        url: '/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon-48x48.png',
+        sizes: '48x48',
+        type: 'image/png',
+      },
     ],
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-  },
-  manifest: '/manifest.webmanifest',
-  openGraph: {
-    type: 'website',
-    locale: 'en_IN',
-    url: 'https://www.majinstudios.tech',
-    title: 'Majin Studios — Build. Create. Automate. Grow.',
-    description:
-      'Digital products, custom software, AI systems, creative design and digital marketing from one independent studio.',
-    siteName: 'Majin Studios',
-    images: [
       {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Majin Studios — Build. Create. Automate. Grow.',
+        url: '/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
       },
     ],
   },
+
+  manifest: '/manifest.webmanifest',
+
+  openGraph: {
+    type: 'website',
+
+    locale: 'en_IN',
+
+    url: 'https://www.majinstudios.tech',
+
+    title:
+      'Majin Studios — Digital products, design & growth',
+
+    description:
+      'Thoughtful digital products, useful systems, creative design and practical growth from one independent studio.',
+
+    siteName: 'Majin Studios',
+
+    images: [
+      {
+        url: '/og-image.png',
+
+        width: 1200,
+
+        height: 630,
+
+        alt:
+          'Majin Studios — Digital products, design & growth',
+      },
+    ],
+  },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Majin Studios — Build. Create. Automate. Grow.',
+
+    title:
+      'Majin Studios — Digital products, design & growth',
+
     description:
-      'Build digital products, automate workflows, sharpen your brand, and run high-ROI digital marketing campaigns with Majin Studios.',
-    images: ['/og-image.png'],
+      'Build useful digital products, connect your systems, sharpen your brand, and reach the right audience with Majin Studios.',
+
+    images: [
+      '/og-image.png',
+    ],
   },
+
   robots: {
     index: true,
+
     follow: true,
+
     googleBot: {
       index: true,
+
       follow: true,
+
       'max-video-preview': -1,
-      'max-image-preview': 'large',
+
+      'max-image-preview':
+        'large',
+
       'max-snippet': -1,
     },
   },
+
   applicationName: 'Majin Studios',
 };
 
 export const viewport: Viewport = {
-  themeColor: '#f8faf8',
+  themeColor: '#f7f8f4',
+
   width: 'device-width',
+
   initialScale: 1,
+
   colorScheme: 'light',
 };
 
@@ -114,13 +181,12 @@ export default function RootLayout({
         height: 1000,
       },
       image: 'https://www.majinstudios.tech/logo.jpg',
-      description:
-        'Majin Studios is an independent digital studio in Hyderabad, India, bringing websites, applications, custom software, AI systems, creative design and digital marketing together.',
+      description: 'Majin Studios is an independent digital studio in Hyderabad, India, bringing websites, apps, custom software, AI, creative design and digital marketing together.',
       email: 'hello@majin.studio',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Hyderabad',
-        addressCountry: 'India',
+        addressCountry: 'India'
       },
       sameAs: [
         'https://www.linkedin.com/company/majin-studios',
@@ -130,20 +196,18 @@ export default function RootLayout({
   ];
 
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-accent="monochrome"
+      suppressHydrationWarning
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#f8faf8] text-[#0a0e0c] antialiased selection:bg-[#00e676] selection:text-[#063d27]" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         {children}
       </body>
     </html>

@@ -22,7 +22,7 @@ export function QuantumArenaCardPreview({ className = '' }: { className?: string
           <div className={styles.winDotRed} />
           <div className={styles.winDotYellow} />
           <div className={styles.winDotGreen} />
-          <span style={{ fontSize: '0.62rem', color: '#ff2538', fontWeight: 700, marginLeft: '0.4rem' }}>
+          <span style={{ fontSize: '0.62rem', color: '#9dff00', fontWeight: 700, marginLeft: '0.4rem' }}>
             QUANTUM ARENA
           </span>
         </div>
@@ -33,7 +33,7 @@ export function QuantumArenaCardPreview({ className = '' }: { className?: string
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab)}
-              className={`${styles.tabButton} ${activeTab.id === tab.id ? styles.tabActiveRed : ''}`}
+              className={`${styles.tabButton} ${activeTab.id === tab.id ? styles.tabActiveLime : ''}`}
             >
               {tab.label}
             </button>
@@ -68,12 +68,12 @@ export function QuantumArenaCardPreview({ className = '' }: { className?: string
         </div>
 
         {/* Floating Telemetry Badges */}
-        <div className={`${styles.floatingBadge} ${styles.badgeRed}`} style={{ top: '15px', right: '15px' }}>
-          <div className={styles.pulseDotRed} />
+        <div className={`${styles.floatingBadge} ${styles.badgeLime}`} style={{ top: '15px', right: '15px' }}>
+          <div className={styles.pulseDotLime} />
           <span>36H CONTINUOUS OPS</span>
         </div>
 
-        <div className={`${styles.floatingBadge} ${styles.badgeRed}`} style={{ bottom: '20px', right: '20px' }}>
+        <div className={`${styles.floatingBadge} ${styles.badgeLime}`} style={{ bottom: '20px', right: '20px' }}>
           <span>1,500+ PARTICIPANTS</span>
         </div>
       </div>
@@ -81,12 +81,12 @@ export function QuantumArenaCardPreview({ className = '' }: { className?: string
       {/* Bottom Telemetry Footer */}
       <div className={styles.bottomFooter}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-          <span style={{ color: '#ff2538', fontWeight: 700 }}>INFRASTRUCTURE:</span>
+          <span style={{ color: '#9dff00', fontWeight: 700 }}>INFRASTRUCTURE:</span>
           <span>GATE CHECK-IN &rarr; JUDGING &rarr; CERT ENGINE</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
           <span>SCALE: 1,500+ PARTICIPANTS</span>
-          <span style={{ color: '#ff2538', fontWeight: 700 }}>STATUS: PRODUCTION READY</span>
+          <span style={{ color: '#9dff00', fontWeight: 700 }}>STATUS: PRODUCTION READY</span>
         </div>
       </div>
     </div>

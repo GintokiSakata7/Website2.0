@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import ScanfeastCaseStudy from "@/components/scanfeast/ScanfeastCaseStudy";
+import CaseStudyPage from '@/components/studio-site/CaseStudyPage';
 
 export const metadata: Metadata = {
   title: 'ScanFeast — Smart Contactless Restaurant Ordering System',
@@ -45,7 +45,7 @@ export default function ScanfeastPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ScanfeastCaseStudy />
+      <CaseStudyPage product="scanfeast" />
     </>
   );
 }

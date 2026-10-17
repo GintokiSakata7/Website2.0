@@ -20,4 +20,3 @@ export * from './HeroScene';
 
 export * from './ParticleField';
 export * from './NeonChevron';
-export { default as SplineHeroCanvas } from './SplineHeroCanvas';

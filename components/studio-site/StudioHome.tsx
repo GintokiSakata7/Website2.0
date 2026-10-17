@@ -66,64 +66,7 @@ function SectionIntro({ label, title, accent, copy, light = false }: {
   );
 }
 
-function HeroSystem() {
-  return (
-    <div className={styles.heroArt} data-hero-visual aria-label="An illustration of strategy, design, engineering and growth connected into one system">
-      <div className={styles.heroArtAura} aria-hidden="true" />
-      <div className={styles.heroBoard} data-hero-depth>
-        <div className={styles.boardTop}>
-          <div className={styles.boardIdentity}><span className={styles.boardLogo}><BrandMark inverse /></span><span><b>MAJIN / STUDIO SYSTEM</b><small>FROM FIRST THOUGHT TO LIVE PRODUCT</small></span></div>
-          <span className={styles.boardStatus}><i /> IN MOTION</span>
-        </div>
-        <div className={styles.boardCanvas}>
-          <div className={styles.heroThreeLayer}>
-            <HeroThreeCanvas />
-          </div>
-          <svg className={styles.boardConnections} viewBox="0 0 620 380" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="flowLine" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#00ff85" stopOpacity=".18" />
-                <stop offset=".48" stopColor="#00ff85" />
-                <stop offset="1" stopColor="#00e676" stopOpacity=".45" />
-              </linearGradient>
-              <linearGradient id="flowPulseGrad" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#00ff85" stopOpacity="0" />
-                <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
-                <stop offset="100%" stopColor="#00ff85" stopOpacity="0" />
-              </linearGradient>
-              <filter id="softGlow"><feGaussianBlur stdDeviation="3.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-              <filter id="neonGlow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            </defs>
-            <path className={styles.connectionBase} d="M310 188 C235 188 232 91 140 91 S55 154 85 218 S194 306 306 264 S458 322 515 255 S476 100 405 108 S361 188 310 188" />
-            <path data-draw-line className={styles.connectionTrace} pathLength="1" d="M310 188 C235 188 232 91 140 91 S55 154 85 218 S194 306 306 264 S458 322 515 255 S476 100 405 108 S361 188 310 188" />
-            <path data-draw-line pathLength="1" className={styles.connectionBranch} d="M140 91 C142 150 201 188 310 188 S444 186 515 255" />
-            <path className={styles.connectionPulse} d="M310 188 C235 188 232 91 140 91 S55 154 85 218 S194 306 306 264 S458 322 515 255 S476 100 405 108 S361 188 310 188" />
-            <circle className={styles.signalDot} cx="140" cy="91" r="4.5" filter="url(#neonGlow)" />
-            <circle className={styles.signalDot} cx="515" cy="255" r="4.5" filter="url(#neonGlow)" />
-            <circle className={styles.signalPulseRing} cx="140" cy="91" r="8" />
-            <circle className={styles.signalPulseRing} cx="515" cy="255" r="8" />
-          </svg>
-          <div className={`${styles.orbitNode} ${styles.orbitStrategy}`} data-float="1"><span className={styles.nodeNumber}>01</span><span className={styles.nodeCopy}><b>Understand</b><small>Strategy & direction</small></span><span className={styles.nodeStatus}>↗</span></div>
-          <div className={`${styles.orbitNode} ${styles.orbitDesign}`} data-float="2"><span className={styles.nodeNumber}>02</span><span className={styles.nodeCopy}><b>Shape</b><small>Brand & experience</small></span><span className={styles.nodeStatus}>↗</span></div>
-          <div className={`${styles.orbitNode} ${styles.orbitBuild}`} data-float="3"><span className={styles.nodeNumber}>03</span><span className={styles.nodeCopy}><b>Build</b><small>Product & systems</small></span><span className={styles.nodeStatus}>↗</span></div>
-          <div className={`${styles.orbitNode} ${styles.orbitGrow}`} data-float="4"><span className={styles.nodeNumber}>04</span><span className={styles.nodeCopy}><b>Move forward</b><small>Launch & growth</small></span><span className={styles.nodeStatus}>↗</span></div>
-          <div className={styles.systemCore} data-float="core">
-            <span className={styles.coreRing} aria-hidden="true" />
-            <span className={styles.coreMark}><BrandMark inverse /></span>
-            <small>THE 3D SYSTEM</small>
-            <strong>Made useful.</strong>
-            <span className={styles.coreTag}>KINETIC CORE</span>
-          </div>
-          <div className={styles.boardAnnotation}><span>CONNECTED BY DESIGN</span><span>MS—01 / 04</span></div>
-        </div>
-        <div className={styles.boardBottom}><span>PRODUCT <i>×</i> CREATIVE <i>×</i> ENGINEERING <i>×</i> GROWTH</span><span className={styles.boardBottomMark}>↗</span></div>
-      </div>
-      <div className={`${styles.floatNote} ${styles.floatNoteTop}`} data-float="5"><span className={styles.floatNoteIcon}>✳</span><span><b>One connected team</b><small>Fewer hand-offs. Clearer decisions.</small></span></div>
-      <div className={`${styles.floatNote} ${styles.floatNoteBottom}`} data-float="6"><span className={styles.floatNotePulse} /><span><b>Made for the real world</b><small>Useful before impressive.</small></span></div>
-      <div className={styles.artIndex} aria-hidden="true"><span>01</span><i /> <span>04</span></div>
-    </div>
-  );
-}
+
 
 function ProjectFrame({ src, alt, kind }: { src: string; alt: string; kind: 'scanfeast' | 'quantum' }) {
   return (
@@ -203,18 +146,11 @@ export default function StudioHome() {
       }
       const heroVisual = root.querySelector<HTMLElement>('[data-hero-visual]');
       if (heroVisual) {
-        gsap.fromTo(heroVisual, { autoAlpha: 0, y: 32, rotate: 1.2, scale: 0.975 }, { autoAlpha: 1, y: 0, rotate: 0, scale: 1, duration: 1.12, ease: 'expo.out', delay: 0.18 });
-        const heroDepth = heroVisual.querySelector<HTMLElement>('[data-hero-depth]');
+        gsap.fromTo(heroVisual, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 1.1, ease: 'power3.out', delay: 0.15 });
         const heroSection = root.querySelector<HTMLElement>('[data-hero-section]');
-        if (heroDepth && heroSection) {
-          gsap.to(heroDepth, {
-            y: 40, rotate: -1, scale: 0.98, ease: 'none',
-            scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.7 },
-          });
-        }
         if (heroSection) {
           gsap.to(heroVisual.querySelectorAll('[data-float]'), {
-            y: (index) => (index % 2 === 0 ? -10 : 10), ease: 'none', stagger: 0.02,
+            y: (index) => (index % 2 === 0 ? -14 : 14), ease: 'none', stagger: 0.02,
             scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 1 },
           });
         }
@@ -333,20 +269,273 @@ export default function StudioHome() {
         <section id="top" className={styles.hero} data-hero-section>
           <div className={styles.heroGrid} aria-hidden="true" />
           <div className={styles.heroGlow} aria-hidden="true" />
-          <div className={`${styles.container} ${styles.heroLayout}`}>
-            <div className={styles.heroCopy} data-hero-copy>
-              <Eyebrow>INDEPENDENT DIGITAL STUDIO · HYDERABAD, INDIA</Eyebrow>
-              <h1>Make your next move <span>matter.</span></h1>
-              <p className={styles.heroLead}>We turn business ideas into thoughtful digital products, useful systems, and creative work that move things forward.</p>
-              <p className={styles.heroSupport}>From the first question to launch day, strategy, design, engineering, and growth work better when they’re connected.</p>
-              <div className={styles.heroActions}>
-                <ButtonLink href="#contact">Tell us what you’re building</ButtonLink>
-                <a href="#work" className={styles.heroTextLink}>Explore selected work <span><ArrowIcon /></span></a>
-              </div>
-              <div className={styles.heroProof}><span className={styles.proofMark}><i /></span><span>Small team. Direct collaboration. Work made for the real world.</span></div>
+
+          {/* Centered Velozity-inspired Hero Constellation Stage */}
+          <div className={styles.heroConstellationStage} data-hero-visual>
+            {/* Background 3D Interactive Three.js Kinetic Core */}
+            <div className={styles.heroThreeBackdrop} aria-hidden="true">
+              <HeroThreeCanvas />
             </div>
-            <HeroSystem />
-            <div className={styles.heroBottom}><span>PRODUCTS · SYSTEMS · CREATIVE · GROWTH</span><a href="#services" className={styles.scrollCue}>A closer look <span>↓</span></a></div>
+
+            {/* Background Orbital Ellipse & Signal Connections */}
+            <svg className={styles.orbitalSvg} viewBox="0 0 1440 840" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="orbitalPulseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#00ff85" stopOpacity="0" />
+                  <stop offset="50%" stopColor="#ffffff" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#00ff85" stopOpacity="0" />
+                </linearGradient>
+                <filter id="orbitalGlow">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <ellipse cx="720" cy="420" rx="630" ry="340" className={styles.orbitalEllipseOuter} />
+              <ellipse cx="720" cy="420" rx="490" ry="250" className={styles.orbitalEllipseInner} />
+              <path d="M 90,420 C 320,110 1120,110 1350,420 C 1120,730 320,730 90,420 Z" className={styles.orbitalPulsePath} />
+            </svg>
+
+            {/* Central Headline, Subtitle, and CTAs */}
+            <div className={styles.heroCenter} data-hero-copy>
+              <div className={styles.heroEyebrow}>
+                <span className={styles.eyebrowPulse} />
+                <span>INDEPENDENT DIGITAL STUDIO · HYDERABAD, INDIA</span>
+              </div>
+              <h1 className={styles.heroTitle}>
+                Make your next move <span className={styles.heroHighlight}>matter.</span>
+              </h1>
+              <p className={styles.heroLead}>
+                We turn business ideas into thoughtful digital products, useful systems, and creative work that move things forward.
+              </p>
+              <div className={styles.heroActions}>
+                <ButtonLink href="#contact" className={styles.primaryHeroBtn}>Tell us what you’re building</ButtonLink>
+                <a href="#work" className={styles.secondaryHeroBtn}>
+                  <span className={styles.playArrow}>▶</span>
+                  Explore selected work
+                </a>
+              </div>
+              <div className={styles.heroTrust}>
+                <span className={styles.trustBadge}><i /> Small dedicated team</span>
+                <span className={styles.trustSep}>·</span>
+                <span className={styles.trustBadge}><i /> Direct founder collaboration</span>
+                <span className={styles.trustSep}>·</span>
+                <span className={styles.trustBadge}><i /> Production-grade velocity</span>
+              </div>
+            </div>
+
+            {/* 8 Floating Constellation Cards orbiting around the center (Velozity.ai architecture) */}
+            <div className={styles.constellationCards}>
+              {/* Card 1: Top-Left (NW) */}
+              <a href="#services" className={`${styles.constellationCard} ${styles.cardNw}`} data-float="1" aria-label="Web and Mobile Apps Engineering">
+                <div className={styles.cardPreview}>
+                  <div className={styles.previewTag}>99.8%</div>
+                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
+                    <rect x="6" y="8" width="188" height="64" rx="6" fill="#01180d" stroke="rgba(0,255,133,0.2)" strokeWidth="1" />
+                    <circle cx="20" cy="20" r="3" fill="#ff5f56" />
+                    <circle cx="30" cy="20" r="3" fill="#ffbd2e" />
+                    <circle cx="40" cy="20" r="3" fill="#27c93f" />
+                    <line x1="16" y1="34" x2="90" y2="34" stroke="rgba(0,255,133,0.5)" strokeWidth="2.5" strokeLinecap="round" />
+                    <line x1="16" y1="44" x2="140" y2="44" stroke="#a2c7a8" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="16" y1="54" x2="110" y2="54" stroke="#486851" strokeWidth="2" strokeLinecap="round" />
+                    <rect x="150" y="24" width="36" height="36" rx="6" fill="rgba(0,255,133,0.12)" stroke="#00ff85" strokeWidth="1" />
+                    <path d="M162 42 L166 46 L174 36" stroke="#00ff85" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                  </svg>
+                </div>
+                <div className={styles.cardMeta}>
+                  <div className={styles.cardHeader}>
+                    <span className={styles.cardCategory}>ENGINEERING</span>
+                    <span className={styles.cardArrow}>↗</span>
+                  </div>
+                  <strong className={styles.cardTitle}>Web & Mobile Apps</strong>
+                  <span className={styles.cardSub}>React, Next.js & Native</span>
+                </div>
+              </a>
+
+              {/* Card 2: Top-Center (N) */}
+              <a href="#services" className={`${styles.constellationCard} ${styles.cardN}`} data-float="2" aria-label="Autonomous AI Agents and Workflows">
+                <div className={styles.cardPreview}>
+                  <div className={styles.previewTag}>AI CORE</div>
+                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
+                    <circle cx="100" cy="40" r="16" fill="rgba(0,255,133,0.18)" stroke="#00ff85" strokeWidth="1.5" />
+                    <circle cx="100" cy="40" r="6" fill="#00ff85" />
+                    <circle cx="45" cy="25" r="9" fill="#022114" stroke="rgba(0,255,133,0.4)" strokeWidth="1" />
+                    <circle cx="45" cy="55" r="8" fill="#022114" stroke="rgba(0,255,133,0.4)" strokeWidth="1" />
+                    <circle cx="155" cy="25" r="9" fill="#022114" stroke="rgba(0,255,133,0.4)" strokeWidth="1" />
+                    <circle cx="155" cy="55" r="8" fill="#022114" stroke="rgba(0,255,133,0.4)" strokeWidth="1" />
+                    <line x1="54" y1="28" x2="86" y2="36" stroke="rgba(0,255,133,0.6)" strokeWidth="1.2" strokeDasharray="3 3" />
+                    <line x1="53" y1="52" x2="86" y2="44" stroke="rgba(0,255,133,0.6)" strokeWidth="1.2" strokeDasharray="3 3" />
+                    <line x1="114" y1="36" x2="146" y2="28" stroke="rgba(0,255,133,0.6)" strokeWidth="1.2" strokeDasharray="3 3" />
+                    <line x1="114" y1="44" x2="147" y2="52" stroke="rgba(0,255,133,0.6)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  </svg>
+                </div>
+                <div className={styles.cardMeta}>
+                  <div className={styles.cardHeader}>
+                    <span className={styles.cardCategory}>AI SYSTEMS</span>
+                    <span className={styles.cardArrow}>↗</span>
+                  </div>
+                  <strong className={styles.cardTitle}>Autonomous AI Agents</strong>
+                  <span className={styles.cardSub}>Workflows & Multi-Agent Logic</span>
+                </div>
+              </a>
+
+              {/* Card 3: Top-Right (NE) */}
+              <a href="/scanfeast/" className={`${styles.constellationCard} ${styles.cardNe}`} data-float="3" aria-label="ScanFeast Restaurant Operations Platform">
+                <div className={styles.cardPreview}>
+                  <div className={`${styles.previewTag} ${styles.tagOrange}`}>SCANFEAST</div>
+                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
+                    <rect x="25" y="12" width="60" height="56" rx="6" fill="#140b04" stroke="rgba(255,103,25,0.4)" strokeWidth="1" />
+                    <rect x="35" y="22" width="12" height="12" fill="#ff6719" rx="2" />
+                    <rect x="63" y="22" width="12" height="12" fill="#ff6719" rx="2" />
+                    <rect x="35" y="46" width="12" height="12" fill="#ff6719" rx="2" />
+                    <circle cx="68" cy="51" r="5" fill="#ff944d" />
+                    <rect x="98" y="16" width="80" height="16" rx="4" fill="rgba(255,103,25,0.15)" stroke="rgba(255,103,25,0.3)" strokeWidth="1" />
+                    <rect x="98" y="38" width="70" height="8" rx="2" fill="#a27254" />
+                    <rect x="98" y="50" width="55" height="8" rx="2" fill="#694833" />
+                  </svg>
+                </div>
+                <div className={styles.cardMeta}>
+                  <div className={styles.cardHeader}>
+                    <span className={`${styles.cardCategory} ${styles.catOrange}`}>FLAGSHIP PLATFORM</span>
+                    <span className={styles.cardArrow}>↗</span>
+                  </div>
+                  <strong className={styles.cardTitle}>ScanFeast Restaurant POS</strong>
+                  <span className={styles.cardSub}>Contactless Dining & Kitchen Hub</span>
+                </div>
+              </a>
+
+              {/* Card 4: Mid-Right (E) */}
+              <a href="#services" className={`${styles.constellationCard} ${styles.cardE}`} data-float="4" aria-label="Paid Ads and Conversion Rate Optimization">
+                <div className={styles.cardPreview}>
+                  <div className={styles.previewTag}>ROAS 4.8X</div>
+                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
+                    <defs>
+                      <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#00ff85" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#00ff85" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M 20,65 L 55,50 L 95,54 L 135,32 L 180,18 L 180,68 L 20,68 Z" fill="url(#chartGrad)" />
+                    <path d="M 20,65 L 55,50 L 95,54 L 135,32 L 180,18" fill="none" stroke="#00ff85" strokeWidth="2.2" strokeLinecap="round" />
+                    <circle cx="180" cy="18" r="4.5" fill="#00ff85" filter="url(#orbitalGlow)" />
+                  </svg>
+                </div>
+                <div className={styles.cardMeta}>
+                  <div className={styles.cardHeader}>
+                    <span className={styles.cardCategory}>GROWTH</span>
+                    <span className={styles.cardArrow}>↗</span>
+                  </div>
+                  <strong className={styles.cardTitle}>Paid Ads & CRO Funnels</strong>
+                  <span className={styles.cardSub}>High-Intent Conversion Strategy</span>
+                </div>
+              </a>
+
+              {/* Card 5: Bottom-Right (SE) */}
+              <a href="/quantumarena/" className={`${styles.constellationCard} ${styles.cardSe}`} data-float="5" aria-label="Quantum Arena Esports and Gaming Platform">
+                <div className={styles.cardPreview}>
+                  <div className={`${styles.previewTag} ${styles.tagRed}`}>QUANTUM</div>
+                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
+                    <rect x="20" y="16" width="44" height="18" rx="4" fill="#200407" stroke="rgba(255,37,56,0.5)" strokeWidth="1" />
+                    <rect x="20" y="46" width="44" height="18" rx="4" fill="#200407" stroke="rgba(255,37,56,0.5)" strokeWidth="1" />
+                    <path d="M64,25 L88,25 L88,55 L64,55" fill="none" stroke="rgba(255,37,56,0.6)" strokeWidth="1.5" />
+                    <line x1="88" y1="40" x2="114" y2="40" stroke="#ff2538" strokeWidth="2" />
+                    <rect x="114" y="28" width="62" height="24" rx="4" fill="#ff2538" />
+                    <text x="145" y="44" fill="#fff" fontSize="9" fontWeight="800" textAnchor="middle">FINALS</text>
+                  </svg>
+                </div>
+                <div className={styles.cardMeta}>
+                  <div className={styles.cardHeader}>
+                    <span className={`${styles.cardCategory} ${styles.catRed}`}>ESPORTS ENGINE</span>
+                    <span className={styles.cardArrow}>↗</span>
+                  </div>
+                  <strong className={styles.cardTitle}>Quantum Arena Gaming</strong>
+                  <span className={styles.cardSub}>Live Brackets & Esports Portal</span>
+                </div>
+              </a>
+
+              {/* Card 6: Bottom-Center (S) */}
+              <a href="#approach" className={`${styles.constellationCard} ${styles.cardS}`} data-float="6" aria-label="Majin Studios Zero Hand-off Process">
+                <div className={styles.cardPreview}>
+                  <div className={styles.previewTag}>PROCESS</div>
+                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
+                    <line x1="30" y1="40" x2="170" y2="40" stroke="rgba(0,255,133,0.3)" strokeWidth="2" />
+                    <circle cx="35" cy="40" r="10" fill="#032115" stroke="#00ff85" strokeWidth="1.8" />
+                    <circle cx="80" cy="40" r="10" fill="#032115" stroke="#00ff85" strokeWidth="1.8" />
+                    <circle cx="125" cy="40" r="10" fill="#032115" stroke="#00ff85" strokeWidth="1.8" />
+                    <circle cx="165" cy="40" r="10" fill="#00ff85" />
+                    <text x="35" y="43" fill="#00ff85" fontSize="8" fontWeight="800" textAnchor="middle">01</text>
+                    <text x="80" y="43" fill="#00ff85" fontSize="8" fontWeight="800" textAnchor="middle">02</text>
+                    <text x="125" y="43" fill="#00ff85" fontSize="8" fontWeight="800" textAnchor="middle">03</text>
+                    <text x="165" y="43" fill="#032115" fontSize="8" fontWeight="800" textAnchor="middle">04</text>
+                  </svg>
+                </div>
+                <div className={styles.cardMeta}>
+                  <div className={styles.cardHeader}>
+                    <span className={styles.cardCategory}>THE SYSTEM</span>
+                    <span className={styles.cardArrow}>↗</span>
+                  </div>
+                  <strong className={styles.cardTitle}>Zero Hand-off Delivery</strong>
+                  <span className={styles.cardSub}>Discovery, Shape, Build & Launch</span>
+                </div>
+              </a>
+
+              {/* Card 7: Bottom-Left (SW) */}
+              <a href="#services" className={`${styles.constellationCard} ${styles.cardSw}`} data-float="7" aria-label="Brand Systems and Design Direction">
+                <div className={styles.cardPreview}>
+                  <div className={styles.previewTag}>DESIGN</div>
+                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
+                    <circle cx="40" cy="40" r="14" fill="#032115" stroke="rgba(0,255,133,0.5)" strokeWidth="1.5" />
+                    <circle cx="70" cy="40" r="14" fill="#00ff85" />
+                    <circle cx="100" cy="40" r="14" fill="#f7f8f4" />
+                    <path d="M130 52 C135 25, 160 25, 175 48" fill="none" stroke="#00ff85" strokeWidth="2" strokeDasharray="3 3" />
+                    <rect x="148" y="26" width="6" height="6" fill="#00ff85" />
+                  </svg>
+                </div>
+                <div className={styles.cardMeta}>
+                  <div className={styles.cardHeader}>
+                    <span className={styles.cardCategory}>IDENTITY</span>
+                    <span className={styles.cardArrow}>↗</span>
+                  </div>
+                  <strong className={styles.cardTitle}>Brand Systems & Tokens</strong>
+                  <span className={styles.cardSub}>Visual Direction & Design Systems</span>
+                </div>
+              </a>
+
+              {/* Card 8: Mid-Left (W) */}
+              <a href="#services" className={`${styles.constellationCard} ${styles.cardW}`} data-float="8" aria-label="Scalable Cloud Backend Architecture">
+                <div className={styles.cardPreview}>
+                  <div className={styles.previewTag}>&lt;45MS</div>
+                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
+                    <rect x="25" y="14" width="150" height="14" rx="3" fill="#01190e" stroke="rgba(0,255,133,0.3)" strokeWidth="1" />
+                    <circle cx="35" cy="21" r="2.5" fill="#00ff85" />
+                    <rect x="25" y="33" width="150" height="14" rx="3" fill="#01190e" stroke="rgba(0,255,133,0.3)" strokeWidth="1" />
+                    <circle cx="35" cy="40" r="2.5" fill="#00ff85" />
+                    <rect x="25" y="52" width="150" height="14" rx="3" fill="#01190e" stroke="rgba(0,255,133,0.3)" strokeWidth="1" />
+                    <circle cx="35" cy="59" r="2.5" fill="#00ff85" />
+                    <line x1="50" y1="21" x2="110" y2="21" stroke="#366b47" strokeWidth="2" />
+                    <line x1="50" y1="40" x2="140" y2="40" stroke="#00ff85" strokeWidth="2" />
+                    <line x1="50" y1="59" x2="85" y2="59" stroke="#366b47" strokeWidth="2" />
+                  </svg>
+                </div>
+                <div className={styles.cardMeta}>
+                  <div className={styles.cardHeader}>
+                    <span className={styles.cardCategory}>CLOUD INFRA</span>
+                    <span className={styles.cardArrow}>↗</span>
+                  </div>
+                  <strong className={styles.cardTitle}>High-Scale Backend APIs</strong>
+                  <span className={styles.cardSub}>Edge Microservices & PostgreSQL</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div className={`${styles.container} ${styles.heroBottomRow}`}>
+            <span>PRODUCTS · SYSTEMS · CREATIVE · GROWTH</span>
+            <a href="#services" className={styles.scrollCue}>
+              A closer look <span>↓</span>
+            </a>
           </div>
         </section>
 

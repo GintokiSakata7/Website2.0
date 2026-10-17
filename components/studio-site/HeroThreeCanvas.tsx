@@ -41,26 +41,28 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
     const coreGroup = new THREE.Group();
     scene.add(coreGroup);
 
-    // 1. Inner Faceted Crystal
-    const innerGeo = new THREE.IcosahedronGeometry(1.25, 0);
+    // 1. Inner Faceted Holographic Crystal
+    const innerGeo = new THREE.IcosahedronGeometry(1.22, 0);
     const innerMat = new THREE.MeshStandardMaterial({
-      color: 0x032316,
+      color: 0x00ff85,
       emissive: 0x003d1f,
-      emissiveIntensity: 0.75,
-      roughness: 0.15,
-      metalness: 0.85,
+      emissiveIntensity: 0.5,
+      roughness: 0.2,
+      metalness: 0.4,
+      transparent: true,
+      opacity: 0.24,
       flatShading: true,
     });
     const innerCrystal = new THREE.Mesh(innerGeo, innerMat);
     coreGroup.add(innerCrystal);
 
     // 2. Outer Kinetic Wireframe Cage
-    const outerGeo = new THREE.IcosahedronGeometry(1.68, 1);
+    const outerGeo = new THREE.IcosahedronGeometry(1.65, 1);
     const outerMat = new THREE.MeshBasicMaterial({
       color: 0x00ff85,
       wireframe: true,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.55,
     });
     const outerCage = new THREE.Mesh(outerGeo, outerMat);
     coreGroup.add(outerCage);

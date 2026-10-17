@@ -58,100 +58,109 @@
 a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px); }
 .mobileNavCta, .menuToggle { display: none; }
 
-/* Hero — editorial type paired with a bespoke built, not borrowed, visual. */
-.hero { position: relative; isolation: isolate; padding: 58px 0 0; background: linear-gradient(180deg, #f7f8f4 0%, #f7f9f5 72%, #eef5eb 100%); }
-.heroGrid { position: absolute; z-index: -2; top: 0; right: 0; bottom: 3%; width: 55%; opacity: .45; background-image: linear-gradient(rgba(0, 135, 74, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 135, 74, .08) 1px, transparent 1px); background-size: 34px 34px; mask-image: linear-gradient(90deg, transparent, black 30%, black 76%, transparent); pointer-events: none; }
-.heroGlow { position: absolute; z-index: -1; top: 4%; right: 8%; width: min(49vw, 660px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(0,255,133,.24) 0%, rgba(0,255,133,.08) 40%, rgba(0,255,133,0) 72%); filter: blur(4px); pointer-events: none; }
-.heroLayout { display: grid; grid-template-columns: minmax(0, .91fr) minmax(0, 1.09fr); align-items: center; column-gap: clamp(32px, 4.3vw, 72px); min-height: 610px; }
-.heroCopy { position: relative; z-index: 4; padding: 10px 0 40px; }
-.eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--green); font-size: 9px; font-weight: 800; letter-spacing: .15em; line-height: 1.5; text-transform: uppercase; }
-.eyebrow > span { display: inline-block; width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 4px rgba(0,255,133,.25), 0 0 8px rgba(0,255,133,.6); }
+/* Shared Button & Tag utilities */
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 16px; min-height: 52px; padding: 0 24px; border: 1px solid var(--deep); border-radius: 999px; background: var(--deep); color: #ffffff !important; font-size: 12.5px; font-weight: 750; box-shadow: 0 10px 24px rgba(3, 33, 21, 0.18); transition: background .24s ease, border-color .24s ease, box-shadow .24s ease, transform .24s ease; }
+.button:hover { background: var(--deep-2); border-color: var(--lime); box-shadow: 0 14px 28px rgba(0, 255, 133, 0.28); transform: translateY(-2px); }
+.buttonSecondary { border-color: #cfdccf; background: rgba(255, 255, 255, 0.9); color: var(--deep) !important; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04); backdrop-filter: blur(10px); }
+.buttonSecondary:hover { border-color: var(--deep); background: #ffffff; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08); }
+
+.eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--green); font-size: 9.5px; font-weight: 800; letter-spacing: .15em; line-height: 1.5; text-transform: uppercase; }
+.eyebrow > span { display: inline-block; width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 4px rgba(0, 255, 133, 0.25), 0 0 8px rgba(0, 255, 133, 0.6); }
 .eyebrowLight { color: #b7cbb7; }
-.eyebrowLight > span { background: var(--lime); box-shadow: 0 0 0 4px rgba(0,255,133,.2), 0 0 8px rgba(0,255,133,.7); }
-.hero h1 { max-width: 690px; margin: 25px 0 24px; color: var(--ink); font-size: clamp(58px, 6.05vw, 88px); font-weight: 760; letter-spacing: -.082em; line-height: .96; text-wrap: balance; }
-.hero h1 span { position: relative; z-index: 0; display: inline-block; color: var(--green); white-space: nowrap; text-shadow: 0 0 25px rgba(0,255,133,.22); }
-.hero h1 span::after { position: absolute; z-index: -1; right: 2px; bottom: 3px; left: 2px; height: 8px; border-radius: 2px; background: var(--lime); content: ''; opacity: .9; box-shadow: 0 0 16px rgba(0,255,133,.75); transform: rotate(-1.3deg); }
-.heroLead { max-width: 555px; margin: 0; color: #3d4f42; font-size: clamp(16px, 1.22vw, 18px); line-height: 1.72; }
-.heroSupport { max-width: 520px; margin: 13px 0 0; color: #6f7d71; font-size: 13px; line-height: 1.8; }
-.heroActions { display: flex; flex-wrap: wrap; align-items: center; gap: 23px; margin-top: 31px; }
-.button { display: inline-flex; align-items: center; justify-content: center; gap: 24px; min-height: 52px; padding: 0 21px; border: 1px solid var(--deep); border-radius: 5px; background: var(--deep); color: #fff !important; font-size: 12px; font-weight: 750; box-shadow: 0 9px 20px rgba(3,33,21,.15); transition: background .24s ease, border-color .24s ease, box-shadow .24s ease, transform .24s ease; }
-.button:hover { background: var(--deep-2); border-color: var(--lime); box-shadow: 0 14px 28px rgba(0,255,133,.22); transform: translateY(-2px); }
-.buttonSecondary { border-color: #cfdccf; background: transparent; color: var(--deep) !important; box-shadow: none; }
-.buttonSecondary:hover { border-color: var(--deep); background: #eaf1e6; box-shadow: none; }
-.heroTextLink { display: inline-flex; align-items: center; gap: 12px; color: var(--deep); font-size: 12px; font-weight: 750; }
-.heroTextLink > span { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid #d4dfd2; border-radius: 50%; transition: background .25s ease, transform .25s ease, border-color .25s ease; }
-.heroTextLink:hover > span { background: var(--lime); border-color: var(--lime); transform: translateX(3px); }
-.heroProof { display: flex; align-items: center; gap: 11px; margin-top: 34px; color: #6e7c70; font-size: 10px; line-height: 1.6; }
-.proofMark { display: grid; place-items: center; width: 24px; height: 24px; flex: 0 0 auto; border: 1px solid #d3dfd0; border-radius: 50%; }
-.proofMark i { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 4px rgba(0,255,133,.2), 0 0 6px rgba(0,255,133,.6); }
-.heroBottom { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: -9px; padding: 19px 0 20px; border-top: 1px solid #dfe7dc; color: #7b887e; font-size: 8px; font-weight: 800; letter-spacing: .15em; }
+.eyebrowLight > span { background: var(--lime); box-shadow: 0 0 0 4px rgba(0, 255, 133, 0.2), 0 0 8px rgba(0, 255, 133, 0.7); }
+
+/* Hero — Velozity.ai inspired Centered Orbital Constellation Architecture */
+.hero { position: relative; isolation: isolate; padding: 18px 0 0; overflow: hidden; background: linear-gradient(180deg, #f7f8f4 0%, #f6faf5 65%, #eef5eb 100%); }
+.heroGrid { position: absolute; z-index: -2; inset: 0; opacity: .35; background-image: linear-gradient(rgba(0, 135, 74, .065) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 135, 74, .065) 1px, transparent 1px); background-size: 38px 38px; mask-image: radial-gradient(ellipse at 50% 45%, black 40%, transparent 80%); pointer-events: none; }
+.heroGlow { position: absolute; z-index: -1; top: 15%; left: 50%; transform: translateX(-50%); width: min(85vw, 1050px); height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(0, 255, 133, 0.16) 0%, rgba(0, 255, 133, 0.05) 45%, rgba(0, 255, 133, 0) 72%); filter: blur(12px); pointer-events: none; }
+
+/* Constellation Stage */
+.heroConstellationStage { position: relative; width: 100%; max-width: 1440px; min-height: 780px; margin: 0 auto; display: flex; align-items: center; justify-content: center; perspective: 1200px; }
+
+/* Three.js Canvas Backdrop */
+.heroThreeBackdrop { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(880px, 92vw); height: min(690px, 75vh); z-index: 1; pointer-events: auto; opacity: 0.95; }
+
+/* Orbital SVG Ellipse */
+.orbitalSvg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.orbitalEllipseOuter { fill: none; stroke: rgba(0, 255, 133, 0.16); stroke-width: 1.2; stroke-dasharray: 4 8; }
+.orbitalEllipseInner { fill: none; stroke: rgba(0, 255, 133, 0.09); stroke-width: 1; }
+.orbitalPulsePath { fill: none; stroke: url(#orbitalPulseGrad); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 80 880; animation: pulseTravelOrbit 5s linear infinite; filter: drop-shadow(0 0 6px #00ff85); }
+
+@keyframes pulseTravelOrbit {
+  from { stroke-dashoffset: 960; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Centered Typography */
+.heroCenter { position: relative; z-index: 10; max-width: 650px; margin: 0 auto; padding: 60px 20px 45px; display: flex; flex-direction: column; align-items: center; text-align: center; pointer-events: none; }
+.heroCenter > * { pointer-events: auto; }
+
+.heroEyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 6px 16px; border: 1px solid #d8e5d5; border-radius: 999px; background: rgba(255, 255, 255, 0.94); box-shadow: 0 4px 14px rgba(3, 33, 21, 0.06); color: var(--green); font-size: 9.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.eyebrowPulse { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 4px rgba(0, 255, 133, 0.28), 0 0 8px rgba(0, 255, 133, 0.8); }
+
+.heroTitle { max-width: 720px; margin: 18px 0 14px; color: var(--ink); font-size: clamp(48px, 5.6vw, 82px); font-weight: 780; letter-spacing: -.082em; line-height: .97; text-wrap: balance; }
+.heroHighlight { position: relative; z-index: 0; display: inline-block; color: var(--green); white-space: nowrap; text-shadow: 0 0 25px rgba(0, 255, 133, 0.28); }
+.heroHighlight::after { position: absolute; z-index: -1; right: 2px; bottom: 4px; left: 2px; height: 8px; border-radius: 2px; background: var(--lime); content: ''; opacity: .92; box-shadow: 0 0 16px rgba(0, 255, 133, 0.8); transform: rotate(-1.3deg); }
+
+.heroLead { max-width: 560px; margin: 0; color: #374a3d; font-size: clamp(15.5px, 1.2vw, 17.5px); line-height: 1.65; font-weight: 450; }
+
+.heroActions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; margin-top: 26px; }
+.primaryHeroBtn { border-radius: 999px !important; padding: 0 28px !important; min-height: 52px !important; background: var(--deep) !important; color: #ffffff !important; border: 1px solid var(--deep) !important; font-size: 12.5px !important; box-shadow: 0 10px 24px rgba(3, 33, 21, 0.22) !important; }
+.primaryHeroBtn:hover { background: var(--deep-2) !important; border-color: var(--lime) !important; box-shadow: 0 14px 30px rgba(0, 255, 133, 0.3) !important; }
+.secondaryHeroBtn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border: 1px solid #d4dfd2; border-radius: 999px; background: rgba(255, 255, 255, 0.94); color: var(--deep) !important; font-size: 12.5px; font-weight: 750; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: all .24s ease; }
+.secondaryHeroBtn:hover { border-color: var(--deep); background: #ffffff; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08); }
+.playArrow { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--lime-soft); color: var(--green); font-size: 8px; }
+
+.heroTrust { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 14px; margin-top: 24px; color: #68796b; font-size: 11px; font-weight: 600; }
+.trustBadge { display: inline-flex; align-items: center; gap: 7px; }
+.trustBadge i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px rgba(0, 255, 133, 0.22), 0 0 6px rgba(0, 255, 133, 0.7); }
+.trustSep { color: #b0c2b2; }
+
+/* 8 Floating Constellation Cards (Velozity.ai) */
+.constellationCards { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+.constellationCard { position: absolute; pointer-events: auto; width: 240px; padding: 10px 12px 12px; border-radius: 14px; background: linear-gradient(150deg, rgba(3, 33, 21, 0.95) 0%, rgba(1, 20, 13, 0.98) 100%); border: 1px solid rgba(0, 255, 133, 0.22); color: #fff !important; box-shadow: 0 16px 36px rgba(1, 22, 14, 0.32), 0 0 20px rgba(0, 255, 133, 0.08); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: transform .3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color .3s ease, box-shadow .3s ease; text-decoration: none; display: flex; flex-direction: column; gap: 8px; cursor: pointer; }
+.constellationCard:hover { transform: translateY(-8px) scale(1.035) !important; border-color: rgba(0, 255, 133, 0.75); box-shadow: 0 25px 60px rgba(0, 25, 14, 0.5), 0 0 35px rgba(0, 255, 133, 0.3); z-index: 25; }
+
+.cardPreview { height: 72px; width: 100%; border-radius: 9px; overflow: hidden; position: relative; background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(0, 255, 133, 0.12); display: flex; align-items: center; justify-content: center; }
+.previewSvg { width: 100%; height: 100%; object-fit: contain; }
+.previewTag { position: absolute; top: 6px; right: 7px; padding: 2px 7px; border-radius: 999px; background: rgba(0, 255, 133, 0.18); border: 1px solid rgba(0, 255, 133, 0.4); color: var(--lime); font-size: 7.5px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+.tagOrange { background: rgba(255, 103, 25, 0.22); border-color: rgba(255, 103, 25, 0.5); color: #ff944d; }
+.tagRed { background: rgba(255, 37, 56, 0.22); border-color: rgba(255, 37, 56, 0.5); color: #ff6070; }
+
+.cardMeta { display: flex; flex-direction: column; gap: 2px; }
+.cardHeader { display: flex; align-items: center; justify-content: space-between; font-size: 8px; font-weight: 800; letter-spacing: .12em; color: var(--lime); }
+.catOrange { color: #ff944d; }
+.catRed { color: #ff6070; }
+.cardArrow { font-size: 11px; color: var(--lime); transition: transform .22s ease; }
+.constellationCard:hover .cardArrow { transform: translate(2px, -2px); }
+.cardTitle { font-size: 11.5px; font-weight: 750; color: #f2f7ef; line-height: 1.25; letter-spacing: -.02em; }
+.cardSub { font-size: 8.5px; color: #9bb5a0; line-height: 1.35; }
+
+/* Card Positions & Organic Floating Physics */
+.cardNw { top: 12px; left: 1.5%; animation: floatNw 6s ease-in-out infinite; }
+.cardN  { top: 0px; left: 50%; transform: translateX(-50%); animation: floatN 6.8s ease-in-out infinite 0.6s; }
+.cardNe { top: 12px; right: 1.5%; animation: floatNe 6.4s ease-in-out infinite 1.2s; }
+.cardW  { top: 48%; left: 0%; transform: translateY(-50%); animation: floatW 6.2s ease-in-out infinite 0.8s; }
+.cardE  { top: 48%; right: 0%; transform: translateY(-50%); animation: floatE 6.6s ease-in-out infinite 1.4s; }
+.cardSw { bottom: 12px; left: 1.5%; animation: floatSw 6.5s ease-in-out infinite 1s; }
+.cardS  { bottom: 0px; left: 50%; transform: translateX(-50%); animation: floatS 7s ease-in-out infinite 1.8s; }
+.cardSe { bottom: 12px; right: 1.5%; animation: floatSe 6.3s ease-in-out infinite 0.4s; }
+
+@keyframes floatNw { 0%, 100% { transform: translateY(0px) rotate(-1.5deg); } 50% { transform: translateY(-9px) rotate(-0.5deg); } }
+@keyframes floatN  { 0%, 100% { transform: translate(-50%, 0px); } 50% { transform: translate(-50%, -10px); } }
+@keyframes floatNe { 0%, 100% { transform: translateY(0px) rotate(1.5deg); } 50% { transform: translateY(-9px) rotate(2.5deg); } }
+@keyframes floatW  { 0%, 100% { transform: translateY(-50%); } 50% { transform: translateY(calc(-50% - 10px)); } }
+@keyframes floatE  { 0%, 100% { transform: translateY(-50%); } 50% { transform: translateY(calc(-50% - 10px)); } }
+@keyframes floatSw { 0%, 100% { transform: translateY(0px) rotate(-1deg); } 50% { transform: translateY(-8px) rotate(0deg); } }
+@keyframes floatS  { 0%, 100% { transform: translate(-50%, 0px); } 50% { transform: translate(-50%, -9px); } }
+@keyframes floatSe { 0%, 100% { transform: translateY(0px) rotate(1deg); } 50% { transform: translateY(-8px) rotate(0deg); } }
+
+/* Hero Bottom Row */
+.heroBottomRow { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 10px; padding: 22px 0 20px; border-top: 1px solid #dfe7dc; color: #7b887e; font-size: 8.5px; font-weight: 800; letter-spacing: .15em; }
 .scrollCue { display: inline-flex; align-items: center; gap: 11px; letter-spacing: .04em; text-transform: none; }
 .scrollCue > span { display: grid; place-items: center; width: 21px; height: 21px; border: 1px solid #cad8c9; border-radius: 50%; color: var(--green); font-size: 13px; animation: cueNudge 1.8s ease-in-out infinite; }
+@keyframes cueNudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
 
-/* Signal board artwork with interactive Three.js 3D kinetic system */
-.heroArt { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 566px; perspective: 1200px; }
-.heroArtAura { position: absolute; inset: 6% -4% 2% 0%; border-radius: 42%; background: radial-gradient(ellipse at 54% 48%, rgba(0,255,133,.20), rgba(0,255,133,0) 70%); filter: blur(16px); pointer-events: none; }
-.heroBoard { position: relative; z-index: 2; width: min(100%, 660px); min-height: 438px; overflow: hidden; border: 1px solid rgba(0,255,133,.25); border-radius: 20px; background: linear-gradient(145deg, #032115 0%, #01160e 100%); color: #f4f8f0; box-shadow: 0 35px 95px rgba(1,22,14,.45), 0 0 45px rgba(0,255,133,.12); transform-style: preserve-3d; }
-.heroBoard::before { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse at 50% 49%, rgba(0,255,133,.14), transparent 54%), linear-gradient(140deg, rgba(255,255,255,.04), transparent 45%); content: ''; pointer-events: none; }
-.heroBoard::after { position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(rgba(0,255,133,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,133,.045) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(to bottom, transparent 5%, black 32%, black 80%, transparent); content: ''; pointer-events: none; }
-.boardTop { position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 19px 21px; border-bottom: 1px solid rgba(0,255,133,.15); }
-.boardIdentity { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.boardLogo { display: grid; place-items: center; width: 31px; height: 31px; flex: 0 0 auto; border: 1px solid rgba(0,255,133,.35); border-radius: 8px; background: rgba(0,255,133,.12); box-shadow: 0 0 12px rgba(0,255,133,.2); }
-.boardLogo .brandMark { width: 27px; height: 27px; border: 0; border-radius: 7px; background: transparent; box-shadow: none; }
-.boardLogo .brandMark svg { width: 23px; height: 23px; }
-.boardIdentity > span:last-child { display: flex; flex-direction: column; gap: 4px; }
-.boardIdentity b { font-size: 9px; font-weight: 800; letter-spacing: .13em; }
-.boardIdentity small { color: #8cb896; font-size: 7px; font-weight: 700; letter-spacing: .12em; }
-.boardStatus { display: inline-flex; align-items: center; gap: 7px; color: #a9e0b8; font-size: 7px; font-weight: 800; letter-spacing: .12em; white-space: nowrap; }
-.boardStatus i { display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px rgba(0,255,133,.22), 0 0 8px rgba(0,255,133,.8); }
-.boardCanvas { position: relative; z-index: 1; min-height: 333px; margin: 0 12px; }
-
-/* Three.js canvas layer inside the hero board */
-.heroThreeLayer { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: auto; }
-
-.boardConnections { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 3; }
-.connectionBase { fill: none; stroke: rgba(0,255,133,.14); stroke-width: 1.2; }
-.connectionTrace { fill: none; stroke: url(#flowLine); stroke-width: 1.75; stroke-linecap: round; filter: drop-shadow(0 0 4px rgba(0,255,133,.45)); }
-.connectionBranch { fill: none; stroke: rgba(0,255,133,.4); stroke-width: 1; stroke-dasharray: 3 6; }
-.connectionPulse { fill: none; stroke: url(#flowPulseGrad); stroke-width: 2.8; stroke-linecap: round; stroke-dasharray: 60 480; animation: pulseTravel 4s linear infinite; filter: drop-shadow(0 0 6px #00ff85); }
-.signalDot { fill: var(--lime); }
-.signalPulseRing { fill: none; stroke: #00ff85; stroke-width: 1.2; animation: ringPulse 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite; transform-origin: center; }
-
-.orbitNode { position: absolute; z-index: 5; display: flex; align-items: center; gap: 9px; width: 185px; min-height: 55px; padding: 9px 10px; border: 1px solid rgba(0,255,133,.24); border-radius: 9px; background: rgba(3,33,21,.88); box-shadow: 0 9px 25px rgba(0,0,0,.35); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transform: translateZ(20px); transition: border-color .25s ease, background .25s ease, transform .25s ease, box-shadow .25s ease; cursor: pointer; }
-.orbitNode:hover { border-color: var(--lime); background: rgba(5,47,30,.96); box-shadow: 0 14px 32px rgba(0,255,133,.25); transform: translateY(-3px) translateZ(24px) scale(1.02); }
-.nodeNumber { display: grid; place-items: center; width: 26px; height: 26px; flex: 0 0 auto; border: 1px solid rgba(0,255,133,.45); border-radius: 6px; color: var(--lime); font-size: 8px; font-weight: 800; background: rgba(0,255,133,.08); }
-.nodeCopy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.nodeCopy b { color: #f0f5ec; font-size: 10px; font-weight: 750; letter-spacing: -.01em; }
-.nodeCopy small { color: #9bb4a0; font-size: 8px; line-height: 1.4; }
-.nodeStatus { margin-left: auto; color: var(--lime); font-size: 12px; transition: transform .22s ease; }
-.orbitNode:hover .nodeStatus { transform: translate(2px, -2px); }
-.orbitStrategy { top: 9%; left: 1%; }
-.orbitDesign { top: 13%; right: 0; }
-.orbitBuild { bottom: 12%; left: 5%; }
-.orbitGrow { right: 2%; bottom: 9%; }
-
-.systemCore { position: absolute; z-index: 4; top: 50%; left: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 134px; height: 134px; border: 1px solid rgba(0,255,133,.5); border-radius: 50%; background: radial-gradient(circle at 36% 28%, rgba(0,255,133,.18), rgba(3,33,21,.85) 70%); box-shadow: 0 0 0 8px rgba(0,255,133,.05), 0 0 45px rgba(0,255,133,.22), inset 0 0 24px rgba(0,255,133,.1); transform: translate(-50%,-50%); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); pointer-events: none; }
-.coreRing { position: absolute; inset: -11px; border: 1px dashed rgba(0,255,133,.45); border-radius: 50%; animation: orbitSpin 26s linear infinite; }
-.coreRing::after { position: absolute; top: 17px; left: 18px; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 16px rgba(0,255,133,1); content: ''; }
-.coreMark .brandMark { width: 33px; height: 33px; border-radius: 8px; box-shadow: 0 0 14px rgba(0,255,133,.3); }
-.coreMark .brandMark svg { width: 25px; height: 25px; }
-.systemCore small { margin-top: 5px; color: #a5cca9; font-size: 6px; font-weight: 800; letter-spacing: .18em; }
-.systemCore strong { margin-top: 1px; color: #f3f7ed; font-size: 13px; font-weight: 750; letter-spacing: -.035em; text-shadow: 0 0 12px rgba(0,255,133,.3); }
-.coreTag { margin-top: 4px; padding: 2px 7px; border: 1px solid rgba(0,255,133,.4); border-radius: 99px; background: rgba(0,255,133,.12); color: var(--lime); font-size: 5.5px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; box-shadow: 0 0 10px rgba(0,255,133,.25); }
-.boardAnnotation { position: absolute; z-index: 4; right: 6px; bottom: 6px; left: 6px; display: flex; justify-content: space-between; color: #6e9a76; font-size: 6px; font-weight: 800; letter-spacing: .15em; }
-.boardBottom { position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 47px; padding: 0 20px; border-top: 1px solid rgba(0,255,133,.15); color: #8fb894; font-size: 7px; font-weight: 800; letter-spacing: .14em; }
-.boardBottom i { padding: 0 4px; color: var(--lime); font-style: normal; }
-.boardBottomMark { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid rgba(0,255,133,.35); border-radius: 6px; color: var(--lime); font-size: 12px; }
-.floatNote { position: absolute; z-index: 7; display: flex; align-items: center; gap: 10px; max-width: 235px; padding: 12px 14px; border: 1px solid #d8e6d4; border-radius: 10px; background: rgba(255,255,255,.97); box-shadow: 0 14px 35px rgba(3,33,21,.14); color: var(--ink); }
-.floatNoteTop { top: 13%; right: -22px; }
-.floatNoteBottom { bottom: 12%; left: -20px; }
-.floatNoteIcon { display: grid; place-items: center; width: 28px; height: 28px; flex: 0 0 auto; border-radius: 7px; background: var(--lime-soft); color: var(--green); font-size: 17px; }
-.floatNote > span:last-child { display: flex; flex-direction: column; gap: 2px; }
-.floatNote b { font-size: 9px; font-weight: 800; }
-.floatNote small { color: #6e7c70; font-size: 8px; line-height: 1.4; }
-.floatNotePulse { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 5px rgba(0,255,133,.2), 0 0 8px rgba(0,255,133,.6); }
-.artIndex { position: absolute; right: -13px; bottom: 14%; display: flex; align-items: center; gap: 8px; color: #718273; font-size: 7px; font-weight: 800; letter-spacing: .08em; writing-mode: vertical-rl; }
-.artIndex i { display: block; width: 1px; height: 35px; background: #b6c7b5; }
 
 /* Capability ticker — one restrained motion strip, not a full-screen gimmick. */
 .serviceTicker { overflow: hidden; border-top: 1px solid #e3e9e0; border-bottom: 1px solid #dbe4d7; background: #f1f5ed; }
@@ -453,14 +462,15 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
   .brand { min-width: 165px; }
   .navigation { gap: 19px; }
   .navigation > a { font-size: 11px; }
-  .heroLayout { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 30px; min-height: 590px; }
-  .hero h1 { font-size: clamp(55px, 6vw, 74px); }
-  .heroArt { min-height: 510px; }
-  .heroBoard { min-height: 410px; }
-  .boardCanvas { min-height: 305px; }
-  .orbitNode { width: 170px; }
-  .floatNoteTop { right: -8px; }
-  .floatNoteBottom { left: -8px; }
+  .heroConstellationStage { min-height: 800px; }
+  .constellationCard { width: 220px; padding: 9px 10px 10px; }
+  .cardPreview { height: 70px; }
+  .cardNw { left: 1%; }
+  .cardNe { right: 1%; }
+  .cardSw { left: 1%; }
+  .cardSe { right: 1%; }
+  .heroCenter { max-width: 580px; padding: 110px 20px 100px; }
+  .heroTitle { font-size: clamp(44px, 5.2vw, 68px); }
   .serviceCard { padding-inline: 17px; }
   .serviceCard > p { font-size: 10.5px; }
   .projectCard { gap: 35px; }
@@ -473,16 +483,52 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
   .navigation { gap: 15px; }
   .navigation > a { font-size: 10px; }
   .headerCta { min-height: 40px; padding-inline: 13px; font-size: 10px; }
-  .hero { padding-top: 42px; }
-  .heroLayout { grid-template-columns: 1fr; min-height: 0; row-gap: 10px; }
-  .heroCopy { max-width: 760px; padding-bottom: 8px; }
-  .hero h1 { max-width: 780px; font-size: clamp(62px, 9vw, 94px); }
-  .heroLead { max-width: 700px; font-size: 17px; }
-  .heroSupport { max-width: 680px; }
-  .heroArt { width: min(100%, 720px); min-height: 520px; margin: 0 auto; }
-  .heroBoard { min-height: 430px; }
-  .boardCanvas { min-height: 323px; }
-  .heroBottom { margin-top: 10px; }
+  .hero { padding-top: 24px; }
+  .heroConstellationStage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+    padding: 20px 0 35px;
+    perspective: none;
+  }
+  .heroCenter {
+    padding: 20px 20px 15px;
+    max-width: 720px;
+  }
+  .heroTitle { font-size: clamp(46px, 8vw, 68px); }
+  .heroLead { max-width: 640px; font-size: 16.5px; }
+  .heroSupport { max-width: 600px; }
+  .heroThreeBackdrop {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: min(100%, 520px);
+    height: 300px;
+    margin: 10px auto 20px;
+    opacity: 1;
+  }
+  .orbitalSvg {
+    display: none;
+  }
+  .constellationCards {
+    position: relative;
+    inset: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 15px;
+    pointer-events: auto;
+  }
+  .constellationCard {
+    position: static;
+    width: 100%;
+    transform: none !important;
+    animation: none !important;
+  }
   .sectionIntro { grid-template-columns: 1fr; row-gap: 16px; }
   .sectionIntroBody { grid-template-columns: minmax(0, 1.1fr) minmax(0, .8fr); gap: 30px; }
   .servicesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -531,54 +577,27 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
   .navigation > a { padding: 14px 2px; border-bottom: 1px solid #e4ebe1; color: var(--ink); font-size: 13px; }
   .navigation > a:not(.mobileNavCta)::after { display: none; }
   .navigation .mobileNavCta { display: flex; align-items: center; justify-content: space-between; margin-top: 11px; padding: 13px 15px; border: 0; border-radius: 5px; background: var(--deep); color: #fff; }
-  .hero { padding-top: 37px; }
-  .heroGrid { width: 100%; background-size: 28px 28px; opacity: .28; }
-  .heroGlow { top: 26%; right: -30%; width: 100vw; opacity: .7; }
-  .heroLayout { row-gap: 2px; }
-  .eyebrow { font-size: 8px; letter-spacing: .12em; }
-  .hero h1 { margin: 23px 0 20px; font-size: clamp(50px, 10.8vw, 76px); line-height: .98; letter-spacing: -.08em; }
-  .hero h1 span::after { bottom: 1px; height: 6px; }
-  .heroLead { font-size: 15px; line-height: 1.75; }
-  .heroSupport { margin-top: 10px; font-size: 11px; }
-  .heroActions { align-items: flex-start; gap: 16px; margin-top: 25px; }
-  .button { min-height: 48px; gap: 13px; padding-inline: 15px; font-size: 11px; }
-  .heroTextLink { gap: 8px; padding-top: 9px; font-size: 10px; }
-  .heroTextLink > span { width: 25px; height: 25px; }
-  .heroProof { align-items: flex-start; margin-top: 24px; font-size: 9px; }
-  .heroArt { min-height: 410px; margin-top: 3px; }
-  .heroBoard { min-height: 355px; border-radius: 14px; }
-  .boardTop { padding: 14px; }
-  .boardIdentity b { font-size: 7px; }
-  .boardIdentity small { font-size: 5.5px; }
-  .boardStatus { font-size: 6px; }
-  .boardCanvas { min-height: 273px; margin-inline: 6px; }
-  .orbitNode { width: 151px; min-height: 48px; gap: 7px; padding: 7px; border-radius: 7px; }
-  .nodeNumber { width: 22px; height: 22px; font-size: 7px; }
-  .nodeCopy b { font-size: 8px; }
-  .nodeCopy small { font-size: 6px; }
-  .nodeStatus { font-size: 10px; }
-  .orbitStrategy { top: 8%; left: 0; }
-  .orbitDesign { top: 12%; right: 0; }
-  .orbitBuild { bottom: 12%; left: 0; }
-  .orbitGrow { right: 0; bottom: 8%; }
-  .systemCore { width: 104px; height: 104px; }
-  .coreRing { inset: -7px; }
-  .systemCore strong { font-size: 11px; }
-  .systemCore small { font-size: 5px; }
-  .coreMark .brandMark { width: 27px; height: 27px; }
-  .coreMark .brandMark svg { width: 21px; height: 21px; }
-  .boardBottom { min-height: 36px; padding-inline: 13px; font-size: 5px; }
-  .boardBottomMark { width: 22px; height: 22px; font-size: 10px; }
-  .boardAnnotation { font-size: 5px; }
-  .floatNote { padding: 8px 10px; gap: 8px; border-radius: 7px; }
-  .floatNoteTop { top: 3%; right: -5px; }
-  .floatNoteBottom { bottom: 3%; left: -5px; }
-  .floatNoteIcon { width: 24px; height: 24px; font-size: 13px; }
-  .floatNote b { font-size: 7px; }
-  .floatNote small { font-size: 6px; }
-  .floatNotePulse { width: 6px; height: 6px; }
-  .artIndex { display: none; }
-  .heroBottom { align-items: center; margin-top: 8px; padding: 16px 0; font-size: 6px; letter-spacing: .1em; }
+  .hero { padding-top: 24px; }
+  .heroGrid { width: 100%; background-size: 28px 28px; opacity: .24; }
+  .heroGlow { top: 20%; width: 100vw; opacity: .6; }
+  .heroConstellationStage { padding: 10px 0 25px; }
+  .heroCenter { padding: 14px 10px 10px; }
+  .heroEyebrow { font-size: 8px; letter-spacing: .12em; padding: 5px 12px; }
+  .heroTitle { margin: 18px 0 16px; font-size: clamp(38px, 9.8vw, 56px); line-height: 1.01; letter-spacing: -.075em; }
+  .heroTitle span::after { bottom: 1px; height: 6px; }
+  .heroLead { font-size: 14.5px; line-height: 1.65; }
+  .heroSupport { margin-top: 8px; font-size: 11.5px; }
+  .heroActions { gap: 12px; margin-top: 24px; }
+  .primaryHeroBtn { min-height: 48px !important; padding: 0 20px !important; font-size: 11.5px !important; }
+  .secondaryHeroBtn { min-height: 48px; padding: 0 18px; font-size: 11.5px; }
+  .heroTrust { gap: 8px 10px; margin-top: 24px; font-size: 9.5px; }
+  .heroThreeBackdrop { width: 100%; height: 240px; margin: 8px auto 16px; }
+  .constellationCards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 0 10px; }
+  .constellationCard { padding: 8px 10px 10px; }
+  .cardPreview { height: 64px; }
+  .cardTitle { font-size: 11px; }
+  .cardSub { font-size: 8.5px; }
+  .heroBottomRow { margin-top: 8px; padding: 16px 0; font-size: 6.5px; letter-spacing: .1em; }
   .scrollCue { gap: 6px; font-size: 8px; letter-spacing: 0; }
   .scrollCue > span { width: 18px; height: 18px; font-size: 10px; }
   .tickerGroup { min-height: 51px; gap: 19px; padding-right: 19px; font-size: 8px; }
@@ -713,22 +732,19 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
   .footerBottom > span:nth-child(2) { order: 3; width: 100%; }
 }
 
+@media (max-width: 480px) {
+  .constellationCards { grid-template-columns: 1fr; }
+  .heroActions { flex-direction: column; width: 100%; }
+  .primaryHeroBtn, .secondaryHeroBtn { width: 100%; justify-content: center; }
+}
+
 @media (max-width: 390px) {
   .container, .headerInner { width: calc(100% - 30px); }
   .headerCta { padding-inline: 9px; }
   .headerCta .arrowIcon { display: none; }
   .brandText { font-size: 18px; }
-  .hero h1 { font-size: 49px; }
-  .heroActions { flex-direction: column; align-items: flex-start; gap: 13px; }
-  .heroTextLink { padding-top: 0; }
-  .heroArt { min-height: 360px; }
-  .heroBoard { min-height: 322px; }
-  .boardCanvas { min-height: 240px; }
-  .orbitNode { width: 132px; min-height: 44px; }
-  .nodeCopy small { max-width: 86px; }
-  .systemCore { width: 90px; height: 90px; }
-  .floatNoteTop { right: -5px; }
-  .floatNoteBottom { left: -4px; }
+  .heroTitle { font-size: 38px; }
+  .heroThreeBackdrop { height: 210px; }
   .servicesGrid { grid-template-columns: 1fr; }
   .serviceCard { padding: 20px; }
   .serviceCardTop { margin-bottom: 18px; }

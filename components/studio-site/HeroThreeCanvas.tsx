@@ -264,15 +264,23 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
       const dt = Math.max(now - lastScrollTime, 16);
       const delta = Math.abs(currentScrollY - lastScrollY);
       const scrollSpeed = delta / dt; // pixels per ms
-      if (scrollSpeed > 0.08) {
-        targetWarpFactor = Math.min(3.8, Math.max(targetWarpFactor, 1.0 + scrollSpeed * 1.8));
+      if (scrollSpeed > 0.06) {
+        targetWarpFactor = Math.min(4.8, Math.max(targetWarpFactor, 1.0 + scrollSpeed * 2.4));
       }
       lastScrollY = currentScrollY;
       lastScrollTime = now;
     };
 
+    const handleWheel = (e: WheelEvent) => {
+      const wheelDelta = Math.abs(e.deltaY);
+      if (wheelDelta > 4) {
+        targetWarpFactor = Math.min(5.0, targetWarpFactor + Math.min(wheelDelta * 0.018, 2.5));
+      }
+    };
+
     window.addEventListener('mousemove', handlePointerMove, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('wheel', handleWheel, { passive: true });
     window.addEventListener('mousedown', handlePointerDown);
     window.addEventListener('mouseup', handlePointerUp);
     container.addEventListener('touchmove', handleTouchMove, { passive: true });
@@ -292,37 +300,28 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
     resizeObserver.observe(container);
 
     // ----------------------------------------------------
-    // 6. Viewport Visibility Pause (Zero CPU off-screen)
-    // ----------------------------------------------------
-    let isVisible = true;
-    const intersectionObserver = new IntersectionObserver(
-      ([entry]) => {
-        isVisible = entry.isIntersecting;
-      },
-      { threshold: 0.05 }
-    );
-    intersectionObserver.observe(container);
-
-    // ----------------------------------------------------
-    // 7. Animation Loop
+    // 6. Animation Loop (Continuous Full-Page Flight)
     // ----------------------------------------------------
     let animId = 0;
     let clock = new THREE.Clock();
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
-      if (!isVisible) return;
 
       const elapsedTime = clock.getElapsedTime();
+      const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+      const maxScroll = typeof document !== 'undefined' ? Math.max(document.body.scrollHeight - window.innerHeight, 1) : 1;
+      const scrollRatio = scrollY / maxScroll;
 
-      // Smooth camera interpolation
+      // Smooth camera interpolation with scroll flight
       currentCameraX += (targetCameraX - currentCameraX) * 0.055;
       currentCameraY += (targetCameraY - currentCameraY) * 0.055;
 
       camera.position.x = currentCameraX;
-      camera.position.y = currentCameraY;
-      camera.position.z = 400 + Math.sin(elapsedTime * 0.35) * 12;
-      camera.lookAt(currentCameraX * 0.22, currentCameraY * 0.22, -400);
+      camera.position.y = currentCameraY - scrollRatio * 120;
+      camera.position.z = 400 + scrollRatio * 220 + Math.sin(elapsedTime * 0.35) * 12;
+      camera.rotation.z = scrollRatio * 0.45;
+      camera.lookAt(currentCameraX * 0.22, currentCameraY * 0.22 - scrollRatio * 80, -400);
 
       // Smooth warp factor return
       warpFactor += (targetWarpFactor - warpFactor) * 0.08;
@@ -398,11 +397,11 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
       cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handlePointerMove);
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('mousedown', handlePointerDown);
       window.removeEventListener('mouseup', handlePointerUp);
       container.removeEventListener('touchmove', handleTouchMove);
       resizeObserver.disconnect();
-      intersectionObserver.disconnect();
 
       starGeo.dispose();
       starMat.dispose();

@@ -26,9 +26,17 @@ export function QuantumArena() {
 
     
         const images = [
-            '/quantumarena/images/Screenshot 2026-08-25 204631.png', '/quantumarena/images/Screenshot 2026-08-25 204657.png', '/quantumarena/images/Screenshot 2026-08-25 204713.png', '/quantumarena/images/Screenshot 2026-08-25 204731.png', '/quantumarena/images/Screenshot 2026-08-25 204746.png', '/quantumarena/images/Screenshot 2026-08-25 204800.png', '/quantumarena/images/Screenshot 2026-08-25 204814.png', '/quantumarena/images/Screenshot 2026-08-25 204825.png', '/quantumarena/images/Screenshot 2026-08-25 204842.png', '/quantumarena/images/Screenshot 2026-08-25 204859.png', '/quantumarena/images/Screenshot 2026-08-25 204916.png'
+            'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1600&q=85',
+            'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1600&q=85',
+            'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=85',
+            'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1600&q=85',
+            '/quantumarena/images/Screenshot 2026-08-25 204631.png', '/quantumarena/images/Screenshot 2026-08-25 204657.png', '/quantumarena/images/Screenshot 2026-08-25 204713.png', '/quantumarena/images/Screenshot 2026-08-25 204731.png', '/quantumarena/images/Screenshot 2026-08-25 204746.png', '/quantumarena/images/Screenshot 2026-08-25 204800.png', '/quantumarena/images/Screenshot 2026-08-25 204814.png'
         ];
-        const labels = ['System Overview', 'Event About', 'Participant Experience', 'Tracks / Discover', 'Timeline / Operations', 'Timeline / Execution', 'Prizes / Outcomes', 'Rules / Governance', 'Registration / Conversion', 'Event Location / Context', 'Additional Interface'];
+        const labels = [
+            'Neon Arena Mainstage', 'Hackathon Builder Mesh', 'Ops Command Matrix', 'Keynote Arena',
+            'System Overview', 'Event About', 'Participant Experience', 'Tracks / Discover',
+            'Timeline / Operations', 'Timeline / Execution', 'Prizes / Outcomes'
+        ];
         const workflow = [
             ['REGISTRATION', 'Participant intake', 'Teams register with 1–5 members, submit payment and identity material, and move through a trackable approval process.', 'registered → submitted → verified → approved'],
             ['CHECK-IN', 'Live event operations', 'QR-based check-in and multi-day attendance tracking turned event-day entry into a controlled digital workflow.', 'scan → identify → verify → check-in → attendance'],

@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HeroThreeCanvas from './HeroThreeCanvas';
 import { ScanfeastCardPreview } from '../sections/visuals/ScanfeastCardPreview';
 import { QuantumArenaCardPreview } from '../sections/visuals/QuantumArenaCardPreview';
+import { NexusAICardPreview } from '../sections/visuals/NexusAICardPreview';
 import TiltCard from '../ui/TiltCard';
 import styles from './StudioHome.module.css';
 
@@ -141,6 +142,124 @@ export default function StudioHome() {
 
     gsap.registerPlugin(ScrollTrigger);
     const context = gsap.context(() => {
+      // 0. Top Viewport Scroll Progress Bar
+      const progressBar = root.querySelector<HTMLElement>('[data-scroll-progress]');
+      if (progressBar) {
+        gsap.fromTo(progressBar, { scaleX: 0 }, {
+          scaleX: 1,
+          ease: 'none',
+          scrollTrigger: {
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.15,
+          },
+        });
+      }
+
+      // 1. Dynamic Mouse Scroll Velocity Inertia Skew on cards
+      const skewTargets = Array.from(root.querySelectorAll<HTMLElement>('[data-scroll-skew]'));
+      if (skewTargets.length > 0) {
+        let scrollProxy = { skew: 0 };
+        let skewSetter = gsap.quickSetter(skewTargets, 'skewY', 'deg');
+        let clamp = gsap.utils.clamp(-3.5, 3.5);
+
+        ScrollTrigger.create({
+          onUpdate: (self) => {
+            const skew = clamp(self.getVelocity() / -110);
+            if (Math.abs(skew) > Math.abs(scrollProxy.skew)) {
+              scrollProxy.skew = skew;
+              gsap.to(scrollProxy, {
+                skew: 0,
+                duration: 0.75,
+                ease: 'power3.out',
+                overwrite: true,
+                onUpdate: () => skewSetter(scrollProxy.skew),
+              });
+            }
+          },
+        });
+      }
+
+      // 2. Continuous scrubbed image parallax on product visuals
+      const projectVisuals = Array.from(root.querySelectorAll<HTMLElement>('[data-project-visual]'));
+      projectVisuals.forEach((visual) => {
+        const img = visual.querySelector('img');
+        if (img) {
+          gsap.fromTo(img,
+            { yPercent: -12, scale: 1.08 },
+            {
+              yPercent: 12,
+              scale: 0.98,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: visual,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.2,
+              },
+            }
+          );
+        }
+      });
+
+      // 3. Continuous multi-plane parallax depth on project cards
+      const projectCards = Array.from(root.querySelectorAll<HTMLElement>('[data-project-card]'));
+      projectCards.forEach((card) => {
+        const info = card.querySelector('.' + styles.projectInfo);
+        const visual = card.querySelector('.' + styles.projectVisual);
+
+        if (visual) {
+          gsap.fromTo(visual,
+            { y: 35 },
+            {
+              y: -35,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.0,
+              },
+            }
+          );
+        }
+        if (info) {
+          gsap.fromTo(info,
+            { y: -20 },
+            {
+              y: 20,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.8,
+              },
+            }
+          );
+        }
+      });
+
+      // 4. Staggered scrub on service cards
+      const serviceCards = Array.from(root.querySelectorAll<HTMLElement>('[data-service-card]'));
+      serviceCards.forEach((card, index) => {
+        gsap.fromTo(card,
+          { y: 35 + index * 12, opacity: 0.7 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 95%',
+              end: 'top 65%',
+              scrub: 0.5,
+            },
+          }
+        );
+      });
+
+      // 5. Section reveals
       const reveals = Array.from(root.querySelectorAll<HTMLElement>('[data-reveal]'));
       reveals.forEach((element) => {
         gsap.from(element, {
@@ -163,14 +282,6 @@ export default function StudioHome() {
           clearProps: 'opacity,visibility,transform',
         });
       }
-
-      const imageLayers = Array.from(root.querySelectorAll<HTMLElement>('[data-parallax-image]'));
-      imageLayers.forEach((image) => {
-        gsap.fromTo(image, { scale: 1.11, yPercent: -2 }, {
-          scale: 1.015, yPercent: 2, ease: 'none',
-          scrollTrigger: { trigger: image, start: 'top bottom', end: 'bottom top', scrub: 0.65 },
-        });
-      });
 
       const flowFill = root.querySelector<HTMLElement>('[data-flow-fill]');
       const flowSection = root.querySelector<HTMLElement>('[data-flow-section]');
@@ -201,18 +312,6 @@ export default function StudioHome() {
             step.dataset.active = self.isActive ? 'true' : 'false';
             if (self.isActive) step.style.setProperty('--step-index', String(index));
           },
-        });
-      });
-
-      const serviceCards = Array.from(root.querySelectorAll<HTMLElement>('[data-service-card]'));
-      serviceCards.forEach((card, index) => {
-        gsap.from(card, {
-          y: 28,
-          autoAlpha: 0,
-          duration: 0.76,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: card, start: 'top 90%', once: true },
-          clearProps: 'opacity,visibility,transform',
         });
       });
     }, root);
@@ -250,6 +349,14 @@ export default function StudioHome() {
 
   return (
     <div className={styles.site} ref={rootRef} data-home-root>
+      {/* Top Viewport Scroll Progress Bar */}
+      <div className={styles.scrollProgressBar} data-scroll-progress aria-hidden="true" />
+
+      {/* Global Persistent Full-Page 3D Space Warp Canvas */}
+      <div className={styles.globalThreeBackdrop} aria-hidden="true">
+        <HeroThreeCanvas />
+      </div>
+
       <a className={styles.skipLink} href="#main">Skip to content</a>
       <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ''}`}>
         <div className={styles.headerInner}>
@@ -282,11 +389,6 @@ export default function StudioHome() {
 
       <main id="main">
         <section id="top" className={styles.hero} data-hero-section>
-          {/* Background Real Responsive 3D Three.js Space Warp Starfield */}
-          <div className={styles.heroThreeBackdrop} aria-hidden="true">
-            <HeroThreeCanvas />
-          </div>
-
           <div className={styles.heroAtmosphere} aria-hidden="true" />
 
           {/* Centered Velozity & Webcros-inspired Cosmic Hero Stage */}
@@ -374,7 +476,7 @@ export default function StudioHome() {
             <div className={styles.servicesGrid}>
               {services.map((service) => (
                 <TiltCard key={service.index} maxTilt={6} className={styles.serviceTiltWrapper}>
-                  <article className={`${styles.serviceCard} ${service.tint === 'green' ? styles.serviceCardGreen : ''} ${service.tint === 'lime' ? styles.serviceCardLime : ''}`} data-service-card
+                  <article className={`${styles.serviceCard} ${service.tint === 'green' ? styles.serviceCardGreen : ''} ${service.tint === 'lime' ? styles.serviceCardLime : ''}`} data-service-card data-scroll-skew
                     onPointerMove={(event) => {
                       const bounds = event.currentTarget.getBoundingClientRect();
                       event.currentTarget.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`);
@@ -412,7 +514,7 @@ export default function StudioHome() {
               <div className={styles.flowSteps}>
                 {/* 01 STRATEGY */}
                 <TiltCard maxTilt={5} className={styles.flowTiltWrapper}>
-                  <article className={styles.flowCard}>
+                  <article className={styles.flowCard} data-scroll-skew>
                     <div className={styles.flowCardTop}>
                       <span className={styles.flowNumber}>01</span>
                       <span className={styles.flowMeta}>STRATEGY</span>
@@ -438,7 +540,7 @@ export default function StudioHome() {
 
                 {/* 02 DESIGN */}
                 <TiltCard maxTilt={5} className={styles.flowTiltWrapper}>
-                  <article className={styles.flowCard}>
+                  <article className={styles.flowCard} data-scroll-skew>
                     <div className={styles.flowCardTop}>
                       <span className={styles.flowNumber}>02</span>
                       <span className={styles.flowMeta}>DESIGN</span>
@@ -464,7 +566,7 @@ export default function StudioHome() {
 
                 {/* 03 ENGINEERING */}
                 <TiltCard maxTilt={5} className={styles.flowTiltWrapper}>
-                  <article className={styles.flowCard}>
+                  <article className={styles.flowCard} data-scroll-skew>
                     <div className={styles.flowCardTop}>
                       <span className={styles.flowNumber}>03</span>
                       <span className={styles.flowMeta}>ENGINEERING</span>
@@ -490,7 +592,7 @@ export default function StudioHome() {
 
                 {/* 04 GROWTH */}
                 <TiltCard maxTilt={5} className={styles.flowTiltWrapper}>
-                  <article className={styles.flowCard}>
+                  <article className={styles.flowCard} data-scroll-skew>
                     <div className={styles.flowCardTop}>
                       <span className={styles.flowNumber}>04</span>
                       <span className={styles.flowMeta}>GROWTH</span>
@@ -534,7 +636,7 @@ export default function StudioHome() {
 
             {/* Project 01: Scanfeast */}
             <TiltCard maxTilt={4} scale={1.012} className={styles.projectTiltWrapper}>
-              <article className={`${styles.projectCard} ${styles.projectCardScanfeast}`} data-project-card data-reveal>
+              <article className={`${styles.projectCard} ${styles.projectCardScanfeast}`} data-project-card data-scroll-skew data-reveal>
                 <div className={styles.projectVisual}>
                   <ScanfeastCardPreview />
                 </div>
@@ -569,7 +671,7 @@ export default function StudioHome() {
 
             {/* Project 02: Quantum Arena */}
             <TiltCard maxTilt={4} scale={1.012} className={styles.projectTiltWrapper}>
-              <article className={`${styles.projectCard} ${styles.projectCardQuantum}`} data-project-card data-reveal>
+              <article className={`${styles.projectCard} ${styles.projectCardQuantum}`} data-project-card data-scroll-skew data-reveal>
                 <div className={styles.projectInfo}>
                   <div className={styles.projectPill}>
                     <span className={styles.projectPillDot} />
@@ -598,6 +700,41 @@ export default function StudioHome() {
                 </div>
                 <div className={styles.projectVisual}>
                   <QuantumArenaCardPreview />
+                </div>
+              </article>
+            </TiltCard>
+
+            {/* Project 03: Nexus AI */}
+            <TiltCard maxTilt={4} scale={1.012} className={styles.projectTiltWrapper}>
+              <article className={`${styles.projectCard} ${styles.projectCardScanfeast}`} data-project-card data-scroll-skew data-reveal>
+                <div className={styles.projectVisual}>
+                  <NexusAICardPreview />
+                </div>
+                <div className={styles.projectInfo}>
+                  <div className={styles.projectPill}>
+                    <span className={styles.projectPillDot} />
+                    <span className={styles.projectPillText}>03 / ARTIFICIAL INTELLIGENCE · AGENTIC WORKFLOWS</span>
+                  </div>
+                  <h3>Nexus AI</h3>
+                  <p className={styles.projectLead}>
+                    Autonomous agent architectures that execute multi-step operations without human bottlenecks.
+                  </p>
+                  <p className={styles.projectCopy}>
+                    Built for teams operating high-frequency workflows. Nexus connects large language models directly with tool execution, private enterprise databases, and real-time streaming interfaces.
+                  </p>
+                  <div className={styles.projectFeatureList}>
+                    <span>Multi-agent planning</span>
+                    <span>Tool invocation mesh</span>
+                    <span>Vector memory persistence</span>
+                    <span>Enterprise security guardrails</span>
+                    <span>Streaming WebSocket UI</span>
+                  </div>
+                  <div className={styles.projectActionRow}>
+                    <a href="#contact" className={styles.projectCtaBtn}>
+                      Request an AI audit <ArrowIcon diagonal />
+                    </a>
+                    <span className={styles.projectMetaTag}>Enterprise AI Suite</span>
+                  </div>
                 </div>
               </article>
             </TiltCard>

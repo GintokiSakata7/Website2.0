@@ -5,9 +5,9 @@
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 999999;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
 .visible {
@@ -19,16 +19,17 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   background-color: #00ff85;
+  border: 1px solid #ffffff;
   border-radius: 50%;
   pointer-events: none;
-  transform: translate3d(-100px, -100px, 0);
-  margin-top: -3.5px;
-  margin-left: -3.5px;
-  box-shadow: 0 0 10px rgba(0, 255, 133, 0.8), 0 0 20px rgba(0, 255, 133, 0.4);
-  transition: opacity 0.2s ease, transform 0.05s linear;
+  transform: translate3d(-200px, -200px, 0);
+  margin-top: -4px;
+  margin-left: -4px;
+  box-shadow: 0 0 10px rgba(0, 255, 133, 0.9), 0 0 20px rgba(0, 255, 133, 0.6);
+  transition: opacity 0.15s ease, transform 0.04s linear;
   will-change: transform;
 }
 
@@ -41,50 +42,48 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 36px;
-  height: 36px;
-  margin-top: -18px;
-  margin-left: -18px;
+  width: 38px;
+  height: 38px;
+  margin-top: -19px;
+  margin-left: -19px;
   border-radius: 50%;
-  border: 1.5px solid rgba(0, 255, 133, 0.6);
-  background: rgba(0, 255, 133, 0.05);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  border: 2px solid #00ff85;
+  background: rgba(0, 255, 133, 0.08);
+  box-shadow: 0 0 16px rgba(0, 255, 133, 0.35);
   pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translate3d(-100px, -100px, 0);
-  transition: width 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              margin 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              border-radius 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(-200px, -200px, 0);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              margin 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, width, height;
 }
 
 /* Hover over clickable links & buttons */
 .hover {
-  width: 50px;
-  height: 50px;
-  margin-top: -25px;
-  margin-left: -25px;
-  background: rgba(0, 255, 133, 0.16);
+  width: 56px;
+  height: 56px;
+  margin-top: -28px;
+  margin-left: -28px;
+  background: rgba(0, 255, 133, 0.2);
   border-color: #00ff85;
-  box-shadow: 0 0 24px rgba(0, 255, 133, 0.4), inset 0 0 12px rgba(0, 255, 133, 0.2);
+  box-shadow: 0 0 30px rgba(0, 255, 133, 0.6), inset 0 0 14px rgba(0, 255, 133, 0.3);
 }
 
 /* Hover over project cards (Lusion-style morphing lens) */
 .card {
-  width: 96px;
-  height: 96px;
-  margin-top: -48px;
-  margin-left: -48px;
+  width: 104px;
+  height: 104px;
+  margin-top: -52px;
+  margin-left: -52px;
   background: #00ff85;
-  border-color: #00ff85;
-  box-shadow: 0 12px 36px rgba(0, 255, 133, 0.55), 0 0 60px rgba(0, 255, 133, 0.35);
+  border: 2px solid #ffffff;
+  box-shadow: 0 14px 40px rgba(0, 255, 133, 0.7), 0 0 80px rgba(0, 255, 133, 0.45);
 }
 
 /* Hover over general typography */
@@ -93,21 +92,21 @@
   height: 28px;
   margin-top: -14px;
   margin-left: -14px;
-  background: rgba(0, 255, 133, 0.12);
-  border-color: rgba(0, 255, 133, 0.4);
+  background: rgba(0, 255, 133, 0.15);
+  border-color: rgba(0, 255, 133, 0.5);
 }
 
 /* Morphing Label inside Cursor */
 .cursorLabel {
   font-family: 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 800;
+  font-size: 11.5px;
+  font-weight: 850;
   letter-spacing: 0.08em;
-  color: #021a0f;
+  color: #01180d;
   text-transform: uppercase;
   pointer-events: none;
   text-align: center;
-  animation: fadeInLabel 0.22s ease-out;
+  animation: fadeInLabel 0.2s ease-out;
   user-select: none;
   white-space: nowrap;
 }
@@ -115,7 +114,7 @@
 @keyframes fadeInLabel {
   from {
     opacity: 0;
-    transform: scale(0.7);
+    transform: scale(0.65);
   }
   to {
     opacity: 1;
@@ -123,7 +122,8 @@
   }
 }
 
-@media (pointer: coarse) {
+/* Only disable if user has NO mouse hover capability (pure smartphones and standalone tablets) */
+@media (hover: none) and (pointer: coarse) {
   .cursorContainer {
     display: none !important;
   }

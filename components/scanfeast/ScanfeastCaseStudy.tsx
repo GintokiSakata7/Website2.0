@@ -3,6 +3,7 @@
 import ScanfeastProduct from "./ScanfeastProduct";
 import ScanfeastArchitecture from "./ScanfeastArchitecture";
 import ScanfeastEngineering from "./ScanfeastEngineering";
+import ScanfeastProductionGallery from "./ScanfeastProductionGallery";
 import ScanfeastOutcome from "./ScanfeastOutcome";
 
 import "./scanfeast-case-study.css";
@@ -78,6 +79,8 @@ export default function ScanfeastCaseStudy() {
       <ScanfeastArchitecture />
 
       <ScanfeastEngineering />
+
+      <ScanfeastProductionGallery />
 
       <ScanfeastOutcome />
 

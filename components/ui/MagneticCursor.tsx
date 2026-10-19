@@ -8,28 +8,24 @@ export default function MagneticCursor() {
   const cursorRingRef = useRef<HTMLDivElement>(null);
   const [cursorText, setCursorText] = useState<string>('');
   const [cursorVariant, setCursorVariant] = useState<'default' | 'hover' | 'card' | 'text'>('default');
-  const [isVisible, setIsVisible] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    // Check if device is touch or coarse pointer
-    if (typeof window === 'undefined') return;
-    const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-    if (isCoarse || 'ontouchstart' in window) {
-      setIsTouch(true);
-      return;
-    }
-
-    let mouseX = -100;
-    let mouseY = -100;
-    let ringX = -100;
-    let ringY = -100;
+    let mouseX = -200;
+    let mouseY = -200;
+    let ringX = -200;
+    let ringY = -200;
     let rafId = 0;
+    let activated = false;
 
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      if (!isVisible) setIsVisible(true);
+
+      if (!activated) {
+        activated = true;
+        setIsActive(true);
+      }
 
       if (cursorDotRef.current) {
         cursorDotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
@@ -54,7 +50,7 @@ export default function MagneticCursor() {
       } else if (clickable) {
         setCursorText('');
         setCursorVariant('hover');
-      } else if (textElement && !textElement.closest('header, nav, footer')) {
+      } else if (textElement && !textElement.closest('header, nav, footer, button, a')) {
         setCursorText('');
         setCursorVariant('text');
       } else {
@@ -64,11 +60,13 @@ export default function MagneticCursor() {
     };
 
     const onMouseLeave = () => {
-      setIsVisible(false);
+      setIsActive(false);
+      activated = false;
     };
 
     const onMouseEnter = () => {
-      setIsVisible(true);
+      setIsActive(true);
+      activated = true;
     };
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
@@ -77,8 +75,8 @@ export default function MagneticCursor() {
 
     // Smooth lerp loop for the outer ring follower
     const render = () => {
-      ringX += (mouseX - ringX) * 0.16;
-      ringY += (mouseY - ringY) * 0.16;
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
 
       if (cursorRingRef.current) {
         cursorRingRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
@@ -95,12 +93,10 @@ export default function MagneticCursor() {
       document.removeEventListener('mouseenter', onMouseEnter);
       cancelAnimationFrame(rafId);
     };
-  }, [isVisible]);
-
-  if (isTouch) return null;
+  }, []);
 
   return (
-    <div className={`${styles.cursorContainer} ${isVisible ? styles.visible : ''}`} aria-hidden="true">
+    <div className={`${styles.cursorContainer} ${isActive ? styles.visible : ''}`} aria-hidden="true">
       {/* Center pinpoint */}
       <div
         ref={cursorDotRef}

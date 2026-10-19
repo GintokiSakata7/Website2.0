@@ -1,0 +1,52 @@
+.tiltWrapper {
+  position: relative;
+  display: block;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tiltInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  transform: rotateX(var(--card-rx, 0deg)) rotateY(var(--card-ry, 0deg)) scale3d(var(--card-scale, 1), var(--card-scale, 1), 1);
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.tiltActive .tiltInner {
+  transition: transform 0.08s ease-out; /* Immediate tracking while moving */
+}
+
+/* Dynamic Specular Light Glare */
+.glareOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 10;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(0, 255, 133, 0.15) 30%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  opacity: var(--glare-opacity, 0);
+  transition: opacity 0.3s ease;
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tiltInner {
+    transform: none !important;
+    transition: none !important;
+  }
+  .glareOverlay {
+    display: none !important;
+  }
+}

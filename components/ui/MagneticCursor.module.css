@@ -1,0 +1,130 @@
+.cursorContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.visible {
+  opacity: 1;
+}
+
+/* Sharp Center Point */
+.cursorDot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background-color: #00ff85;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate3d(-100px, -100px, 0);
+  margin-top: -3.5px;
+  margin-left: -3.5px;
+  box-shadow: 0 0 10px rgba(0, 255, 133, 0.8), 0 0 20px rgba(0, 255, 133, 0.4);
+  transition: opacity 0.2s ease, transform 0.05s linear;
+  will-change: transform;
+}
+
+.dotHidden {
+  opacity: 0;
+}
+
+/* Trailing Follower Ring */
+.cursorRing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  margin-top: -18px;
+  margin-left: -18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 255, 133, 0.6);
+  background: rgba(0, 255, 133, 0.05);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate3d(-100px, -100px, 0);
+  transition: width 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              margin 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, width, height;
+}
+
+/* Hover over clickable links & buttons */
+.hover {
+  width: 50px;
+  height: 50px;
+  margin-top: -25px;
+  margin-left: -25px;
+  background: rgba(0, 255, 133, 0.16);
+  border-color: #00ff85;
+  box-shadow: 0 0 24px rgba(0, 255, 133, 0.4), inset 0 0 12px rgba(0, 255, 133, 0.2);
+}
+
+/* Hover over project cards (Lusion-style morphing lens) */
+.card {
+  width: 96px;
+  height: 96px;
+  margin-top: -48px;
+  margin-left: -48px;
+  background: #00ff85;
+  border-color: #00ff85;
+  box-shadow: 0 12px 36px rgba(0, 255, 133, 0.55), 0 0 60px rgba(0, 255, 133, 0.35);
+}
+
+/* Hover over general typography */
+.text {
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+  margin-left: -14px;
+  background: rgba(0, 255, 133, 0.12);
+  border-color: rgba(0, 255, 133, 0.4);
+}
+
+/* Morphing Label inside Cursor */
+.cursorLabel {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #021a0f;
+  text-transform: uppercase;
+  pointer-events: none;
+  text-align: center;
+  animation: fadeInLabel 0.22s ease-out;
+  user-select: none;
+  white-space: nowrap;
+}
+
+@keyframes fadeInLabel {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (pointer: coarse) {
+  .cursorContainer {
+    display: none !important;
+  }
+}

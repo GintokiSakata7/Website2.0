@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HeroThreeCanvas from './HeroThreeCanvas';
 import { ScanfeastCardPreview } from '../sections/visuals/ScanfeastCardPreview';
 import { QuantumArenaCardPreview } from '../sections/visuals/QuantumArenaCardPreview';
+import TiltCard from '../ui/TiltCard';
 import styles from './StudioHome.module.css';
 
 function ArrowIcon({ diagonal = false, className = '' }: { diagonal?: boolean; className?: string }) {
@@ -30,7 +31,12 @@ function BrandMark({ inverse = false }: { inverse?: boolean }) {
 }
 
 function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
-  return <div className={`${styles.eyebrow} ${light ? styles.eyebrowLight : ''}`}><span aria-hidden="true" />{children}</div>;
+  return (
+    <div className={`${styles.eyebrow} ${light ? styles.eyebrowLight : ''}`}>
+      <span className={styles.accentBlock} aria-hidden="true" />
+      {children}
+    </div>
+  );
 }
 
 function ButtonLink({ href, children, secondary = false, external = false, className = '' }: {
@@ -61,7 +67,7 @@ function SectionIntro({ label, title, accent, copy, light = false }: {
     <div className={`${styles.sectionIntro} ${light ? styles.sectionIntroLight : ''}`} data-reveal>
       <Eyebrow light={light}>{label}</Eyebrow>
       <div className={styles.sectionIntroBody}>
-        <h2>{title}{accent && <> <span>{accent}</span></>}</h2>
+        <h2>{title}{accent && <> <span className={styles.editorialSerif}>{accent}</span></>}</h2>
         {copy && <p>{copy}</p>}
       </div>
     </div>
@@ -295,7 +301,7 @@ export default function StudioHome() {
               <h1 className={styles.heroTitle}>
                 Make your next{' '}
                 <span className={styles.heroBadgeHighlight}>move</span>{' '}
-                <span className={styles.heroGlowWord}>matter.</span>
+                <span className={`${styles.heroGlowWord} ${styles.editorialSerif}`}>matter.</span>
               </h1>
 
               <p className={styles.heroLead}>
@@ -346,6 +352,8 @@ export default function StudioHome() {
               A closer look <span>↓</span>
             </a>
           </div>
+
+          <div className={styles.liquidHeroCurtain} aria-hidden="true" />
         </section>
 
         <div className={styles.serviceTicker} aria-label="Majin Studios capabilities">
@@ -354,36 +362,46 @@ export default function StudioHome() {
           </div>
         </div>
 
+        <div className={styles.liquidPaperCurtain} aria-hidden="true" />
+
         <section className={styles.servicesSection} id="services">
           <div className={styles.container}>
-            <SectionIntro label="WHAT WE DO" title={<>Good ideas need the <span>right things around them.</span></>} copy="A website is only one part of the picture. We bring the product, the systems behind it, the way it looks, and the way it reaches people into the same conversation." />
+            <SectionIntro
+              label="WHAT WE DO"
+              title={<>Good ideas need the <span className={styles.editorialSerif}>right things around them.</span></>}
+              copy="A website is only one part of the picture. We bring the product, the systems behind it, the way it looks, and the way it reaches people into the same conversation."
+            />
             <div className={styles.servicesGrid}>
               {services.map((service) => (
-                <article key={service.index} className={`${styles.serviceCard} ${service.tint === 'green' ? styles.serviceCardGreen : ''} ${service.tint === 'lime' ? styles.serviceCardLime : ''}`} data-service-card
-                  onPointerMove={(event) => {
-                    const bounds = event.currentTarget.getBoundingClientRect();
-                    event.currentTarget.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`);
-                    event.currentTarget.style.setProperty('--spot-y', `${event.clientY - bounds.top}px`);
-                  }}>
-                  <div className={styles.serviceCardTop}><span className={styles.serviceIconWrap}><ServiceIcon type={service.type} /></span><span className={styles.cardIndex}>{service.index} / 04</span></div>
-                  <h3>{service.title}</h3>
-                  <p>{service.copy}</p>
-                  <ul>{service.items.map((item) => <li key={item}>{item}</li>)}</ul>
-                  <a className={styles.cardLink} href="#contact">Talk through this service <ArrowIcon diagonal /></a>
-                  <span className={styles.cardDecoration} aria-hidden="true">{service.index}</span>
-                </article>
+                <TiltCard key={service.index} maxTilt={6} className={styles.serviceTiltWrapper}>
+                  <article className={`${styles.serviceCard} ${service.tint === 'green' ? styles.serviceCardGreen : ''} ${service.tint === 'lime' ? styles.serviceCardLime : ''}`} data-service-card
+                    onPointerMove={(event) => {
+                      const bounds = event.currentTarget.getBoundingClientRect();
+                      event.currentTarget.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`);
+                      event.currentTarget.style.setProperty('--spot-y', `${event.clientY - bounds.top}px`);
+                    }}>
+                    <div className={styles.serviceCardTop}><span className={styles.serviceIconWrap}><ServiceIcon type={service.type} /></span><span className={styles.cardIndex}>{service.index} / 04</span></div>
+                    <h3>{service.title}</h3>
+                    <p>{service.copy}</p>
+                    <ul>{service.items.map((item) => <li key={item}>{item}</li>)}</ul>
+                    <a className={styles.cardLink} href="#contact">Talk through this service <ArrowIcon diagonal /></a>
+                    <span className={styles.cardDecoration} aria-hidden="true">{service.index}</span>
+                  </article>
+                </TiltCard>
               ))}
             </div>
             <div className={styles.servicesNote} data-reveal><span className={styles.noteSpark}>✳</span><p><strong>Not sure what you need yet?</strong> That’s a good place to start. Tell us what you want to improve and we’ll work out the right first step together.</p><a href="#contact" className={styles.textLink}>Start with a conversation <ArrowIcon /></a></div>
           </div>
         </section>
 
+        <div className={styles.liquidFlowTransition} aria-hidden="true" />
+
         <section className={styles.flowSection} data-flow-section id="approach">
           <div className={styles.container}>
             <div className={styles.flowHeader} data-reveal>
               <div className={styles.flowHeaderLeft}>
                 <Eyebrow light>HOW THE PARTS CONNECT</Eyebrow>
-                <h2>One clear direction. <span>Four connected disciplines.</span></h2>
+                <h2>One clear direction. <span className={styles.editorialSerif}>Four connected disciplines.</span></h2>
               </div>
               <p className={styles.flowLead}>
                 The value isn’t in doing everything at once. It’s in knowing what each part needs to do—and making sure the hand-offs make sense.
@@ -393,99 +411,107 @@ export default function StudioHome() {
             <div className={styles.flowBoard} data-reveal>
               <div className={styles.flowSteps}>
                 {/* 01 STRATEGY */}
-                <article className={styles.flowCard}>
-                  <div className={styles.flowCardTop}>
-                    <span className={styles.flowNumber}>01</span>
-                    <span className={styles.flowMeta}>STRATEGY</span>
-                  </div>
-                  <div className={styles.flowCardBody}>
-                    <div className={styles.flowGlyphWrap}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" />
-                        <line x1="12" y1="3" x2="12" y2="7" /><line x1="12" y1="17" x2="12" y2="21" />
-                        <line x1="3" y1="12" x2="7" y2="12" /><line x1="17" y1="12" x2="21" y2="12" />
-                      </svg>
+                <TiltCard maxTilt={5} className={styles.flowTiltWrapper}>
+                  <article className={styles.flowCard}>
+                    <div className={styles.flowCardTop}>
+                      <span className={styles.flowNumber}>01</span>
+                      <span className={styles.flowMeta}>STRATEGY</span>
                     </div>
-                    <h3>Find the signal</h3>
-                    <p>Get clear on the real problem, audience, and desired outcome.</p>
-                  </div>
-                  <div className={styles.flowTags}>
-                    <span>Problem definition</span>
-                    <span>Audience</span>
-                    <span>KPIs</span>
-                  </div>
-                </article>
+                    <div className={styles.flowCardBody}>
+                      <div className={styles.flowGlyphWrap}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" />
+                          <line x1="12" y1="3" x2="12" y2="7" /><line x1="12" y1="17" x2="12" y2="21" />
+                          <line x1="3" y1="12" x2="7" y2="12" /><line x1="17" y1="12" x2="21" y2="12" />
+                        </svg>
+                      </div>
+                      <h3>Find the signal</h3>
+                      <p>Get clear on the real problem, audience, and desired outcome.</p>
+                    </div>
+                    <div className={styles.flowTags}>
+                      <span>Problem definition</span>
+                      <span>Audience</span>
+                      <span>KPIs</span>
+                    </div>
+                  </article>
+                </TiltCard>
 
                 {/* 02 DESIGN */}
-                <article className={styles.flowCard}>
-                  <div className={styles.flowCardTop}>
-                    <span className={styles.flowNumber}>02</span>
-                    <span className={styles.flowMeta}>DESIGN</span>
-                  </div>
-                  <div className={styles.flowCardBody}>
-                    <div className={styles.flowGlyphWrap}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                        <path d="M2 17l10 5 10-5" />
-                        <path d="M2 12l10 5 10-5" />
-                      </svg>
+                <TiltCard maxTilt={5} className={styles.flowTiltWrapper}>
+                  <article className={styles.flowCard}>
+                    <div className={styles.flowCardTop}>
+                      <span className={styles.flowNumber}>02</span>
+                      <span className={styles.flowMeta}>DESIGN</span>
                     </div>
-                    <h3>Shape the experience</h3>
-                    <p>Make the idea understandable, usable, and recognisable.</p>
-                  </div>
-                  <div className={styles.flowTags}>
-                    <span>UX/UI</span>
-                    <span>Design Systems</span>
-                    <span>Prototypes</span>
-                  </div>
-                </article>
+                    <div className={styles.flowCardBody}>
+                      <div className={styles.flowGlyphWrap}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                          <path d="M2 17l10 5 10-5" />
+                          <path d="M2 12l10 5 10-5" />
+                        </svg>
+                      </div>
+                      <h3>Shape the experience</h3>
+                      <p>Make the idea understandable, usable, and recognisable.</p>
+                    </div>
+                    <div className={styles.flowTags}>
+                      <span>UX/UI</span>
+                      <span>Design Systems</span>
+                      <span>Prototypes</span>
+                    </div>
+                  </article>
+                </TiltCard>
 
                 {/* 03 ENGINEERING */}
-                <article className={styles.flowCard}>
-                  <div className={styles.flowCardTop}>
-                    <span className={styles.flowNumber}>03</span>
-                    <span className={styles.flowMeta}>ENGINEERING</span>
-                  </div>
-                  <div className={styles.flowCardBody}>
-                    <div className={styles.flowGlyphWrap}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="4" y="4" width="16" height="16" rx="3" />
-                        <path d="M9 9h6v6H9z" />
-                        <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3" />
-                      </svg>
+                <TiltCard maxTilt={5} className={styles.flowTiltWrapper}>
+                  <article className={styles.flowCard}>
+                    <div className={styles.flowCardTop}>
+                      <span className={styles.flowNumber}>03</span>
+                      <span className={styles.flowMeta}>ENGINEERING</span>
                     </div>
-                    <h3>Make it work</h3>
-                    <p>Turn the plan into a reliable product or operating system.</p>
-                  </div>
-                  <div className={styles.flowTags}>
-                    <span>Full-Stack</span>
-                    <span>APIs & Data</span>
-                    <span>Cloud & AI</span>
-                  </div>
-                </article>
+                    <div className={styles.flowCardBody}>
+                      <div className={styles.flowGlyphWrap}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="4" y="4" width="16" height="16" rx="3" />
+                          <path d="M9 9h6v6H9z" />
+                          <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3" />
+                        </svg>
+                      </div>
+                      <h3>Make it work</h3>
+                      <p>Turn the plan into a reliable product or operating system.</p>
+                    </div>
+                    <div className={styles.flowTags}>
+                      <span>Full-Stack</span>
+                      <span>APIs & Data</span>
+                      <span>Cloud & AI</span>
+                    </div>
+                  </article>
+                </TiltCard>
 
                 {/* 04 GROWTH */}
-                <article className={styles.flowCard}>
-                  <div className={styles.flowCardTop}>
-                    <span className={styles.flowNumber}>04</span>
-                    <span className={styles.flowMeta}>GROWTH</span>
-                  </div>
-                  <div className={styles.flowCardBody}>
-                    <div className={styles.flowGlyphWrap}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                        <polyline points="16 7 22 7 22 13" />
-                      </svg>
+                <TiltCard maxTilt={5} className={styles.flowTiltWrapper}>
+                  <article className={styles.flowCard}>
+                    <div className={styles.flowCardTop}>
+                      <span className={styles.flowNumber}>04</span>
+                      <span className={styles.flowMeta}>GROWTH</span>
                     </div>
-                    <h3>Help it move</h3>
-                    <p>Prepare the launch and connect the work to the right audience.</p>
-                  </div>
-                  <div className={styles.flowTags}>
-                    <span>Launch</span>
-                    <span>Funnels</span>
-                    <span>Performance</span>
-                  </div>
-                </article>
+                    <div className={styles.flowCardBody}>
+                      <div className={styles.flowGlyphWrap}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                          <polyline points="16 7 22 7 22 13" />
+                        </svg>
+                      </div>
+                      <h3>Help it move</h3>
+                      <p>Prepare the launch and connect the work to the right audience.</p>
+                    </div>
+                    <div className={styles.flowTags}>
+                      <span>Launch</span>
+                      <span>Funnels</span>
+                      <span>Performance</span>
+                    </div>
+                  </article>
+                </TiltCard>
               </div>
 
               <div className={styles.flowFooter}>
@@ -496,79 +522,85 @@ export default function StudioHome() {
           </div>
         </section>
 
+        <div className={styles.liquidWorkTransition} aria-hidden="true" />
+
         <section className={styles.workSection} id="work">
           <div className={styles.container}>
             <SectionIntro
               label="SELECTED WORK"
-              title={<>Built around a real <span>job to be done.</span></>}
+              title={<>Built around a real <span className={styles.editorialSerif}>job to be done.</span></>}
               copy="A look at two products from our studio. Each solves a different kind of operational problem, with the same care for how people move through the experience."
             />
 
             {/* Project 01: Scanfeast */}
-            <article className={`${styles.projectCard} ${styles.projectCardScanfeast}`} data-reveal>
-              <div className={styles.projectVisual}>
-                <ScanfeastCardPreview />
-              </div>
-              <div className={styles.projectInfo}>
-                <div className={styles.projectPill}>
-                  <span className={styles.projectPillDot} />
-                  <span className={styles.projectPillText}>01 / PRODUCT &amp; SAAS · HOSPITALITY TECH</span>
+            <TiltCard maxTilt={4} scale={1.012} className={styles.projectTiltWrapper}>
+              <article className={`${styles.projectCard} ${styles.projectCardScanfeast}`} data-project-card data-reveal>
+                <div className={styles.projectVisual}>
+                  <ScanfeastCardPreview />
                 </div>
-                <h3>Scanfeast</h3>
-                <p className={styles.projectLead}>
-                  Restaurant ordering that keeps the front of house and the kitchen in sync.
-                </p>
-                <p className={styles.projectCopy}>
-                  Scanfeast connects QR-based menu access and ordering with kitchen order handling and a manager view—so the diner, kitchen, and operator aren’t working from disconnected screens.
-                </p>
-                <div className={styles.projectFeatureList}>
-                  <span>QR-based ordering</span>
-                  <span>Kitchen display system</span>
-                  <span>Manager dashboard</span>
-                  <span>Live order flow</span>
-                  <span>Real-time WebSocket</span>
+                <div className={styles.projectInfo}>
+                  <div className={styles.projectPill}>
+                    <span className={styles.projectPillDot} />
+                    <span className={styles.projectPillText}>01 / PRODUCT &amp; SAAS · HOSPITALITY TECH</span>
+                  </div>
+                  <h3>Scanfeast</h3>
+                  <p className={styles.projectLead}>
+                    Restaurant ordering that keeps the front of house and the kitchen in sync.
+                  </p>
+                  <p className={styles.projectCopy}>
+                    Scanfeast connects QR-based menu access and ordering with kitchen order handling and a manager view—so the diner, kitchen, and operator aren’t working from disconnected screens.
+                  </p>
+                  <div className={styles.projectFeatureList}>
+                    <span>QR-based ordering</span>
+                    <span>Kitchen display system</span>
+                    <span>Manager dashboard</span>
+                    <span>Live order flow</span>
+                    <span>Real-time WebSocket</span>
+                  </div>
+                  <div className={styles.projectActionRow}>
+                    <a href="/scanfeast/" className={styles.projectCtaBtn}>
+                      Explore the case study <ArrowIcon diagonal />
+                    </a>
+                    <span className={styles.projectMetaTag}>Live Production SaaS</span>
+                  </div>
                 </div>
-                <div className={styles.projectActionRow}>
-                  <a href="/scanfeast/" className={styles.projectCtaBtn}>
-                    Explore the case study <ArrowIcon diagonal />
-                  </a>
-                  <span className={styles.projectMetaTag}>Live Production SaaS</span>
-                </div>
-              </div>
-            </article>
+              </article>
+            </TiltCard>
 
             {/* Project 02: Quantum Arena */}
-            <article className={`${styles.projectCard} ${styles.projectCardQuantum}`} data-reveal>
-              <div className={styles.projectInfo}>
-                <div className={styles.projectPill}>
-                  <span className={styles.projectPillDot} />
-                  <span className={styles.projectPillText}>02 / DIGITAL PLATFORM · EVENT INFRASTRUCTURE</span>
+            <TiltCard maxTilt={4} scale={1.012} className={styles.projectTiltWrapper}>
+              <article className={`${styles.projectCard} ${styles.projectCardQuantum}`} data-project-card data-reveal>
+                <div className={styles.projectInfo}>
+                  <div className={styles.projectPill}>
+                    <span className={styles.projectPillDot} />
+                    <span className={styles.projectPillText}>02 / DIGITAL PLATFORM · EVENT INFRASTRUCTURE</span>
+                  </div>
+                  <h3>Quantum Arena</h3>
+                  <p className={styles.projectLead}>
+                    Event operations with fewer loose ends.
+                  </p>
+                  <p className={styles.projectCopy}>
+                    An event platform concept bringing participant registration, QR check-in, competition information, and judging workflows together—so organisers and participants can follow the same process.
+                  </p>
+                  <div className={styles.projectFeatureList}>
+                    <span>Participant workflows</span>
+                    <span>QR gate check-in</span>
+                    <span>Judging &amp; scoring matrix</span>
+                    <span>Live team portals</span>
+                    <span>1,500+ Attendees</span>
+                  </div>
+                  <div className={styles.projectActionRow}>
+                    <a href="/quantumarena/" className={styles.projectCtaBtn}>
+                      Explore the experience <ArrowIcon diagonal />
+                    </a>
+                    <span className={styles.projectMetaTag}>Hackathon Infrastructure</span>
+                  </div>
                 </div>
-                <h3>Quantum Arena</h3>
-                <p className={styles.projectLead}>
-                  Event operations with fewer loose ends.
-                </p>
-                <p className={styles.projectCopy}>
-                  An event platform concept bringing participant registration, QR check-in, competition information, and judging workflows together—so organisers and participants can follow the same process.
-                </p>
-                <div className={styles.projectFeatureList}>
-                  <span>Participant workflows</span>
-                  <span>QR gate check-in</span>
-                  <span>Judging &amp; scoring matrix</span>
-                  <span>Live team portals</span>
-                  <span>1,500+ Attendees</span>
+                <div className={styles.projectVisual}>
+                  <QuantumArenaCardPreview />
                 </div>
-                <div className={styles.projectActionRow}>
-                  <a href="/quantumarena/" className={styles.projectCtaBtn}>
-                    Explore the experience <ArrowIcon diagonal />
-                  </a>
-                  <span className={styles.projectMetaTag}>Hackathon Infrastructure</span>
-                </div>
-              </div>
-              <div className={styles.projectVisual}>
-                <QuantumArenaCardPreview />
-              </div>
-            </article>
+              </article>
+            </TiltCard>
 
             <div className={styles.workClosing} data-reveal>
               <p>The next project doesn’t have to look like either of these.</p>
@@ -581,7 +613,7 @@ export default function StudioHome() {
 
         <section className={styles.approachSection} id="approach">
           <div className={styles.container}>
-            <SectionIntro label="A PRACTICAL PROCESS" title={<>Make the important decisions <span>before they become expensive.</span></>} copy="A good process should make the work clearer, not heavier. Here’s how we move from an open question to a finished delivery." />
+            <SectionIntro label="A PRACTICAL PROCESS" title={<>Make the important decisions <span className={styles.editorialSerif}>before they become expensive.</span></>} copy="A good process should make the work clearer, not heavier. Here’s how we move from an open question to a finished delivery." />
             <div className={styles.processTimeline}>
               <div className={styles.processTrack} aria-hidden="true"><span className={styles.processTrackFill} /></div>
               {steps.map((step, index) => (
@@ -597,29 +629,31 @@ export default function StudioHome() {
 
         <section className={styles.studioSection} id="studio">
           <div className={styles.container}>
-            <div className={styles.studioPanel}>
-              <div className={styles.studioCopy} data-reveal>
-                <Eyebrow light>ABOUT THE STUDIO</Eyebrow>
-                <h2>Good work happens when the people making it <span>stay close to the problem.</span></h2>
-                <p>Majin Studios is an independent digital studio based in Hyderabad, India. We bring product thinking, engineering, and creative execution together—and keep collaboration direct from the first conversation.</p>
-                <a href="#contact" className={styles.studioLink}>Meet us at the start <ArrowIcon /></a>
-                <div className={styles.studioSignature}><BrandMark inverse /><span><b>MAJIN STUDIOS</b><small>INDEPENDENT BY DESIGN</small></span></div>
+            <TiltCard maxTilt={3} scale={1.006} className={styles.studioTiltWrapper}>
+              <div className={styles.studioPanel}>
+                <div className={styles.studioCopy} data-reveal>
+                  <Eyebrow light>ABOUT THE STUDIO</Eyebrow>
+                  <h2>Good work happens when the people making it <span className={styles.editorialSerif}>stay close to the problem.</span></h2>
+                  <p>Majin Studios is an independent digital studio based in Hyderabad, India. We bring product thinking, engineering, and creative execution together—and keep collaboration direct from the first conversation.</p>
+                  <a href="#contact" className={styles.studioLink}>Meet us at the start <ArrowIcon /></a>
+                  <div className={styles.studioSignature}><BrandMark inverse /><span><b>MAJIN STUDIOS</b><small>INDEPENDENT BY DESIGN</small></span></div>
+                </div>
+                <div className={styles.studioPrinciples}>
+                  <article data-reveal><span>01</span><div><h3>Start with the actual problem</h3><p>We ask why before choosing what to build, design, or promote.</p></div><i>↗</i></article>
+                  <article data-reveal><span>02</span><div><h3>Make the details work</h3><p>Clear interfaces, dependable systems, and a finish that feels considered.</p></div><i>↗</i></article>
+                  <article data-reveal><span>03</span><div><h3>Keep the whole picture in view</h3><p>Brand, product, operations, and marketing should reinforce one another.</p></div><i>↗</i></article>
+                  <div className={styles.studioPrincipleFooter}><span className={styles.principlePulse} />THOUGHTFUL IN THE DETAILS. PRACTICAL IN THE DELIVERY.</div>
+                </div>
+                <div className={styles.studioTexture} aria-hidden="true"><span /><span /><span /></div>
               </div>
-              <div className={styles.studioPrinciples}>
-                <article data-reveal><span>01</span><div><h3>Start with the actual problem</h3><p>We ask why before choosing what to build, design, or promote.</p></div><i>↗</i></article>
-                <article data-reveal><span>02</span><div><h3>Make the details work</h3><p>Clear interfaces, dependable systems, and a finish that feels considered.</p></div><i>↗</i></article>
-                <article data-reveal><span>03</span><div><h3>Keep the whole picture in view</h3><p>Brand, product, operations, and marketing should reinforce one another.</p></div><i>↗</i></article>
-                <div className={styles.studioPrincipleFooter}><span className={styles.principlePulse} />THOUGHTFUL IN THE DETAILS. PRACTICAL IN THE DELIVERY.</div>
-              </div>
-              <div className={styles.studioTexture} aria-hidden="true"><span /><span /><span /></div>
-            </div>
+            </TiltCard>
           </div>
         </section>
 
         <section className={styles.faqSection} id="faq">
           <div className={styles.container}>
             <div className={styles.faqLayout}>
-              <div className={styles.faqIntro} data-reveal><Eyebrow>GOOD QUESTIONS</Eyebrow><h2>A few things worth <span>knowing.</span></h2><p>Every project starts somewhere. Here are some of the questions we usually work through at the beginning.</p><a href="#contact" className={styles.textLink}>Ask us directly <ArrowIcon /></a></div>
+              <div className={styles.faqIntro} data-reveal><Eyebrow>GOOD QUESTIONS</Eyebrow><h2>A few things worth <span className={styles.editorialSerif}>knowing.</span></h2><p>Every project starts somewhere. Here are some of the questions we usually work through at the beginning.</p><a href="#contact" className={styles.textLink}>Ask us directly <ArrowIcon /></a></div>
               <div className={styles.faqList} data-reveal>
                 <details><summary>Can you help if we only have an idea? <span>+</span></summary><p>Yes. We can help clarify the problem, decide what is worth building first, and turn the idea into a practical scope and next steps.</p></details>
                 <details><summary>Can you handle the website and the marketing? <span>+</span></summary><p>Yes. We work across digital products, creative design, and digital marketing, so the experience and the way it reaches people can be considered together.</p></details>
@@ -636,7 +670,7 @@ export default function StudioHome() {
             <div className={styles.contactLayout}>
               <div className={styles.contactIntro} data-reveal>
                 <Eyebrow>START A CONVERSATION</Eyebrow>
-                <h2>What are you trying to <span>make possible?</span></h2>
+                <h2>What are you trying to <span className={styles.editorialSerif}>make possible?</span></h2>
                 <p>A rough idea is enough to start. Tell us what you want to build, improve, or grow; we’ll take it from there.</p>
                 <div className={styles.contactDirect}><span>Prefer email?</span><a href="mailto:hello@majin.studio">hello@majin.studio <ArrowIcon diagonal /></a></div>
                 <div className={styles.contactLocation}><span className={styles.locationDot} />Based in Hyderabad, India <i /> Working with teams remotely</div>

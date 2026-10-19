@@ -255,7 +255,24 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
       }
     };
 
+    let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+    let lastScrollTime = performance.now();
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const now = performance.now();
+      const dt = Math.max(now - lastScrollTime, 16);
+      const delta = Math.abs(currentScrollY - lastScrollY);
+      const scrollSpeed = delta / dt; // pixels per ms
+      if (scrollSpeed > 0.08) {
+        targetWarpFactor = Math.min(3.8, Math.max(targetWarpFactor, 1.0 + scrollSpeed * 1.8));
+      }
+      lastScrollY = currentScrollY;
+      lastScrollTime = now;
+    };
+
     window.addEventListener('mousemove', handlePointerMove, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('mousedown', handlePointerDown);
     window.addEventListener('mouseup', handlePointerUp);
     container.addEventListener('touchmove', handleTouchMove, { passive: true });
@@ -311,12 +328,25 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
       warpFactor += (targetWarpFactor - warpFactor) * 0.08;
       targetWarpFactor += (1.0 - targetWarpFactor) * 0.04;
 
-      // Update Starfield Positions
+      // Update Starfield Positions with fluid cursor wake
       const positions = starGeo.attributes.position.array as Float32Array;
+      const pointerMagnitude = Math.hypot(currentCameraX, currentCameraY);
       for (let i = 0; i < STAR_COUNT; i++) {
         const idx = i * 3;
         const speed = starVelocities[i] * warpFactor;
         positions[idx + 2] += speed;
+
+        // Fluid cursor wake: particles subtly deflect around cursor position
+        if (pointerMagnitude > 8) {
+          const dx = positions[idx] - currentCameraX * 2.2;
+          const dy = positions[idx + 1] - currentCameraY * 2.2;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < 36000 && distSq > 100) {
+            const force = (1 - distSq / 36000) * 0.75;
+            positions[idx] += (dx / Math.sqrt(distSq)) * force;
+            positions[idx + 1] += (dy / Math.sqrt(distSq)) * force;
+          }
+        }
 
         // When star flies past camera, recycle it deep into distance
         if (positions[idx + 2] > 480) {
@@ -329,11 +359,11 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
       }
       starGeo.attributes.position.needsUpdate = true;
 
-      // Update Warp Streaks
+      // Update Warp Streaks with hyperspace elongation
       const streakPos = streakGeo.attributes.position.array as Float32Array;
       for (let i = 0; i < STREAK_COUNT; i++) {
         const s = streakData[i];
-        const speed = s.speed * warpFactor * 1.45;
+        const speed = s.speed * warpFactor * 1.5;
         s.z += speed;
 
         if (s.z > 480) {
@@ -351,7 +381,7 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
 
         streakPos[idx + 3] = s.x;
         streakPos[idx + 4] = s.y;
-        streakPos[idx + 5] = s.z - s.length * (warpFactor * 0.85);
+        streakPos[idx + 5] = s.z - s.length * (warpFactor * 1.25);
       }
       streakGeo.attributes.position.needsUpdate = true;
 
@@ -367,6 +397,7 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handlePointerMove);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousedown', handlePointerDown);
       window.removeEventListener('mouseup', handlePointerUp);
       container.removeEventListener('touchmove', handleTouchMove);

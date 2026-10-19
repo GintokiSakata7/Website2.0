@@ -414,6 +414,114 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
 .sectionIntroLight h2 span { color: var(--lime); }
 .sectionIntroLight .sectionIntroBody > p { color: #bbccba; }
 
+/* Lusion-style Hybrid Editorial Typography */
+.editorialSerif {
+  font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.accentBlock {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  background: #00ff85;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(0, 255, 133, 0.7);
+  margin-right: 8px;
+  vertical-align: 1px;
+}
+
+/* 3D Tilt Wrappers */
+.serviceTiltWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.serviceTiltWrapper > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.serviceTiltWrapper .serviceCard {
+  height: 100%;
+  flex: 1;
+}
+
+.flowTiltWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.flowTiltWrapper > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.flowTiltWrapper .flowCard {
+  height: 100%;
+  flex: 1;
+}
+
+.projectTiltWrapper {
+  width: 100%;
+  margin-bottom: 36px;
+}
+.projectTiltWrapper:last-of-type {
+  margin-bottom: 0;
+}
+.projectTiltWrapper .projectCard {
+  margin-bottom: 0 !important;
+}
+
+.studioTiltWrapper {
+  width: 100%;
+}
+
+/* Atmospheric Liquid Curtains */
+.liquidHeroCurtain {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(180deg, rgba(3, 5, 8, 0) 0%, rgba(3, 5, 8, 0.7) 60%, #030805 100%);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.liquidPaperCurtain {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(180deg, #030805 0%, rgba(3, 8, 5, 0.15) 30%, var(--paper) 100%);
+  margin-top: -1px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.liquidFlowTransition {
+  position: relative;
+  width: 100%;
+  height: 72px;
+  background: linear-gradient(180deg, var(--paper) 0%, rgba(247, 248, 244, 0.3) 30%, #020704 100%);
+  margin-bottom: -1px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.liquidWorkTransition {
+  position: relative;
+  width: 100%;
+  height: 72px;
+  background: linear-gradient(180deg, #020704 0%, rgba(2, 7, 4, 0.25) 35%, var(--paper-2) 100%);
+  margin-bottom: -1px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+
 /* Services — aligned four-card system with light paper contrast */
 .servicesGrid {
   display: grid;

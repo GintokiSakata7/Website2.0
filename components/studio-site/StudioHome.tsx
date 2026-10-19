@@ -6,6 +6,8 @@ import emailjs from '@emailjs/browser';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HeroThreeCanvas from './HeroThreeCanvas';
+import { ScanfeastCardPreview } from '../sections/visuals/ScanfeastCardPreview';
+import { QuantumArenaCardPreview } from '../sections/visuals/QuantumArenaCardPreview';
 import styles from './StudioHome.module.css';
 
 function ArrowIcon({ diagonal = false, className = '' }: { diagonal?: boolean; className?: string }) {
@@ -66,20 +68,6 @@ function SectionIntro({ label, title, accent, copy, light = false }: {
   );
 }
 
-
-
-function ProjectFrame({ src, alt, kind }: { src: string; alt: string; kind: 'scanfeast' | 'quantum' }) {
-  return (
-    <div className={`${styles.projectFrame} ${kind === 'quantum' ? styles.projectFrameQuantum : ''}`} data-project-frame>
-      <div className={styles.projectWindowTop}><div className={styles.windowDots}><i /><i /><i /></div><span>{kind === 'scanfeast' ? 'SCANFEAST / OPERATIONS' : 'QUANTUM ARENA / EVENT PLATFORM'}</span><span className={styles.windowArrow}>↗</span></div>
-      <div className={styles.projectImageViewport} data-image-viewport>
-        <Image src={src} alt={alt} fill sizes="(max-width: 700px) 90vw, (max-width: 1100px) 48vw, 620px" className={styles.projectImage} data-parallax-image priority={false} />
-      </div>
-      <div className={styles.projectFrameMeta}><span>{kind === 'scanfeast' ? 'PRODUCT INTERFACE' : 'DIGITAL EXPERIENCE'}</span><span>MAJIN STUDIOS / SELECTED WORK</span></div>
-    </div>
-  );
-}
-
 const services = [
   {
     index: '01', type: 'web' as const, title: 'Websites & digital products',
@@ -118,52 +106,57 @@ export default function StudioHome() {
   const rootRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 28);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    const handlePointerMove = (e: MouseEvent) => {
+      root.style.setProperty('--mouse-x', `${e.clientX}px`);
+      root.style.setProperty('--mouse-y', `${e.clientY}px`);
+    };
+    window.addEventListener('mousemove', handlePointerMove, { passive: true });
+
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion) {
       root.setAttribute('data-motion', 'reduced');
-      return;
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('mousemove', handlePointerMove);
+      };
     }
 
     gsap.registerPlugin(ScrollTrigger);
     const context = gsap.context(() => {
       const reveals = Array.from(root.querySelectorAll<HTMLElement>('[data-reveal]'));
-      gsap.set(reveals, { autoAlpha: 0, y: 28 });
       reveals.forEach((element) => {
-        gsap.to(element, {
-          autoAlpha: 1, y: 0, duration: 0.82, ease: 'power3.out',
-          scrollTrigger: { trigger: element, start: 'top 88%', once: true },
+        gsap.from(element, {
+          autoAlpha: 0,
+          y: 24,
+          duration: 0.75,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: element, start: 'top 90%', once: true },
+          clearProps: 'opacity,visibility,transform',
         });
       });
 
       const heroCopy = root.querySelector<HTMLElement>('[data-hero-copy]');
       if (heroCopy) {
-        gsap.fromTo(heroCopy, { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.92, ease: 'power3.out', delay: 0.08 });
-      }
-      const heroVisual = root.querySelector<HTMLElement>('[data-hero-visual]');
-      if (heroVisual) {
-        gsap.fromTo(heroVisual, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 1.1, ease: 'power3.out', delay: 0.15 });
-        const heroSection = root.querySelector<HTMLElement>('[data-hero-section]');
-        if (heroSection) {
-          gsap.to(heroVisual.querySelectorAll('[data-float]'), {
-            y: (index) => (index % 2 === 0 ? -14 : 14), ease: 'none', stagger: 0.02,
-            scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 1 },
-          });
-        }
-      }
-
-      const traces = Array.from(root.querySelectorAll<SVGPathElement>('[data-draw-line]'));
-      gsap.set(traces, { strokeDasharray: 1, strokeDashoffset: 1 });
-      traces.forEach((trace, index) => {
-        gsap.to(trace, {
-          strokeDashoffset: 0, duration: 1.45, ease: 'power2.inOut', delay: 0.55 + index * 0.16,
-          scrollTrigger: { trigger: heroVisual, start: 'top 70%', once: true },
+        gsap.from(heroCopy, {
+          autoAlpha: 0,
+          y: 20,
+          duration: 0.75,
+          ease: 'power3.out',
+          clearProps: 'opacity,visibility,transform',
         });
-      });
+      }
 
       const imageLayers = Array.from(root.querySelectorAll<HTMLElement>('[data-parallax-image]'));
       imageLayers.forEach((image) => {
@@ -207,14 +200,20 @@ export default function StudioHome() {
 
       const serviceCards = Array.from(root.querySelectorAll<HTMLElement>('[data-service-card]'));
       serviceCards.forEach((card, index) => {
-        gsap.fromTo(card, { y: 30, rotate: index % 2 ? 0.6 : -0.6 }, {
-          y: 0, rotate: 0, duration: 0.76, ease: 'power3.out',
+        gsap.from(card, {
+          y: 28,
+          autoAlpha: 0,
+          duration: 0.76,
+          ease: 'power3.out',
           scrollTrigger: { trigger: card, start: 'top 90%', once: true },
+          clearProps: 'opacity,visibility,transform',
         });
       });
     }, root);
 
     return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handlePointerMove);
       context.revert();
     };
   }, []);
@@ -246,10 +245,15 @@ export default function StudioHome() {
   return (
     <div className={styles.site} ref={rootRef} data-home-root>
       <a className={styles.skipLink} href="#main">Skip to content</a>
-      <header className={styles.header}>
+      <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ''}`}>
         <div className={styles.headerInner}>
           <a href="#top" className={styles.brand} onClick={closeMenu} aria-label="Majin Studios home">
-            <BrandMark /><span className={styles.brandText}>majin<span>studios</span></span>
+            <BrandMark />
+            <span className={styles.brandText}>
+              majin<span>studios</span>
+            </span>
+            <span className={styles.brandDivider}>✕</span>
+            <span className={styles.brandTagline}>A DIGITAL PRODUCT HOUSE</span>
           </a>
           <nav id="main-navigation" className={`${styles.navigation} ${menuOpen ? styles.navigationOpen : ''}`} aria-label="Main navigation">
             <a href="#services" onClick={closeMenu}>Services</a>
@@ -258,65 +262,74 @@ export default function StudioHome() {
             <a href="#studio" onClick={closeMenu}>Studio</a>
             <a className={styles.mobileNavCta} href="#contact" onClick={closeMenu}>Start a project <ArrowIcon /></a>
           </nav>
-          <a className={styles.headerCta} href="#contact">Let’s talk <ArrowIcon diagonal /></a>
-          <button className={`${styles.menuToggle} ${menuOpen ? styles.menuToggleOpen : ''}`} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen((open) => !open)}>
-            <span /><span />
-          </button>
+          <div className={styles.headerRight}>
+            <a className={styles.headerCta} href="#contact">
+              <span className={styles.headerCtaDot} />
+              Let’s talk <ArrowIcon diagonal />
+            </a>
+            <button className={`${styles.menuToggle} ${menuOpen ? styles.menuToggleOpen : ''}`} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen((open) => !open)}>
+              <span /><span />
+            </button>
+          </div>
         </div>
       </header>
 
       <main id="main">
         <section id="top" className={styles.hero} data-hero-section>
-          <div className={styles.heroGrid} aria-hidden="true" />
-          <div className={styles.heroGlow} aria-hidden="true" />
+          {/* Background Real Responsive 3D Three.js Space Warp Starfield */}
+          <div className={styles.heroThreeBackdrop} aria-hidden="true">
+            <HeroThreeCanvas />
+          </div>
 
-          {/* Centered Velozity-inspired Hero Constellation Stage */}
+          <div className={styles.heroAtmosphere} aria-hidden="true" />
+
+          {/* Centered Velozity & Webcros-inspired Cosmic Hero Stage */}
           <div className={styles.heroConstellationStage} data-hero-visual>
-            {/* Background 3D Interactive Three.js Kinetic Core */}
-            <div className={styles.heroThreeBackdrop} aria-hidden="true">
-              <HeroThreeCanvas />
-            </div>
-
-            {/* Background Orbital Ellipse & Signal Connections */}
-            <svg className={styles.orbitalSvg} viewBox="0 0 1440 840" preserveAspectRatio="none" aria-hidden="true">
-              <defs>
-                <linearGradient id="orbitalPulseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#00ff85" stopOpacity="0" />
-                  <stop offset="50%" stopColor="#ffffff" stopOpacity="0.9" />
-                  <stop offset="100%" stopColor="#00ff85" stopOpacity="0" />
-                </linearGradient>
-                <filter id="orbitalGlow">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-              <ellipse cx="720" cy="420" rx="630" ry="340" className={styles.orbitalEllipseOuter} />
-              <ellipse cx="720" cy="420" rx="490" ry="250" className={styles.orbitalEllipseInner} />
-              <path d="M 90,420 C 320,110 1120,110 1350,420 C 1120,730 320,730 90,420 Z" className={styles.orbitalPulsePath} />
-            </svg>
-
             {/* Central Headline, Subtitle, and CTAs */}
             <div className={styles.heroCenter} data-hero-copy>
               <div className={styles.heroEyebrow}>
                 <span className={styles.eyebrowPulse} />
                 <span>INDEPENDENT DIGITAL STUDIO · HYDERABAD, INDIA</span>
               </div>
+
               <h1 className={styles.heroTitle}>
-                Make your next move <span className={styles.heroHighlight}>matter.</span>
+                Make your next{' '}
+                <span className={styles.heroBadgeHighlight}>move</span>{' '}
+                <span className={styles.heroGlowWord}>matter.</span>
               </h1>
+
               <p className={styles.heroLead}>
                 We turn business ideas into thoughtful digital products, useful systems, and creative work that move things forward.
               </p>
+
+              {/* Social Proof Stack (Webcros inspired) */}
+              <div className={styles.heroSocialProof}>
+                <div className={styles.clientAvatars}>
+                  <span className={styles.avatarPill} style={{ background: '#00ff85', color: '#011e11' }}>⚡</span>
+                  <span className={styles.avatarPill} style={{ background: '#38bdf8', color: '#031726' }}>SF</span>
+                  <span className={styles.avatarPill} style={{ background: '#f43f5e', color: '#fff' }}>QA</span>
+                  <span className={styles.avatarPill} style={{ background: '#a855f7', color: '#fff' }}>AI</span>
+                </div>
+                <div className={styles.proofText}>
+                  <div className={styles.starsRow}>
+                    <span className={styles.ratingNumber}>5.0</span>
+                    <span className={styles.starsIcon}>★★★★★</span>
+                    <span className={styles.ratingCount}>/ 5.0 Rating</span>
+                  </div>
+                  <span className={styles.proofLabel}>Built by senior engineers · Zero hand-off</span>
+                </div>
+              </div>
+
               <div className={styles.heroActions}>
-                <ButtonLink href="#contact" className={styles.primaryHeroBtn}>Tell us what you’re building</ButtonLink>
+                <a href="#contact" className={styles.primaryHeroBtn}>
+                  Tell us what you’re building <ArrowIcon />
+                </a>
                 <a href="#work" className={styles.secondaryHeroBtn}>
                   <span className={styles.playArrow}>▶</span>
                   Explore selected work
                 </a>
               </div>
+
               <div className={styles.heroTrust}>
                 <span className={styles.trustBadge}><i /> Small dedicated team</span>
                 <span className={styles.trustSep}>·</span>
@@ -324,210 +337,6 @@ export default function StudioHome() {
                 <span className={styles.trustSep}>·</span>
                 <span className={styles.trustBadge}><i /> Production-grade velocity</span>
               </div>
-            </div>
-
-            {/* 8 Floating Constellation Cards orbiting around the center (Velozity.ai architecture) */}
-            <div className={styles.constellationCards}>
-              {/* Card 1: Top-Left (NW) */}
-              <a href="#services" className={`${styles.constellationCard} ${styles.cardNw}`} data-float="1" aria-label="Web and Mobile Apps Engineering">
-                <div className={styles.cardPreview}>
-                  <div className={styles.previewTag}>99.8%</div>
-                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
-                    <rect x="6" y="8" width="188" height="64" rx="6" fill="#01180d" stroke="rgba(0,255,133,0.2)" strokeWidth="1" />
-                    <circle cx="20" cy="20" r="3" fill="#ff5f56" />
-                    <circle cx="30" cy="20" r="3" fill="#ffbd2e" />
-                    <circle cx="40" cy="20" r="3" fill="#27c93f" />
-                    <line x1="16" y1="34" x2="90" y2="34" stroke="rgba(0,255,133,0.5)" strokeWidth="2.5" strokeLinecap="round" />
-                    <line x1="16" y1="44" x2="140" y2="44" stroke="#a2c7a8" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="16" y1="54" x2="110" y2="54" stroke="#486851" strokeWidth="2" strokeLinecap="round" />
-                    <rect x="150" y="24" width="36" height="36" rx="6" fill="rgba(0,255,133,0.12)" stroke="#00ff85" strokeWidth="1" />
-                    <path d="M162 42 L166 46 L174 36" stroke="#00ff85" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                  </svg>
-                </div>
-                <div className={styles.cardMeta}>
-                  <div className={styles.cardHeader}>
-                    <span className={styles.cardCategory}>ENGINEERING</span>
-                    <span className={styles.cardArrow}>↗</span>
-                  </div>
-                  <strong className={styles.cardTitle}>Web & Mobile Apps</strong>
-                  <span className={styles.cardSub}>React, Next.js & Native</span>
-                </div>
-              </a>
-
-              {/* Card 2: Top-Center (N) */}
-              <a href="#services" className={`${styles.constellationCard} ${styles.cardN}`} data-float="2" aria-label="Autonomous AI Agents and Workflows">
-                <div className={styles.cardPreview}>
-                  <div className={styles.previewTag}>AI CORE</div>
-                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
-                    <circle cx="100" cy="40" r="16" fill="rgba(0,255,133,0.18)" stroke="#00ff85" strokeWidth="1.5" />
-                    <circle cx="100" cy="40" r="6" fill="#00ff85" />
-                    <circle cx="45" cy="25" r="9" fill="#022114" stroke="rgba(0,255,133,0.4)" strokeWidth="1" />
-                    <circle cx="45" cy="55" r="8" fill="#022114" stroke="rgba(0,255,133,0.4)" strokeWidth="1" />
-                    <circle cx="155" cy="25" r="9" fill="#022114" stroke="rgba(0,255,133,0.4)" strokeWidth="1" />
-                    <circle cx="155" cy="55" r="8" fill="#022114" stroke="rgba(0,255,133,0.4)" strokeWidth="1" />
-                    <line x1="54" y1="28" x2="86" y2="36" stroke="rgba(0,255,133,0.6)" strokeWidth="1.2" strokeDasharray="3 3" />
-                    <line x1="53" y1="52" x2="86" y2="44" stroke="rgba(0,255,133,0.6)" strokeWidth="1.2" strokeDasharray="3 3" />
-                    <line x1="114" y1="36" x2="146" y2="28" stroke="rgba(0,255,133,0.6)" strokeWidth="1.2" strokeDasharray="3 3" />
-                    <line x1="114" y1="44" x2="147" y2="52" stroke="rgba(0,255,133,0.6)" strokeWidth="1.2" strokeDasharray="3 3" />
-                  </svg>
-                </div>
-                <div className={styles.cardMeta}>
-                  <div className={styles.cardHeader}>
-                    <span className={styles.cardCategory}>AI SYSTEMS</span>
-                    <span className={styles.cardArrow}>↗</span>
-                  </div>
-                  <strong className={styles.cardTitle}>Autonomous AI Agents</strong>
-                  <span className={styles.cardSub}>Workflows & Multi-Agent Logic</span>
-                </div>
-              </a>
-
-              {/* Card 3: Top-Right (NE) */}
-              <a href="/scanfeast/" className={`${styles.constellationCard} ${styles.cardNe}`} data-float="3" aria-label="ScanFeast Restaurant Operations Platform">
-                <div className={styles.cardPreview}>
-                  <div className={`${styles.previewTag} ${styles.tagOrange}`}>SCANFEAST</div>
-                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
-                    <rect x="25" y="12" width="60" height="56" rx="6" fill="#140b04" stroke="rgba(255,103,25,0.4)" strokeWidth="1" />
-                    <rect x="35" y="22" width="12" height="12" fill="#ff6719" rx="2" />
-                    <rect x="63" y="22" width="12" height="12" fill="#ff6719" rx="2" />
-                    <rect x="35" y="46" width="12" height="12" fill="#ff6719" rx="2" />
-                    <circle cx="68" cy="51" r="5" fill="#ff944d" />
-                    <rect x="98" y="16" width="80" height="16" rx="4" fill="rgba(255,103,25,0.15)" stroke="rgba(255,103,25,0.3)" strokeWidth="1" />
-                    <rect x="98" y="38" width="70" height="8" rx="2" fill="#a27254" />
-                    <rect x="98" y="50" width="55" height="8" rx="2" fill="#694833" />
-                  </svg>
-                </div>
-                <div className={styles.cardMeta}>
-                  <div className={styles.cardHeader}>
-                    <span className={`${styles.cardCategory} ${styles.catOrange}`}>FLAGSHIP PLATFORM</span>
-                    <span className={styles.cardArrow}>↗</span>
-                  </div>
-                  <strong className={styles.cardTitle}>ScanFeast Restaurant POS</strong>
-                  <span className={styles.cardSub}>Contactless Dining & Kitchen Hub</span>
-                </div>
-              </a>
-
-              {/* Card 4: Mid-Right (E) */}
-              <a href="#services" className={`${styles.constellationCard} ${styles.cardE}`} data-float="4" aria-label="Paid Ads and Conversion Rate Optimization">
-                <div className={styles.cardPreview}>
-                  <div className={styles.previewTag}>ROAS 4.8X</div>
-                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
-                    <defs>
-                      <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#00ff85" stopOpacity="0.35" />
-                        <stop offset="100%" stopColor="#00ff85" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M 20,65 L 55,50 L 95,54 L 135,32 L 180,18 L 180,68 L 20,68 Z" fill="url(#chartGrad)" />
-                    <path d="M 20,65 L 55,50 L 95,54 L 135,32 L 180,18" fill="none" stroke="#00ff85" strokeWidth="2.2" strokeLinecap="round" />
-                    <circle cx="180" cy="18" r="4.5" fill="#00ff85" filter="url(#orbitalGlow)" />
-                  </svg>
-                </div>
-                <div className={styles.cardMeta}>
-                  <div className={styles.cardHeader}>
-                    <span className={styles.cardCategory}>GROWTH</span>
-                    <span className={styles.cardArrow}>↗</span>
-                  </div>
-                  <strong className={styles.cardTitle}>Paid Ads & CRO Funnels</strong>
-                  <span className={styles.cardSub}>High-Intent Conversion Strategy</span>
-                </div>
-              </a>
-
-              {/* Card 5: Bottom-Right (SE) */}
-              <a href="/quantumarena/" className={`${styles.constellationCard} ${styles.cardSe}`} data-float="5" aria-label="Quantum Arena Esports and Gaming Platform">
-                <div className={styles.cardPreview}>
-                  <div className={`${styles.previewTag} ${styles.tagRed}`}>QUANTUM</div>
-                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
-                    <rect x="20" y="16" width="44" height="18" rx="4" fill="#200407" stroke="rgba(255,37,56,0.5)" strokeWidth="1" />
-                    <rect x="20" y="46" width="44" height="18" rx="4" fill="#200407" stroke="rgba(255,37,56,0.5)" strokeWidth="1" />
-                    <path d="M64,25 L88,25 L88,55 L64,55" fill="none" stroke="rgba(255,37,56,0.6)" strokeWidth="1.5" />
-                    <line x1="88" y1="40" x2="114" y2="40" stroke="#ff2538" strokeWidth="2" />
-                    <rect x="114" y="28" width="62" height="24" rx="4" fill="#ff2538" />
-                    <text x="145" y="44" fill="#fff" fontSize="9" fontWeight="800" textAnchor="middle">FINALS</text>
-                  </svg>
-                </div>
-                <div className={styles.cardMeta}>
-                  <div className={styles.cardHeader}>
-                    <span className={`${styles.cardCategory} ${styles.catRed}`}>ESPORTS ENGINE</span>
-                    <span className={styles.cardArrow}>↗</span>
-                  </div>
-                  <strong className={styles.cardTitle}>Quantum Arena Gaming</strong>
-                  <span className={styles.cardSub}>Live Brackets & Esports Portal</span>
-                </div>
-              </a>
-
-              {/* Card 6: Bottom-Center (S) */}
-              <a href="#approach" className={`${styles.constellationCard} ${styles.cardS}`} data-float="6" aria-label="Majin Studios Zero Hand-off Process">
-                <div className={styles.cardPreview}>
-                  <div className={styles.previewTag}>PROCESS</div>
-                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
-                    <line x1="30" y1="40" x2="170" y2="40" stroke="rgba(0,255,133,0.3)" strokeWidth="2" />
-                    <circle cx="35" cy="40" r="10" fill="#032115" stroke="#00ff85" strokeWidth="1.8" />
-                    <circle cx="80" cy="40" r="10" fill="#032115" stroke="#00ff85" strokeWidth="1.8" />
-                    <circle cx="125" cy="40" r="10" fill="#032115" stroke="#00ff85" strokeWidth="1.8" />
-                    <circle cx="165" cy="40" r="10" fill="#00ff85" />
-                    <text x="35" y="43" fill="#00ff85" fontSize="8" fontWeight="800" textAnchor="middle">01</text>
-                    <text x="80" y="43" fill="#00ff85" fontSize="8" fontWeight="800" textAnchor="middle">02</text>
-                    <text x="125" y="43" fill="#00ff85" fontSize="8" fontWeight="800" textAnchor="middle">03</text>
-                    <text x="165" y="43" fill="#032115" fontSize="8" fontWeight="800" textAnchor="middle">04</text>
-                  </svg>
-                </div>
-                <div className={styles.cardMeta}>
-                  <div className={styles.cardHeader}>
-                    <span className={styles.cardCategory}>THE SYSTEM</span>
-                    <span className={styles.cardArrow}>↗</span>
-                  </div>
-                  <strong className={styles.cardTitle}>Zero Hand-off Delivery</strong>
-                  <span className={styles.cardSub}>Discovery, Shape, Build & Launch</span>
-                </div>
-              </a>
-
-              {/* Card 7: Bottom-Left (SW) */}
-              <a href="#services" className={`${styles.constellationCard} ${styles.cardSw}`} data-float="7" aria-label="Brand Systems and Design Direction">
-                <div className={styles.cardPreview}>
-                  <div className={styles.previewTag}>DESIGN</div>
-                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
-                    <circle cx="40" cy="40" r="14" fill="#032115" stroke="rgba(0,255,133,0.5)" strokeWidth="1.5" />
-                    <circle cx="70" cy="40" r="14" fill="#00ff85" />
-                    <circle cx="100" cy="40" r="14" fill="#f7f8f4" />
-                    <path d="M130 52 C135 25, 160 25, 175 48" fill="none" stroke="#00ff85" strokeWidth="2" strokeDasharray="3 3" />
-                    <rect x="148" y="26" width="6" height="6" fill="#00ff85" />
-                  </svg>
-                </div>
-                <div className={styles.cardMeta}>
-                  <div className={styles.cardHeader}>
-                    <span className={styles.cardCategory}>IDENTITY</span>
-                    <span className={styles.cardArrow}>↗</span>
-                  </div>
-                  <strong className={styles.cardTitle}>Brand Systems & Tokens</strong>
-                  <span className={styles.cardSub}>Visual Direction & Design Systems</span>
-                </div>
-              </a>
-
-              {/* Card 8: Mid-Left (W) */}
-              <a href="#services" className={`${styles.constellationCard} ${styles.cardW}`} data-float="8" aria-label="Scalable Cloud Backend Architecture">
-                <div className={styles.cardPreview}>
-                  <div className={styles.previewTag}>&lt;45MS</div>
-                  <svg viewBox="0 0 200 80" className={styles.previewSvg} aria-hidden="true">
-                    <rect x="25" y="14" width="150" height="14" rx="3" fill="#01190e" stroke="rgba(0,255,133,0.3)" strokeWidth="1" />
-                    <circle cx="35" cy="21" r="2.5" fill="#00ff85" />
-                    <rect x="25" y="33" width="150" height="14" rx="3" fill="#01190e" stroke="rgba(0,255,133,0.3)" strokeWidth="1" />
-                    <circle cx="35" cy="40" r="2.5" fill="#00ff85" />
-                    <rect x="25" y="52" width="150" height="14" rx="3" fill="#01190e" stroke="rgba(0,255,133,0.3)" strokeWidth="1" />
-                    <circle cx="35" cy="59" r="2.5" fill="#00ff85" />
-                    <line x1="50" y1="21" x2="110" y2="21" stroke="#366b47" strokeWidth="2" />
-                    <line x1="50" y1="40" x2="140" y2="40" stroke="#00ff85" strokeWidth="2" />
-                    <line x1="50" y1="59" x2="85" y2="59" stroke="#366b47" strokeWidth="2" />
-                  </svg>
-                </div>
-                <div className={styles.cardMeta}>
-                  <div className={styles.cardHeader}>
-                    <span className={styles.cardCategory}>CLOUD INFRA</span>
-                    <span className={styles.cardArrow}>↗</span>
-                  </div>
-                  <strong className={styles.cardTitle}>High-Scale Backend APIs</strong>
-                  <span className={styles.cardSub}>Edge Microservices & PostgreSQL</span>
-                </div>
-              </a>
             </div>
           </div>
 
@@ -550,7 +359,7 @@ export default function StudioHome() {
             <SectionIntro label="WHAT WE DO" title={<>Good ideas need the <span>right things around them.</span></>} copy="A website is only one part of the picture. We bring the product, the systems behind it, the way it looks, and the way it reaches people into the same conversation." />
             <div className={styles.servicesGrid}>
               {services.map((service) => (
-                <article key={service.index} className={`${styles.serviceCard} ${service.tint === 'green' ? styles.serviceCardGreen : ''} ${service.tint === 'lime' ? styles.serviceCardLime : ''}`} data-service-card data-reveal
+                <article key={service.index} className={`${styles.serviceCard} ${service.tint === 'green' ? styles.serviceCardGreen : ''} ${service.tint === 'lime' ? styles.serviceCardLime : ''}`} data-service-card
                   onPointerMove={(event) => {
                     const bounds = event.currentTarget.getBoundingClientRect();
                     event.currentTarget.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`);
@@ -569,65 +378,204 @@ export default function StudioHome() {
           </div>
         </section>
 
-        <section className={styles.flowSection} data-flow-section>
+        <section className={styles.flowSection} data-flow-section id="approach">
           <div className={styles.container}>
             <div className={styles.flowHeader} data-reveal>
-              <Eyebrow light>HOW THE PARTS CONNECT</Eyebrow>
-              <h2>One clear direction.<br /><span>Four connected disciplines.</span></h2>
-              <p>The value isn’t in doing everything at once. It’s in knowing what each part needs to do—and making sure the hand-offs make sense.</p>
-            </div>
-            <div className={styles.flowBoard}>
-              <div className={styles.flowTrack} aria-hidden="true"><span data-flow-fill /></div>
-              <div className={styles.flowSteps}>
-                <article data-reveal><span className={styles.flowNumber}>01</span><span className={styles.flowGlyph}><i className={styles.glyphAim} /></span><h3>Find the signal</h3><p>Get clear on the real problem, audience, and desired outcome.</p><span className={styles.flowMeta}>STRATEGY</span></article>
-                <article data-reveal><span className={styles.flowNumber}>02</span><span className={styles.flowGlyph}><i className={styles.glyphShape} /></span><h3>Shape the experience</h3><p>Make the idea understandable, usable, and recognisable.</p><span className={styles.flowMeta}>DESIGN</span></article>
-                <article data-reveal><span className={styles.flowNumber}>03</span><span className={styles.flowGlyph}><i className={styles.glyphBuild} /></span><h3>Make it work</h3><p>Turn the plan into a reliable product or operating system.</p><span className={styles.flowMeta}>ENGINEERING</span></article>
-                <article data-reveal><span className={styles.flowNumber}>04</span><span className={styles.flowGlyph}><i className={styles.glyphGrow} /></span><h3>Help it move</h3><p>Prepare the launch and connect the work to the right audience.</p><span className={styles.flowMeta}>GROWTH</span></article>
+              <div className={styles.flowHeaderLeft}>
+                <Eyebrow light>HOW THE PARTS CONNECT</Eyebrow>
+                <h2>One clear direction. <span>Four connected disciplines.</span></h2>
               </div>
-              <div className={styles.flowFooter}><span>NO DECORATIVE COMPLEXITY. NO DISCONNECTED HAND-OFFS.</span><span>THE MAJIN APPROACH <b>↗</b></span></div>
+              <p className={styles.flowLead}>
+                The value isn’t in doing everything at once. It’s in knowing what each part needs to do—and making sure the hand-offs make sense.
+              </p>
+            </div>
+
+            <div className={styles.flowBoard} data-reveal>
+              <div className={styles.flowSteps}>
+                {/* 01 STRATEGY */}
+                <article className={styles.flowCard}>
+                  <div className={styles.flowCardTop}>
+                    <span className={styles.flowNumber}>01</span>
+                    <span className={styles.flowMeta}>STRATEGY</span>
+                  </div>
+                  <div className={styles.flowCardBody}>
+                    <div className={styles.flowGlyphWrap}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" />
+                        <line x1="12" y1="3" x2="12" y2="7" /><line x1="12" y1="17" x2="12" y2="21" />
+                        <line x1="3" y1="12" x2="7" y2="12" /><line x1="17" y1="12" x2="21" y2="12" />
+                      </svg>
+                    </div>
+                    <h3>Find the signal</h3>
+                    <p>Get clear on the real problem, audience, and desired outcome.</p>
+                  </div>
+                  <div className={styles.flowTags}>
+                    <span>Problem definition</span>
+                    <span>Audience</span>
+                    <span>KPIs</span>
+                  </div>
+                </article>
+
+                {/* 02 DESIGN */}
+                <article className={styles.flowCard}>
+                  <div className={styles.flowCardTop}>
+                    <span className={styles.flowNumber}>02</span>
+                    <span className={styles.flowMeta}>DESIGN</span>
+                  </div>
+                  <div className={styles.flowCardBody}>
+                    <div className={styles.flowGlyphWrap}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                        <path d="M2 17l10 5 10-5" />
+                        <path d="M2 12l10 5 10-5" />
+                      </svg>
+                    </div>
+                    <h3>Shape the experience</h3>
+                    <p>Make the idea understandable, usable, and recognisable.</p>
+                  </div>
+                  <div className={styles.flowTags}>
+                    <span>UX/UI</span>
+                    <span>Design Systems</span>
+                    <span>Prototypes</span>
+                  </div>
+                </article>
+
+                {/* 03 ENGINEERING */}
+                <article className={styles.flowCard}>
+                  <div className={styles.flowCardTop}>
+                    <span className={styles.flowNumber}>03</span>
+                    <span className={styles.flowMeta}>ENGINEERING</span>
+                  </div>
+                  <div className={styles.flowCardBody}>
+                    <div className={styles.flowGlyphWrap}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="4" y="4" width="16" height="16" rx="3" />
+                        <path d="M9 9h6v6H9z" />
+                        <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3" />
+                      </svg>
+                    </div>
+                    <h3>Make it work</h3>
+                    <p>Turn the plan into a reliable product or operating system.</p>
+                  </div>
+                  <div className={styles.flowTags}>
+                    <span>Full-Stack</span>
+                    <span>APIs & Data</span>
+                    <span>Cloud & AI</span>
+                  </div>
+                </article>
+
+                {/* 04 GROWTH */}
+                <article className={styles.flowCard}>
+                  <div className={styles.flowCardTop}>
+                    <span className={styles.flowNumber}>04</span>
+                    <span className={styles.flowMeta}>GROWTH</span>
+                  </div>
+                  <div className={styles.flowCardBody}>
+                    <div className={styles.flowGlyphWrap}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                        <polyline points="16 7 22 7 22 13" />
+                      </svg>
+                    </div>
+                    <h3>Help it move</h3>
+                    <p>Prepare the launch and connect the work to the right audience.</p>
+                  </div>
+                  <div className={styles.flowTags}>
+                    <span>Launch</span>
+                    <span>Funnels</span>
+                    <span>Performance</span>
+                  </div>
+                </article>
+              </div>
+
+              <div className={styles.flowFooter}>
+                <span>NO DECORATIVE COMPLEXITY. NO DISCONNECTED HAND-OFFS.</span>
+                <a href="#contact" className={styles.flowFooterLink}>THE MAJIN APPROACH <b>↗</b></a>
+              </div>
             </div>
           </div>
         </section>
 
         <section className={styles.workSection} id="work">
           <div className={styles.container}>
-            <SectionIntro label="SELECTED WORK" title={<>Built around a real <span>job to be done.</span></>} copy="A look at two products from our studio. Each solves a different kind of operational problem, with the same care for how people move through the experience." />
+            <SectionIntro
+              label="SELECTED WORK"
+              title={<>Built around a real <span>job to be done.</span></>}
+              copy="A look at two products from our studio. Each solves a different kind of operational problem, with the same care for how people move through the experience."
+            />
+
+            {/* Project 01: Scanfeast */}
             <article className={`${styles.projectCard} ${styles.projectCardScanfeast}`} data-reveal>
-              <div className={styles.projectVisualScanfeast}>
-                <div className={styles.projectVisualLabel}><span>01 / PRODUCT ENGINEERING</span><span>HOSPITALITY TECH</span></div>
-                <ProjectFrame src="/scanfeast/images/Screenshot%202026-08-27%20001503.png" alt="Scanfeast restaurant manager dashboard interface" kind="scanfeast" />
-                <div className={styles.phoneMockup}><div className={styles.phoneSpeaker} /><Image src="/scanfeast/images/diner.png" alt="Scanfeast diner mobile ordering interface" width={485} height={805} sizes="180px" /></div>
-                <span className={styles.projectVisualIndex}>SF—01</span>
+              <div className={styles.projectVisual}>
+                <ScanfeastCardPreview />
               </div>
               <div className={styles.projectInfo}>
-                <div className={styles.projectPill}><span /> PRODUCT / SAAS</div>
+                <div className={styles.projectPill}>
+                  <span className={styles.projectPillDot} />
+                  <span className={styles.projectPillText}>01 / PRODUCT &amp; SAAS · HOSPITALITY TECH</span>
+                </div>
                 <h3>Scanfeast</h3>
-                <p className={styles.projectLead}>Restaurant ordering that keeps the front of house and the kitchen in sync.</p>
-                <p className={styles.projectCopy}>Scanfeast connects QR-based menu access and ordering with kitchen order handling and a manager view—so the diner, kitchen, and operator aren’t working from disconnected screens.</p>
-                <div className={styles.projectFeatureList}><span>QR-based ordering</span><span>Kitchen display system</span><span>Manager dashboard</span><span>Live order flow</span></div>
-                <a href="/scanfeast/" className={styles.projectLink}>Explore the case study <ArrowIcon diagonal /></a>
-                <span className={styles.projectIndexLarge}>01</span>
+                <p className={styles.projectLead}>
+                  Restaurant ordering that keeps the front of house and the kitchen in sync.
+                </p>
+                <p className={styles.projectCopy}>
+                  Scanfeast connects QR-based menu access and ordering with kitchen order handling and a manager view—so the diner, kitchen, and operator aren’t working from disconnected screens.
+                </p>
+                <div className={styles.projectFeatureList}>
+                  <span>QR-based ordering</span>
+                  <span>Kitchen display system</span>
+                  <span>Manager dashboard</span>
+                  <span>Live order flow</span>
+                  <span>Real-time WebSocket</span>
+                </div>
+                <div className={styles.projectActionRow}>
+                  <a href="/scanfeast/" className={styles.projectCtaBtn}>
+                    Explore the case study <ArrowIcon diagonal />
+                  </a>
+                  <span className={styles.projectMetaTag}>Live Production SaaS</span>
+                </div>
               </div>
             </article>
 
+            {/* Project 02: Quantum Arena */}
             <article className={`${styles.projectCard} ${styles.projectCardQuantum}`} data-reveal>
               <div className={styles.projectInfo}>
-                <div className={styles.projectPill}><span /> DIGITAL PLATFORM / EVENTS</div>
+                <div className={styles.projectPill}>
+                  <span className={styles.projectPillDot} />
+                  <span className={styles.projectPillText}>02 / DIGITAL PLATFORM · EVENT INFRASTRUCTURE</span>
+                </div>
                 <h3>Quantum Arena</h3>
-                <p className={styles.projectLead}>Event operations with fewer loose ends.</p>
-                <p className={styles.projectCopy}>An event platform concept bringing participant registration, QR check-in, competition information, and judging workflows together—so organisers and participants can follow the same process.</p>
-                <div className={styles.projectFeatureList}><span>Participant workflows</span><span>QR check-in</span><span>Event information</span><span>Judging and results</span></div>
-                <a href="/quantumarena/" className={styles.projectLink}>Explore the experience <ArrowIcon diagonal /></a>
-                <span className={styles.projectIndexLarge}>02</span>
+                <p className={styles.projectLead}>
+                  Event operations with fewer loose ends.
+                </p>
+                <p className={styles.projectCopy}>
+                  An event platform concept bringing participant registration, QR check-in, competition information, and judging workflows together—so organisers and participants can follow the same process.
+                </p>
+                <div className={styles.projectFeatureList}>
+                  <span>Participant workflows</span>
+                  <span>QR gate check-in</span>
+                  <span>Judging &amp; scoring matrix</span>
+                  <span>Live team portals</span>
+                  <span>1,500+ Attendees</span>
+                </div>
+                <div className={styles.projectActionRow}>
+                  <a href="/quantumarena/" className={styles.projectCtaBtn}>
+                    Explore the experience <ArrowIcon diagonal />
+                  </a>
+                  <span className={styles.projectMetaTag}>Hackathon Infrastructure</span>
+                </div>
               </div>
-              <div className={styles.projectVisualQuantum}>
-                <div className={styles.projectVisualLabel}><span>02 / DIGITAL EXPERIENCE</span><span>EVENT OPERATIONS</span></div>
-                <ProjectFrame src="/quantumarena/images/Screenshot%202026-08-25%20204631.png" alt="Quantum Arena website interface showing the event platform" kind="quantum" />
-                <div className={styles.quantumAccentCard}><span className={styles.quantumAccentIcon}>Q</span><span><b>Quantum Arena</b><small>REGISTER · VERIFY · COMPETE</small></span><ArrowIcon diagonal /></div>
-                <span className={styles.projectVisualIndex}>QA—02</span>
+              <div className={styles.projectVisual}>
+                <QuantumArenaCardPreview />
               </div>
             </article>
-            <div className={styles.workClosing} data-reveal><p>The next project doesn’t have to look like either of these.</p><ButtonLink href="#contact" secondary>Tell us what you have in mind</ButtonLink></div>
+
+            <div className={styles.workClosing} data-reveal>
+              <p>The next project doesn’t have to look like either of these.</p>
+              <a href="#contact" className={styles.closingCtaBtn}>
+                Tell us what you have in mind <ArrowIcon />
+              </a>
+            </div>
           </div>
         </section>
 

@@ -14,176 +14,255 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
     const container = mountRef.current;
     if (!container) return;
 
-    // Dimensions
-    let width = container.clientWidth || 300;
-    let height = container.clientHeight || 300;
+    let width = container.clientWidth || window.innerWidth;
+    let height = container.clientHeight || window.innerHeight;
 
-    // Scene
+    // Scene & Camera
     const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x030508, 0.00075);
 
-    // Camera
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.z = 7.5;
+    const camera = new THREE.PerspectiveCamera(65, width / height, 1, 2000);
+    camera.position.z = 400;
 
-    // Renderer
+    // WebGL Renderer
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
       powerPreference: 'high-performance',
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setClearColor(0x030508, 0);
     container.appendChild(renderer.domElement);
 
-    // Group for all core 3D items to allow global parallax tilt
-    const coreGroup = new THREE.Group();
-    scene.add(coreGroup);
+    // ----------------------------------------------------
+    // 1. Warp Starfield (Traveling forward towards viewer)
+    // ----------------------------------------------------
+    const STAR_COUNT = 1500;
+    const starGeo = new THREE.BufferGeometry();
+    const starPositions = new Float32Array(STAR_COUNT * 3);
+    const starColors = new Float32Array(STAR_COUNT * 3);
+    const starSizes = new Float32Array(STAR_COUNT);
+    const starVelocities = new Float32Array(STAR_COUNT);
 
-    // 1. Inner Faceted Holographic Crystal
-    const innerGeo = new THREE.IcosahedronGeometry(1.22, 0);
-    const innerMat = new THREE.MeshStandardMaterial({
-      color: 0x00ff85,
-      emissive: 0x003d1f,
-      emissiveIntensity: 0.5,
-      roughness: 0.2,
-      metalness: 0.4,
-      transparent: true,
-      opacity: 0.24,
-      flatShading: true,
-    });
-    const innerCrystal = new THREE.Mesh(innerGeo, innerMat);
-    coreGroup.add(innerCrystal);
+    const baseColors = [
+      new THREE.Color('#ffffff'), // pure starlight
+      new THREE.Color('#ffffff'),
+      new THREE.Color('#f0f9ff'), // silver
+      new THREE.Color('#a7f3d0'), // soft emerald
+      new THREE.Color('#6ee7b7'), // lime/mint starlight
+      new THREE.Color('#e0f2fe'), // subtle ice blue
+    ];
 
-    // 2. Outer Kinetic Wireframe Cage
-    const outerGeo = new THREE.IcosahedronGeometry(1.65, 1);
-    const outerMat = new THREE.MeshBasicMaterial({
-      color: 0x00ff85,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.55,
-    });
-    const outerCage = new THREE.Mesh(outerGeo, outerMat);
-    coreGroup.add(outerCage);
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const radius = 25 + Math.random() * 950;
+      const angle = Math.random() * Math.PI * 2;
+      starPositions[i * 3] = Math.cos(angle) * radius;
+      starPositions[i * 3 + 1] = Math.sin(angle) * radius;
+      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 1600;
 
-    // 3. Orbital Ring 1 (Tilted Gyro Ring)
-    const ring1Geo = new THREE.TorusGeometry(2.3, 0.024, 16, 120);
-    const ring1Mat = new THREE.MeshBasicMaterial({
-      color: 0x00ff85,
-      transparent: true,
-      opacity: 0.75,
-    });
-    const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
-    ring1.rotation.x = Math.PI / 3;
-    ring1.rotation.y = Math.PI / 6;
-    coreGroup.add(ring1);
+      const col = baseColors[Math.floor(Math.random() * baseColors.length)];
+      starColors[i * 3] = col.r;
+      starColors[i * 3 + 1] = col.g;
+      starColors[i * 3 + 2] = col.b;
 
-    // Orbiting Satellite on Ring 1
-    const sat1Geo = new THREE.SphereGeometry(0.08, 16, 16);
-    const sat1Mat = new THREE.MeshBasicMaterial({ color: 0x10ff96 });
-    const sat1 = new THREE.Mesh(sat1Geo, sat1Mat);
-    coreGroup.add(sat1);
-
-    // 4. Orbital Ring 2 (Counter-tilted Ring)
-    const ring2Geo = new THREE.TorusGeometry(2.7, 0.018, 16, 120);
-    const ring2Mat = new THREE.MeshBasicMaterial({
-      color: 0x00e676,
-      transparent: true,
-      opacity: 0.5,
-    });
-    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-    ring2.rotation.x = -Math.PI / 3.5;
-    ring2.rotation.z = Math.PI / 4;
-    coreGroup.add(ring2);
-
-    // Orbiting Satellite on Ring 2
-    const sat2Geo = new THREE.SphereGeometry(0.065, 16, 16);
-    const sat2Mat = new THREE.MeshBasicMaterial({ color: 0x00ff85 });
-    const sat2 = new THREE.Mesh(sat2Geo, sat2Mat);
-    coreGroup.add(sat2);
-
-    // 5. Constellation Cloud (Floating Dust & Sparks)
-    const particleCount = 65;
-    const particlePositions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-      const radius = 1.9 + Math.random() * 1.8;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-      particlePositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      particlePositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      particlePositions[i * 3 + 2] = radius * Math.cos(phi);
+      starSizes[i] = 1.2 + Math.random() * 3.2;
+      starVelocities[i] = 1.4 + Math.random() * 3.0;
     }
-    const particleGeo = new THREE.BufferGeometry();
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    const particleMat = new THREE.PointsMaterial({
-      color: 0x00ff85,
-      size: 0.07,
-      transparent: true,
-      opacity: 0.85,
-      blending: THREE.AdditiveBlending,
-    });
-    const particles = new THREE.Points(particleGeo, particleMat);
-    coreGroup.add(particles);
 
-    // 6. Strategic Lights
-    const ambientLight = new THREE.AmbientLight(0x042316, 2.5);
-    scene.add(ambientLight);
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+    starGeo.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
 
-    const keyLight = new THREE.PointLight(0x00ff85, 4.5, 12);
-    keyLight.position.set(2.5, 3, 3);
-    scene.add(keyLight);
-
-    const fillLight = new THREE.PointLight(0x00e676, 3, 10);
-    fillLight.position.set(-3, -2, 2);
-    scene.add(fillLight);
-
-    // Mouse Tracking & Drag Interaction
-    let targetRotationX = 0;
-    let targetRotationY = 0;
-    let currentRotationX = 0;
-    let currentRotationY = 0;
-    let isDragging = false;
-    let prevMouseX = 0;
-    let prevMouseY = 0;
-    let dragVelocityX = 0;
-    let dragVelocityY = 0;
-
-    const handlePointerMove = (e: MouseEvent) => {
-      if (isDragging) {
-        const deltaX = e.clientX - prevMouseX;
-        const deltaY = e.clientY - prevMouseY;
-        dragVelocityX = deltaX * 0.006;
-        dragVelocityY = deltaY * 0.006;
-        targetRotationY += dragVelocityX;
-        targetRotationX += dragVelocityY;
-        prevMouseX = e.clientX;
-        prevMouseY = e.clientY;
-        return;
+    // Custom circle texture for soft round stars
+    const createStarTexture = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 64;
+      canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        grad.addColorStop(0.2, 'rgba(255, 255, 255, 0.9)');
+        grad.addColorStop(0.5, 'rgba(0, 255, 133, 0.4)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 64, 64);
       }
-
-      const rect = container.getBoundingClientRect();
-      const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const normY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      targetRotationY = normX * 0.45;
-      targetRotationX = -normY * 0.45;
+      return new THREE.CanvasTexture(canvas);
     };
 
-    const handlePointerDown = (e: MouseEvent) => {
-      isDragging = true;
-      prevMouseX = e.clientX;
-      prevMouseY = e.clientY;
+    const starTexture = createStarTexture();
+
+    const starMat = new THREE.PointsMaterial({
+      size: 3.8,
+      map: starTexture,
+      transparent: true,
+      vertexColors: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const starField = new THREE.Points(starGeo, starMat);
+    scene.add(starField);
+
+    // ----------------------------------------------------
+    // 2. Warp Streaks (High-speed hyper-drive light lines)
+    // ----------------------------------------------------
+    const STREAK_COUNT = 180;
+    const streakPositions = new Float32Array(STREAK_COUNT * 6);
+    const streakColors = new Float32Array(STREAK_COUNT * 6);
+    const streakData: { x: number; y: number; z: number; length: number; speed: number }[] = [];
+
+    for (let i = 0; i < STREAK_COUNT; i++) {
+      const radius = 50 + Math.random() * 900;
+      const angle = Math.random() * Math.PI * 2;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+      const z = -700 + Math.random() * 1100;
+      const length = 28 + Math.random() * 85;
+      const speed = 4.0 + Math.random() * 6.0;
+
+      streakData.push({ x, y, z, length, speed });
+
+      const idx = i * 6;
+      streakPositions[idx] = x;
+      streakPositions[idx + 1] = y;
+      streakPositions[idx + 2] = z;
+
+      streakPositions[idx + 3] = x;
+      streakPositions[idx + 4] = y;
+      streakPositions[idx + 5] = z - length;
+
+      // Color with fade from bright white head to cyan/emerald tail
+      streakColors[idx] = 1;
+      streakColors[idx + 1] = 1;
+      streakColors[idx + 2] = 1;
+
+      streakColors[idx + 3] = 0;
+      streakColors[idx + 4] = 0.95;
+      streakColors[idx + 5] = 0.55;
+    }
+
+    const streakGeo = new THREE.BufferGeometry();
+    streakGeo.setAttribute('position', new THREE.BufferAttribute(streakPositions, 3));
+    streakGeo.setAttribute('color', new THREE.BufferAttribute(streakColors, 3));
+
+    const streakMat = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const streaks = new THREE.LineSegments(streakGeo, streakMat);
+    scene.add(streaks);
+
+    // ----------------------------------------------------
+    // 3. Ambient Deep Cosmos Nebula Dust (Volumetric glow)
+    // ----------------------------------------------------
+    const NEBULA_COUNT = 7;
+    const nebulaGroup = new THREE.Group();
+    scene.add(nebulaGroup);
+
+    const createNebulaTexture = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 128;
+      canvas.height = 128;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+        grad.addColorStop(0, 'rgba(0, 255, 133, 0.4)');
+        grad.addColorStop(0.35, 'rgba(0, 200, 160, 0.2)');
+        grad.addColorStop(0.7, 'rgba(3, 30, 20, 0.08)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 128, 128);
+      }
+      return new THREE.CanvasTexture(canvas);
+    };
+
+    const nebulaTexture = createNebulaTexture();
+    const nebulaMat = new THREE.SpriteMaterial({
+      map: nebulaTexture,
+      transparent: true,
+      opacity: 0.16,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    for (let i = 0; i < NEBULA_COUNT; i++) {
+      const sprite = new THREE.Sprite(nebulaMat);
+      const angle = (i / NEBULA_COUNT) * Math.PI * 2;
+      const dist = 280 + Math.random() * 380;
+      sprite.position.set(Math.cos(angle) * dist, Math.sin(angle) * dist, -350 - Math.random() * 350);
+      const scale = 520 + Math.random() * 380;
+      sprite.scale.set(scale, scale, 1);
+      nebulaGroup.add(sprite);
+    }
+
+    // ----------------------------------------------------
+    // 4. Interactive Physics & Pointer Dynamics
+    // ----------------------------------------------------
+    let targetCameraX = 0;
+    let targetCameraY = 0;
+    let currentCameraX = 0;
+    let currentCameraY = 0;
+    let warpFactor = 1.0;
+    let targetWarpFactor = 1.0;
+    let lastPointerX = 0;
+    let lastPointerY = 0;
+    let lastPointerTime = performance.now();
+
+    const handlePointerMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const ny = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+
+      targetCameraX = nx * 140;
+      targetCameraY = ny * 90;
+
+      // Measure cursor velocity to give responsive warp surge
+      const now = performance.now();
+      const dt = Math.max(now - lastPointerTime, 16);
+      const dist = Math.hypot(e.clientX - lastPointerX, e.clientY - lastPointerY);
+      const speed = dist / dt;
+      if (speed > 1.1) {
+        targetWarpFactor = Math.min(2.7, 1.0 + (speed - 1.1) * 0.35);
+      }
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+      lastPointerTime = now;
+    };
+
+    const handlePointerDown = () => {
+      targetWarpFactor = 3.0; // Warp surge on click
     };
 
     const handlePointerUp = () => {
-      isDragging = false;
+      targetWarpFactor = 1.0;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const rect = container.getBoundingClientRect();
+        const nx = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = -(((touch.clientY - rect.top) / rect.height) * 2 - 1);
+        targetCameraX = nx * 90;
+        targetCameraY = ny * 60;
+      }
     };
 
     window.addEventListener('mousemove', handlePointerMove, { passive: true });
-    container.addEventListener('mousedown', handlePointerDown);
+    window.addEventListener('mousedown', handlePointerDown);
     window.addEventListener('mouseup', handlePointerUp);
+    container.addEventListener('touchmove', handleTouchMove, { passive: true });
 
-    // Resize Observer
+    // ----------------------------------------------------
+    // 5. Responsive Resize Observer
+    // ----------------------------------------------------
     const resizeObserver = new ResizeObserver(() => {
       if (!container) return;
       width = container.clientWidth;
@@ -195,17 +274,21 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
     });
     resizeObserver.observe(container);
 
-    // Visibility Check (Pause rendering when scrolled out of view)
+    // ----------------------------------------------------
+    // 6. Viewport Visibility Pause (Zero CPU off-screen)
+    // ----------------------------------------------------
     let isVisible = true;
     const intersectionObserver = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
     intersectionObserver.observe(container);
 
-    // Animation Loop
+    // ----------------------------------------------------
+    // 7. Animation Loop
+    // ----------------------------------------------------
     let animId = 0;
     let clock = new THREE.Clock();
 
@@ -215,43 +298,65 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
 
       const elapsedTime = clock.getElapsedTime();
 
-      // Inertia interpolation
-      currentRotationX += (targetRotationX - currentRotationX) * 0.08;
-      currentRotationY += (targetRotationY - currentRotationY) * 0.08;
+      // Smooth camera interpolation
+      currentCameraX += (targetCameraX - currentCameraX) * 0.055;
+      currentCameraY += (targetCameraY - currentCameraY) * 0.055;
 
-      // Spin crystal & cage
-      innerCrystal.rotation.y = elapsedTime * 0.4 + currentRotationY;
-      innerCrystal.rotation.x = Math.sin(elapsedTime * 0.3) * 0.2 + currentRotationX;
+      camera.position.x = currentCameraX;
+      camera.position.y = currentCameraY;
+      camera.position.z = 400 + Math.sin(elapsedTime * 0.35) * 12;
+      camera.lookAt(currentCameraX * 0.22, currentCameraY * 0.22, -400);
 
-      outerCage.rotation.y = -elapsedTime * 0.3 + currentRotationY * 1.2;
-      outerCage.rotation.x = Math.cos(elapsedTime * 0.25) * 0.25 + currentRotationX * 1.2;
+      // Smooth warp factor return
+      warpFactor += (targetWarpFactor - warpFactor) * 0.08;
+      targetWarpFactor += (1.0 - targetWarpFactor) * 0.04;
 
-      // Gyro Rings Spin
-      ring1.rotation.z = elapsedTime * 0.6;
-      ring2.rotation.y = -elapsedTime * 0.45;
+      // Update Starfield Positions
+      const positions = starGeo.attributes.position.array as Float32Array;
+      for (let i = 0; i < STAR_COUNT; i++) {
+        const idx = i * 3;
+        const speed = starVelocities[i] * warpFactor;
+        positions[idx + 2] += speed;
 
-      // Satellite Orbits
-      const sat1Angle = elapsedTime * 1.2;
-      sat1.position.x = 2.3 * Math.cos(sat1Angle);
-      sat1.position.y = 2.3 * Math.sin(sat1Angle) * Math.cos(Math.PI / 3);
-      sat1.position.z = 2.3 * Math.sin(sat1Angle) * Math.sin(Math.PI / 3);
+        // When star flies past camera, recycle it deep into distance
+        if (positions[idx + 2] > 480) {
+          positions[idx + 2] = -900;
+          const radius = 25 + Math.random() * 950;
+          const angle = Math.random() * Math.PI * 2;
+          positions[idx] = Math.cos(angle) * radius;
+          positions[idx + 1] = Math.sin(angle) * radius;
+        }
+      }
+      starGeo.attributes.position.needsUpdate = true;
 
-      const sat2Angle = -elapsedTime * 0.9;
-      sat2.position.x = 2.7 * Math.cos(sat2Angle);
-      sat2.position.y = 2.7 * Math.sin(sat2Angle) * Math.cos(-Math.PI / 3.5);
-      sat2.position.z = 2.7 * Math.sin(sat2Angle) * Math.sin(-Math.PI / 3.5);
+      // Update Warp Streaks
+      const streakPos = streakGeo.attributes.position.array as Float32Array;
+      for (let i = 0; i < STREAK_COUNT; i++) {
+        const s = streakData[i];
+        const speed = s.speed * warpFactor * 1.45;
+        s.z += speed;
 
-      // Rotate particle constellation
-      particles.rotation.y = elapsedTime * 0.08;
-      particles.rotation.x = Math.sin(elapsedTime * 0.05) * 0.1;
+        if (s.z > 480) {
+          s.z = -900;
+          const radius = 50 + Math.random() * 900;
+          const angle = Math.random() * Math.PI * 2;
+          s.x = Math.cos(angle) * radius;
+          s.y = Math.sin(angle) * radius;
+        }
 
-      // Subtle breathing pulse on lights
-      keyLight.intensity = 4.2 + Math.sin(elapsedTime * 2.5) * 0.8;
-      innerMat.emissiveIntensity = 0.65 + Math.sin(elapsedTime * 2) * 0.2;
+        const idx = i * 6;
+        streakPos[idx] = s.x;
+        streakPos[idx + 1] = s.y;
+        streakPos[idx + 2] = s.z;
 
-      // Parallax group tilt
-      coreGroup.rotation.y = currentRotationY * 0.35;
-      coreGroup.rotation.x = currentRotationX * 0.35;
+        streakPos[idx + 3] = s.x;
+        streakPos[idx + 4] = s.y;
+        streakPos[idx + 5] = s.z - s.length * (warpFactor * 0.85);
+      }
+      streakGeo.attributes.position.needsUpdate = true;
+
+      // Slowly rotate nebula background for alive depth
+      nebulaGroup.rotation.z = elapsedTime * 0.02;
 
       renderer.render(scene, camera);
     };
@@ -262,25 +367,19 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handlePointerMove);
-      container.removeEventListener('mousedown', handlePointerDown);
+      window.removeEventListener('mousedown', handlePointerDown);
       window.removeEventListener('mouseup', handlePointerUp);
+      container.removeEventListener('touchmove', handleTouchMove);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
 
-      innerGeo.dispose();
-      innerMat.dispose();
-      outerGeo.dispose();
-      outerMat.dispose();
-      ring1Geo.dispose();
-      ring1Mat.dispose();
-      ring2Geo.dispose();
-      ring2Mat.dispose();
-      sat1Geo.dispose();
-      sat1Mat.dispose();
-      sat2Geo.dispose();
-      sat2Mat.dispose();
-      particleGeo.dispose();
-      particleMat.dispose();
+      starGeo.dispose();
+      starMat.dispose();
+      starTexture.dispose();
+      streakGeo.dispose();
+      streakMat.dispose();
+      nebulaTexture.dispose();
+      nebulaMat.dispose();
 
       renderer.dispose();
       if (renderer.domElement && renderer.domElement.parentElement) {
@@ -293,7 +392,7 @@ export default function HeroThreeCanvas({ className = '' }: HeroThreeCanvasProps
     <div
       ref={mountRef}
       className={`relative w-full h-full pointer-events-auto cursor-grab active:cursor-grabbing ${className}`}
-      aria-label="Interactive 3D Kinetic Core"
+      aria-label="Responsive Cosmic Space Background"
     />
   );
 }

@@ -766,21 +766,184 @@ export default function StudioHome() {
 
         <section className={styles.studioSection} id="studio">
           <div className={styles.container}>
-            <TiltCard maxTilt={3} scale={1.006} className={styles.studioTiltWrapper}>
+            <TiltCard maxTilt={2.5} scale={1.005} className={styles.studioTiltWrapper}>
               <div className={styles.studioPanel}>
-                <div className={styles.studioCopy} data-reveal>
-                  <Eyebrow light>ABOUT THE STUDIO</Eyebrow>
-                  <h2>Good work happens when the people making it <span className={styles.editorialSerif}>stay close to the problem.</span></h2>
-                  <p>Majin Studios is an independent digital studio based in Hyderabad, India. We bring product thinking, engineering, and creative execution together—and keep collaboration direct from the first conversation.</p>
-                  <a href="#contact" className={styles.studioLink}>Meet us at the start <ArrowIcon /></a>
-                  <div className={styles.studioSignature}><BrandMark inverse /><span><b>MAJIN STUDIOS</b><small>INDEPENDENT BY DESIGN</small></span></div>
+                <div className={styles.studioTopGrid}>
+                  {/* Left Column: Brand Story & Ethos */}
+                  <div className={styles.studioCopy} data-reveal>
+                    <Eyebrow light>ABOUT THE STUDIO · HYDERABAD &amp; REMOTE</Eyebrow>
+                    <h2>
+                      Good work happens when the people making it{' '}
+                      <span className={styles.editorialSerif}>stay close to the problem.</span>
+                    </h2>
+                    <p className={styles.studioLead}>
+                      Majin Studios is an independent digital product studio based in Hyderabad, India. We bring product architecture, engineering, and creative execution into the same room—eliminating disconnected hand-offs and keeping communication direct from day one.
+                    </p>
+
+                    <div className={styles.studioPills}>
+                      <span className={styles.studioPill}><i /> Product Architecture</span>
+                      <span className={styles.studioPill}><i /> Full-Stack Engineering</span>
+                      <span className={styles.studioPill}><i /> Brand &amp; Design Systems</span>
+                      <span className={styles.studioPill}><i /> AI &amp; Cloud Workflows</span>
+                    </div>
+
+                    <div className={styles.studioDirectCommitment}>
+                      <span className={styles.commitmentDot} />
+                      <div>
+                        <strong>Direct Founder Collaboration</strong>
+                        <p>Senior engineers &amp; designers on every sprint. Zero junior account managers.</p>
+                      </div>
+                    </div>
+
+                    <div className={styles.studioActions}>
+                      <a href="#contact" className={styles.studioPrimaryCta}>
+                        Start a conversation <ArrowIcon diagonal />
+                      </a>
+                      <div className={styles.studioStatusBadge}>
+                        <span className={styles.studioStatusDot} />
+                        <span>Q4/Q1 INTAKE OPEN</span>
+                      </div>
+                    </div>
+
+                    <div className={styles.studioSignature}>
+                      <BrandMark inverse />
+                      <span>
+                        <b>MAJIN STUDIOS</b>
+                        <small>INDEPENDENT BY DESIGN · HYDERABAD, IN</small>
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right Column: 3 Interactive Bento Glass Principle Cards */}
+                  <div className={styles.studioPrinciples}>
+                    {/* Card 01 */}
+                    <article
+                      className={styles.principleCard}
+                      data-reveal
+                      data-scroll-skew
+                      onPointerMove={(e) => {
+                        const bounds = e.currentTarget.getBoundingClientRect();
+                        e.currentTarget.style.setProperty('--spot-x', `${e.clientX - bounds.left}px`);
+                        e.currentTarget.style.setProperty('--spot-y', `${e.clientY - bounds.top}px`);
+                      }}
+                    >
+                      <div className={styles.principleCardHeader}>
+                        <div className={styles.principleTag}>
+                          <span className={styles.principleIndex}>01</span>
+                          <span className={styles.principleCategory}>PROBLEM DISCOVERY</span>
+                        </div>
+                        <div className={styles.principleIconWrap}>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="3" /><path d="M12 3v3M12 18v3M3 12h3M18 12h3" />
+                          </svg>
+                        </div>
+                      </div>
+                      <h3>Start with the actual problem</h3>
+                      <p>
+                        We diagnose the operational bottleneck before choosing what to build, design, or promote. Uncovering the root constraint prevents weeks of wasted engineering and decorative complexity.
+                      </p>
+                      <div className={styles.principleFooter}>
+                        <span>ROOT-CAUSE ANALYSIS</span>
+                        <span>·</span>
+                        <span>0 WASTED SPRINTS</span>
+                        <i className={styles.principleArrow}>↗</i>
+                      </div>
+                    </article>
+
+                    {/* Card 02 */}
+                    <article
+                      className={styles.principleCard}
+                      data-reveal
+                      data-scroll-skew
+                      onPointerMove={(e) => {
+                        const bounds = e.currentTarget.getBoundingClientRect();
+                        e.currentTarget.style.setProperty('--spot-x', `${e.clientX - bounds.left}px`);
+                        e.currentTarget.style.setProperty('--spot-y', `${e.clientY - bounds.top}px`);
+                      }}
+                    >
+                      <div className={styles.principleCardHeader}>
+                        <div className={styles.principleTag}>
+                          <span className={styles.principleIndex}>02</span>
+                          <span className={styles.principleCategory}>HIGH-CRAFT SYSTEMS</span>
+                        </div>
+                        <div className={styles.principleIconWrap}>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
+                          </svg>
+                        </div>
+                      </div>
+                      <h3>Make the details work</h3>
+                      <p>
+                        Fluid 60fps interfaces, resilient database schemas, tactile feedback, and robust edge deployments. We obsess over the micro-interactions that make digital products feel exceptionally responsive.
+                      </p>
+                      <div className={styles.principleFooter}>
+                        <span>SUB-100MS LATENCY</span>
+                        <span>·</span>
+                        <span>PRODUCTION-GRADE UX</span>
+                        <i className={styles.principleArrow}>↗</i>
+                      </div>
+                    </article>
+
+                    {/* Card 03 */}
+                    <article
+                      className={styles.principleCard}
+                      data-reveal
+                      data-scroll-skew
+                      onPointerMove={(e) => {
+                        const bounds = e.currentTarget.getBoundingClientRect();
+                        e.currentTarget.style.setProperty('--spot-x', `${e.clientX - bounds.left}px`);
+                        e.currentTarget.style.setProperty('--spot-y', `${e.clientY - bounds.top}px`);
+                      }}
+                    >
+                      <div className={styles.principleCardHeader}>
+                        <div className={styles.principleTag}>
+                          <span className={styles.principleIndex}>03</span>
+                          <span className={styles.principleCategory}>END-TO-END CONTINUITY</span>
+                        </div>
+                        <div className={styles.principleIconWrap}>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" />
+                          </svg>
+                        </div>
+                      </div>
+                      <h3>Keep the whole picture in view</h3>
+                      <p>
+                        Brand identity, frontend mechanics, API architecture, and conversion loops reinforce each other into a cohesive flywheel. No fragmented vendor silos or hand-off misunderstandings.
+                      </p>
+                      <div className={styles.principleFooter}>
+                        <span>ZERO HAND-OFF LOSS</span>
+                        <span>·</span>
+                        <span>MEASURABLE GROWTH</span>
+                        <i className={styles.principleArrow}>↗</i>
+                      </div>
+                    </article>
+                  </div>
                 </div>
-                <div className={styles.studioPrinciples}>
-                  <article data-reveal><span>01</span><div><h3>Start with the actual problem</h3><p>We ask why before choosing what to build, design, or promote.</p></div><i>↗</i></article>
-                  <article data-reveal><span>02</span><div><h3>Make the details work</h3><p>Clear interfaces, dependable systems, and a finish that feels considered.</p></div><i>↗</i></article>
-                  <article data-reveal><span>03</span><div><h3>Keep the whole picture in view</h3><p>Brand, product, operations, and marketing should reinforce one another.</p></div><i>↗</i></article>
-                  <div className={styles.studioPrincipleFooter}><span className={styles.principlePulse} />THOUGHTFUL IN THE DETAILS. PRACTICAL IN THE DELIVERY.</div>
+
+                {/* Bottom Studio Metrics Ribbon */}
+                <div className={styles.studioMetricsRibbon} data-reveal>
+                  <div className={styles.metricItem}>
+                    <span className={styles.metricValue}>100%</span>
+                    <span className={styles.metricLabel}>DIRECT FOUNDER COLLABORATION</span>
+                    <span className={styles.metricSub}>No account manager middlemen</span>
+                  </div>
+                  <div className={styles.metricItem}>
+                    <span className={styles.metricValue}>&lt; 48H</span>
+                    <span className={styles.metricLabel}>RAPID PROTOTYPE VELOCITY</span>
+                    <span className={styles.metricSub}>From concept to interactive click-through</span>
+                  </div>
+                  <div className={styles.metricItem}>
+                    <span className={styles.metricValue}>14+</span>
+                    <span className={styles.metricLabel}>DEPLOYED PRODUCTION SYSTEMS</span>
+                    <span className={styles.metricSub}>Real SaaS, event &amp; enterprise platforms</span>
+                  </div>
+                  <div className={styles.metricItem}>
+                    <span className={styles.metricValue}>GLOBAL</span>
+                    <span className={styles.metricLabel}>HYDERABAD HQ · WORLDWIDE TEAMS</span>
+                    <span className={styles.metricSub}>Async agility + real-time coordination</span>
+                  </div>
                 </div>
+
                 <div className={styles.studioTexture} aria-hidden="true"><span /><span /><span /></div>
               </div>
             </TiltCard>

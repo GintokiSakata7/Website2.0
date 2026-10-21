@@ -468,6 +468,146 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
   transform: translateY(2px);
 }
 
+/* Hero Status Pill */
+.heroStatusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: rgba(0, 255, 133, 0.08);
+  border: 1px solid rgba(0, 255, 133, 0.28);
+  box-shadow: 0 0 20px rgba(0, 255, 133, 0.15);
+  margin-bottom: 18px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  text-decoration: none;
+}
+.heroStatusPill span {
+  font-family: 'Satoshi', 'Space Grotesk', monospace, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  color: #00ff85;
+  text-transform: uppercase;
+}
+.statusPulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00ff85;
+  box-shadow: 0 0 8px #00ff85, 0 0 16px rgba(0, 255, 133, 0.9);
+  animation: radarPing 2s infinite ease-in-out;
+}
+@keyframes radarPing {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.55; }
+}
+
+/* Mobile & Tablet Interactive Hero Capability Deck */
+.heroMobileDeck {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 860px;
+  margin: 36px auto 0;
+  text-align: left;
+}
+.heroMobileCard {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  padding: 16px 14px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+}
+.heroMobileCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 133, 0.4), transparent);
+}
+.heroMobileCard:hover, .heroMobileCard:active {
+  background: rgba(255, 255, 255, 0.075);
+  border-color: rgba(0, 255, 133, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45), 0 0 20px rgba(0, 255, 133, 0.16);
+}
+.heroMobileCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.mobileCardIndex {
+  font-family: 'Outfit', 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 850;
+  color: #00ff85;
+  background: rgba(0, 255, 133, 0.12);
+  padding: 2px 7px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 255, 133, 0.22);
+}
+.mobileCardTag {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+.heroMobileCard strong {
+  display: block;
+  font-family: 'Space Grotesk', 'Outfit', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3px;
+  letter-spacing: -0.01em;
+}
+.heroMobileCard p {
+  font-family: 'Geist', sans-serif;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Quick Trust Metrics Strip */
+.heroTrustStrip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  font-family: 'Geist', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.trustSep {
+  font-style: normal;
+  color: #00ff85;
+  font-size: 9px;
+}
+
 /* Hero Bottom Row */
 .heroBottomRow {
   position: relative;
@@ -3020,37 +3160,65 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
   .footerCta { grid-column: auto; flex-direction: row; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
 }
 
-@media (max-width: 740px) {
-  .contactDirectHub { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .contactDirectDivider { display: none; }
-  .studioSpecsRow { grid-template-columns: 1fr; gap: 14px; }
-  .capabilitiesPillRow { gap: 8px; }
-  .transitionTitle { font-size: clamp(24px, 6vw, 34px); }
-  .transitionLead { font-size: 14.5px; }
-  .container { width: calc(100% - 32px); }
-  .header { padding: 12px 16px 0; }
-  .headerScrolled { padding: 10px 16px 10px; }
-  .brand { padding: 5px 12px 5px 6px; }
+@media (max-width: 860px) {
+  /* Header & Navigation */
+  .container { width: calc(100% - 28px); }
+  .header { padding: 12px 14px 0; }
+  .headerScrolled { padding: 10px 14px 10px; }
+  .headerInner { width: 100%; }
+  .brand { padding: 4px 10px 4px 4px; }
   .brandMark { width: 28px; height: 28px; }
   .brandMark svg { width: 16px; height: 16px; }
-  .brandText { font-size: 15.5px; }
+  .brandText { font-size: 15px; }
   .brandDivider, .brandTagline { display: none; }
-  .headerCta { min-height: 38px; padding: 0 14px; font-size: 12px; gap: 6px; }
+  .headerRight { display: flex; align-items: center; gap: 8px; }
+  .headerCta { min-height: 36px; padding: 0 12px; font-size: 11.5px; gap: 6px; }
+  .menuToggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: rgba(8, 14, 11, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    cursor: pointer;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 0;
+    transition: all 0.2s ease;
+    z-index: 220;
+  }
+  .menuToggle span {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all .25s ease;
+    position: absolute;
+  }
+  .menuToggle span:first-child { transform: translateY(-3.5px); }
+  .menuToggle span:last-child { transform: translateY(3.5px); }
+  .menuToggleOpen span:first-child { transform: rotate(45deg); }
+  .menuToggleOpen span:last-child { transform: rotate(-45deg); }
+
   .navigation {
     display: none;
     position: fixed;
-    top: 68px;
-    left: 14px;
-    right: 14px;
-    background: rgba(4, 9, 6, 0.96);
-    backdrop-filter: blur(28px) saturate(190%);
-    -webkit-backdrop-filter: blur(28px) saturate(190%);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    top: 64px;
+    left: 12px;
+    right: 12px;
+    background: rgba(3, 8, 5, 0.97);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     padding: 16px;
     flex-direction: column;
     gap: 4px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
     z-index: 200;
     pointer-events: auto;
   }
@@ -3083,62 +3251,196 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
     font-weight: 800;
     margin-top: 8px;
   }
-  .heroConstellationStage { padding: 40px 0 25px; }
-  .heroCenter { padding: 10px 10px; }
-  .heroTitle { font-size: clamp(36px, 9vw, 52px); }
-  .heroLead { font-size: 14.5px; line-height: 1.65; }
-  .heroActions { gap: 12px; margin-top: 24px; }
-  .primaryHeroBtn { min-height: 48px !important; padding: 0 20px !important; font-size: 11.5px !important; }
-  .secondaryHeroBtn { min-height: 48px; padding: 0 18px; font-size: 11.5px; }
-  .servicesSection, .approachSection, .faqSection { padding: 77px 0 80px; }
+
+  /* 1. Hero Mobile Upgrade — Rich atmosphere, cards, thumb CTAs */
+  .hero {
+    padding-top: 76px;
+    min-height: 100vh;
+  }
+  .heroAtmosphere {
+    background:
+      radial-gradient(ellipse at 50% 28%, rgba(0, 255, 133, 0.22) 0%, rgba(0, 135, 74, 0.1) 45%, transparent 72%),
+      radial-gradient(circle at 50% 90%, rgba(3, 5, 8, 0.95) 0%, transparent 60%);
+  }
+  .heroConstellationStage {
+    padding: 24px 0 20px;
+    min-height: auto;
+  }
+  .heroCenter {
+    padding: 18px 12px 20px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .heroStatusPill {
+    margin-bottom: 14px;
+    padding: 5px 14px;
+    font-size: 10px;
+  }
+  .heroEyebrow {
+    font-size: 10.5px;
+    margin-bottom: 12px;
+  }
+  .heroTitle {
+    font-size: clamp(33px, 8.8vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    margin-bottom: 14px;
+  }
+  .heroLead {
+    font-size: 14px;
+    line-height: 1.62;
+    max-width: 520px;
+    margin-bottom: 22px;
+    padding: 0 4px;
+  }
+  .heroActions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 340px;
+    gap: 10px;
+    margin-top: 0;
+  }
+  .primaryHeroBtn {
+    width: 100%;
+    justify-content: center;
+    min-height: 50px !important;
+    padding: 0 24px !important;
+    font-size: 13.5px !important;
+  }
+  .secondaryHeroBtn {
+    width: 100%;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0 22px;
+    font-size: 13.5px;
+  }
+  .heroMobileDeck {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 24px;
+    max-width: 100%;
+  }
+  .heroMobileCard {
+    padding: 12px 10px;
+    border-radius: 12px;
+  }
+  .heroMobileCard strong {
+    font-size: 12.5px;
+  }
+  .heroMobileCard p {
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+  .heroTrustStrip {
+    margin-top: 18px;
+    font-size: 11px;
+    padding: 6px 14px;
+    gap: 8px;
+  }
+  .heroBottomRow {
+    padding: 16px 0;
+  }
+
+  /* 2. Transition Strip */
+  .transitionStripSection { padding: 48px 0 42px; }
+  .transitionTitle { font-size: clamp(24px, 6vw, 32px); line-height: 1.2; }
+  .transitionLead { font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+  .capabilitiesPillRow { gap: 8px; justify-content: center; }
+  .capabilityPill { padding: 6px 14px; font-size: 12px; }
+
+  /* 3. Services Section */
+  .servicesSection { padding: 64px 0; }
   .servicesGrid { grid-template-columns: 1fr; gap: 14px; }
-  .flowSection { min-height: auto; padding: 60px 0 44px; }
-  .flowHeader { margin-bottom: 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
-  .flowSteps { grid-template-columns: 1fr; }
-  .flowCard { border-right: none !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 20px 16px; }
-  .flowCard:last-child { border-bottom: none; }
-  .workSection { padding: 78px 0 74px; }
-  .projectCard, .projectCardQuantum { padding: 16px; border-radius: 18px; }
-  .projectInfo h3 { font-size: 32px; }
-  .projectActionRow { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .projectCtaBtn { width: 100%; justify-content: center; }
-  .workClosing { flex-direction: column; align-items: flex-start; gap: 16px; padding: 20px; }
-  .closingCtaBtn { width: 100%; justify-content: center; }
-  .processStep { grid-template-columns: 46px minmax(0, 1fr) 24px; gap: 14px; padding: 2px 0 32px; }
+  .serviceCard { padding: 22px 18px; border-radius: 18px; min-height: auto; }
+  .serviceCardTop { margin-bottom: 14px; }
+  .serviceCard h3 { font-size: 21px; margin-bottom: 8px; }
+  .serviceCardDesc { font-size: 13.5px; line-height: 1.6; }
+  .serviceOutcomeBox { padding: 12px 14px; margin: 16px 0; border-radius: 10px; }
+  .outcomeTag { font-size: 9.5px; }
+  .serviceOutcomeBox p { font-size: 12.5px; }
+  .serviceTagList { gap: 6px; }
+  .serviceTagList span { font-size: 10.5px; padding: 3px 9px; }
+
+  /* 4. Selected Work */
+  .workSection { padding: 64px 0; }
+  .projectCard, .projectCardQuantum { padding: 18px 16px; border-radius: 20px; gap: 20px; }
+  .projectVisualScanfeast, .projectVisualQuantum, .projectVisualNexus {
+    min-height: 200px;
+    max-height: 240px;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .projectInfo h3 { font-size: 28px; margin-bottom: 10px; }
+  .projectCopy { font-size: 13.5px; line-height: 1.6; }
+  .projectQuestionGrid { grid-template-columns: 1fr; gap: 10px; margin: 16px 0; }
+  .questionCard { padding: 12px 14px; border-radius: 12px; }
+  .questionCard strong { font-size: 12.5px; }
+  .questionCard p { font-size: 12px; }
+  .projectCtaBtn { width: 100%; justify-content: center; min-height: 48px; font-size: 13px; }
+  .workClosing { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px 16px; border-radius: 16px; }
+  .closingCtaBtn { width: 100%; justify-content: center; min-height: 46px; }
+
+  /* 5. Process Section */
+  .approachSection { padding: 64px 0; }
+  .processTimeline { margin: 32px auto 0; }
+  .processTrack { left: 23px; top: 23px; bottom: 23px; width: 2px; }
+  .processStep { grid-template-columns: 46px minmax(0, 1fr) 28px; gap: 14px; padding: 0 0 24px; }
   .processMarker { width: 46px; height: 46px; }
-  .processMarker > span { font-size: 10px; }
-  .processCopy h3 { font-size: 18px; }
-  .studioSection { padding-bottom: 80px; }
-  .studioPanel { padding: 24px 20px; border-radius: 16px; }
-  .contactSection { padding-bottom: 72px; }
-  .contactFormCard { padding: 24px 18px; border-radius: 16px; }
-  .formGrid { grid-template-columns: 1fr; }
-  .footerLinks { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .processMarker > span { font-size: 11px; }
+  .processMarker > i { width: 8px; height: 8px; }
+  .processCopy h3 { font-size: 19px; margin: 4px 0 6px; }
+  .processCopy p { font-size: 13px; line-height: 1.6; }
+  .processArrow { width: 28px; height: 28px; font-size: 12px; margin-top: 4px; }
+
+  /* 6. Why Majin */
+  .whyMajinSection { padding: 64px 0; }
+  .whyMajinGrid { grid-template-columns: 1fr; gap: 32px; }
+  .whyTitle { font-size: clamp(28px, 7vw, 36px); line-height: 1.15; }
+  .whyLead { font-size: 14px; line-height: 1.65; margin-bottom: 20px; }
+  .whyHighlightBox { padding: 14px 16px; border-radius: 14px; font-size: 13px; }
+  .editorialPrincipleItem { padding: 16px 14px; border-radius: 14px; }
+  .principleHeader { gap: 10px; margin-bottom: 6px; }
+  .principleHeader h3 { font-size: 17px; }
+  .editorialPrincipleItem p { font-size: 13px; }
+
+  /* 7. Studio Section */
+  .studioSection { padding-bottom: 64px; }
+  .studioPanel { padding: 24px 16px; border-radius: 18px; gap: 28px; }
+  .studioCopy h2 { font-size: clamp(26px, 6.5vw, 34px); }
+  .studioCopy p { font-size: 13.5px; }
+  .studioMetricsRibbon { grid-template-columns: 1fr 1fr; gap: 10px; padding: 12px; border-radius: 14px; }
+  .metricTile { padding: 10px 8px; }
+  .metricValue { font-size: 20px; }
+  .metricLabel { font-size: 10px; }
+  .foundersRow { grid-template-columns: 1fr; gap: 12px; }
+  .founderCard { padding: 16px 14px; border-radius: 14px; }
+  .studioSpecsRow { grid-template-columns: 1fr; gap: 10px; }
+
+  /* 8. Contact Section */
+  .contactSection { padding-bottom: 64px; }
+  .contactLayout { grid-template-columns: 1fr; gap: 32px; }
+  .contactExpectations { padding: 20px 16px; border-radius: 18px; }
+  .contactFormCard { padding: 22px 16px; border-radius: 18px; }
+  .contactForm input, .contactForm select, .contactForm textarea {
+    font-size: 16px;
+    min-height: 48px;
+  }
+  .formGrid { grid-template-columns: 1fr; gap: 12px; }
+  .submitButton { width: 100%; justify-content: center; min-height: 52px; font-size: 13.5px; }
+
+  /* 9. Footer */
+  .footerTop { grid-template-columns: 1fr; gap: 20px; }
+  .footerLinks { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .footerBottom { flex-direction: column; align-items: flex-start; gap: 10px; font-size: 11px; }
 }
 
 @media (max-width: 480px) {
-  .constellationCards { grid-template-columns: 1fr; }
-  .heroActions { flex-direction: column; width: 100%; }
-  .primaryHeroBtn, .secondaryHeroBtn { width: 100%; justify-content: center; }
-}
-
-@media (max-width: 390px) {
-  .container, .headerInner { width: calc(100% - 30px); }
-  .headerCta { padding-inline: 9px; }
-  .headerCta .arrowIcon { display: none; }
-  .brandText { font-size: 18px; }
-  .heroTitle { font-size: 38px; }
-  .heroThreeBackdrop { height: 210px; }
-  .servicesGrid { grid-template-columns: 1fr; }
-  .serviceCard { padding: 20px; }
-  .serviceCardTop { margin-bottom: 18px; }
-  .serviceCard h3 { max-width: 290px; font-size: 20px; }
-  .serviceCard > p { font-size: 11px; }
-  .serviceCard li { font-size: 10px; }
-  .cardLink { font-size: 9px; }
-  .projectVisualScanfeast, .projectVisualQuantum { min-height: 265px; }
-  .projectImageViewport { height: 170px; }
-  .projectInfo h3 { font-size: 36px; }
+  .heroTitle { font-size: 33px; }
+  .heroMobileDeck { gap: 6px; }
+  .heroMobileCard { padding: 10px 8px; }
+  .heroMobileCard strong { font-size: 11.5px; }
+  .heroMobileCard p { font-size: 10px; }
+  .footerLinks { grid-template-columns: 1fr; gap: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -435,6 +435,11 @@ export default function StudioHome() {
 
           <div className={styles.heroConstellationStage} data-hero-visual>
             <div className={styles.heroCenter} data-hero-copy>
+              <div className={styles.heroStatusPill}>
+                <span className={styles.statusPulseDot} />
+                <span>STUDIO INTAKE OPEN · Q4 2026</span>
+              </div>
+
               <div className={styles.heroEyebrow}>
                 <span>DESIGN · ENGINEERING · INTELLIGENCE</span>
               </div>
@@ -455,6 +460,51 @@ export default function StudioHome() {
                 <a href="#work" className={styles.secondaryHeroBtn}>
                   Explore our work <span className={styles.btnDownArrow}>↓</span>
                 </a>
+              </div>
+
+              {/* Interactive Capability Deck — Gives high-tech substance and texture on mobile & desktop */}
+              <div className={styles.heroMobileDeck}>
+                <a href="#services" className={styles.heroMobileCard}>
+                  <div className={styles.heroMobileCardTop}>
+                    <span className={styles.mobileCardIndex}>01</span>
+                    <span className={styles.mobileCardTag}>PRODUCTS</span>
+                  </div>
+                  <strong>Digital products</strong>
+                  <p>Web apps, SaaS &amp; mobile interfaces</p>
+                </a>
+                <a href="#services" className={styles.heroMobileCard}>
+                  <div className={styles.heroMobileCardTop}>
+                    <span className={styles.mobileCardIndex}>02</span>
+                    <span className={styles.mobileCardTag}>AI SYSTEMS</span>
+                  </div>
+                  <strong>Software &amp; AI</strong>
+                  <p>Intelligent workflows &amp; automation</p>
+                </a>
+                <a href="#services" className={styles.heroMobileCard}>
+                  <div className={styles.heroMobileCardTop}>
+                    <span className={styles.mobileCardIndex}>03</span>
+                    <span className={styles.mobileCardTag}>BRAND</span>
+                  </div>
+                  <strong>Brand &amp; design</strong>
+                  <p>Identities &amp; design systems</p>
+                </a>
+                <a href="#services" className={styles.heroMobileCard}>
+                  <div className={styles.heroMobileCardTop}>
+                    <span className={styles.mobileCardIndex}>04</span>
+                    <span className={styles.mobileCardTag}>GROWTH</span>
+                  </div>
+                  <strong>Digital growth</strong>
+                  <p>Landing pages &amp; conversion</p>
+                </a>
+              </div>
+
+              {/* Quick trust metrics row */}
+              <div className={styles.heroTrustStrip}>
+                <span>100% In-house</span>
+                <i className={styles.trustSep}>•</i>
+                <span>Direct founders</span>
+                <i className={styles.trustSep}>•</i>
+                <span>4-week sprints</span>
               </div>
             </div>
           </div>

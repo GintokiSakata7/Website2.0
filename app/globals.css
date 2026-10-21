@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@500,600,700,800,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -43,16 +44,16 @@
        ----------------------------------------------------- */
 
     --accent-mono: #f5f7f3;
-    --accent-lime: #9dff00;
-    --accent-cyan: #9dff00;
-    --accent-amber: #9dff00;
-    --accent-violet: #9dff00;
+    --accent-lime: #00ff85;
+    --accent-cyan: #00ff85;
+    --accent-amber: #00ff85;
+    --accent-violet: #00ff85;
 
     /* Current active scene accent */
     --accent-current: var(--accent-lime);
     --accent: var(--accent-current);
-    --accent-current-rgb: 157, 255, 0;
-    --color-accent-current-rgb: 157, 255, 0;
+    --accent-current-rgb: 0, 255, 133;
+    --color-accent-current-rgb: 0, 255, 133;
 
     /*
      * Used throughout the DOM and atmospheric layers.
@@ -76,15 +77,16 @@
        ----------------------------------------------------- */
 
     --font-display:
-      'Outfit',
-      'Plus Jakarta Sans',
+      'Satoshi',
       'Space Grotesk',
+      'Outfit',
       system-ui,
       sans-serif;
 
     --font-body:
-      'Outfit',
+      'Geist',
       'Plus Jakarta Sans',
+      'Outfit',
       system-ui,
       -apple-system,
       sans-serif;

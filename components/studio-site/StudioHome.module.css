@@ -2078,116 +2078,156 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
 }
 
 /* =========================================================
-   CONTACT SECTION — Light Canvas with Dark Cybernetic Form
+   CONTACT SECTION — Dark Cosmic Split Stage
    ========================================================= */
 .contactSection {
-  padding: 0 0 120px;
-  background: #f0f4ed;
+  position: relative;
+  z-index: 2;
+  padding: 100px 0 130px;
+  background: transparent;
 }
 .contactLayout {
   display: grid;
-  grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr);
-  gap: clamp(40px, 7vw, 105px);
-  align-items: start;
-  padding-top: 25px;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  gap: clamp(36px, 5.5vw, 68px);
+  align-items: stretch;
 }
-.contactIntro {
-  padding: 30px 0 10px;
-}
-.contactIntro h2 {
-  max-width: 530px;
-  margin: 24px 0 18px;
-  color: var(--ink);
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(38px, 4.4vw, 60px);
-  font-weight: 750;
-  letter-spacing: -.035em;
-  line-height: 1.02;
-  text-wrap: balance;
-}
-.contactIntro h2 span {
-  color: var(--green);
-}
-.contactIntro > p {
-  max-width: 420px;
-  margin: 0;
-  color: #68766b;
-  font-size: 15px;
-  line-height: 1.8;
-}
-.contactDirect {
+
+/* Left Panel */
+.contactLeftPanel {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  margin-top: 32px;
+  justify-content: space-between;
 }
-.contactDirect > span {
-  color: #809082;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-.contactDirect > a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--deep);
-  font-family: 'Outfit', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  transition: all .2s ease;
-}
-.contactDirect > a:hover {
-  color: var(--green);
-  transform: translateX(3px);
-}
-.contactLocation {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-top: 28px;
-  color: #758176;
-  font-size: 12px;
-  line-height: 1.7;
-}
-.contactLocation > i {
+
+.contactPulseDot {
   display: inline-block;
-  width: 3px;
-  height: 3px;
-  margin: 0 4px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: #9aab9a;
+  background: #00ff85;
+  box-shadow: 0 0 10px #00ff85;
+  margin-right: 8px;
+  vertical-align: middle;
+  animation: pulseGlow 2.2s ease-in-out infinite;
 }
-.locationDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--green-2);
-  box-shadow: 0 0 0 4px rgba(0, 204, 102, 0.2);
+
+.contactTitle {
+  font-family: 'Satoshi', 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(36px, 4.2vw, 54px);
+  font-weight: 750;
+  color: #ffffff;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin: 0 0 18px;
+  text-wrap: balance;
 }
-.contactAside {
+
+.contactLead {
+  font-family: 'Geist', 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: clamp(15px, 1.15vw, 16.5px);
+  line-height: 1.7;
+  color: #94a3b8;
+  margin: 0 0 32px;
+}
+
+/* What to Expect Cards Grid */
+.contactExpectGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.expectCard {
   display: flex;
-  gap: 17px;
-  margin-top: 43px;
-  padding-top: 18px;
-  border-top: 1px solid #d6e0d3;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
 }
-.contactAside > span {
-  color: #80947f;
-  font-family: 'Outfit', sans-serif;
-  font-size: 10px;
+.expectCard:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(0, 255, 133, 0.3);
+  transform: translateY(-2px);
+}
+.expectIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(0, 255, 133, 0.09);
+  border: 1px solid rgba(0, 255, 133, 0.22);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.expectCard strong {
+  display: block;
+  font-family: 'Satoshi', 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 750;
+  color: #ffffff;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.expectCard p {
+  margin: 0;
+  font-family: 'Geist', sans-serif;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #94a3b8;
+}
+
+/* Direct Hub */
+.contactDirectHub {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 18px 24px;
+  border-radius: 14px;
+  background: rgba(0, 255, 133, 0.04);
+  border: 1px solid rgba(0, 255, 133, 0.18);
+  margin-top: auto;
+}
+.contactDirectItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.contactDirectItem span:first-child {
+  font-family: 'Satoshi', monospace, sans-serif;
+  font-size: 9.5px;
   font-weight: 850;
   letter-spacing: .12em;
+  color: #00ff85;
 }
-.contactAside p {
-  margin: 0;
-  color: #344d3a;
-  font-size: 11px;
-  font-weight: 650;
-  line-height: 1.7;
+.directEmailLink {
+  color: #ffffff;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 15px;
+  font-weight: 750;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+.directEmailLink:hover {
+  color: #00ff85;
+}
+.directLocationText {
+  color: #cbd5e1;
+  font-family: 'Geist', sans-serif;
+  font-size: 13px;
+  font-weight: 550;
+}
+.contactDirectDivider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.12);
 }
 .contactFormCard {
   position: relative;
@@ -2938,12 +2978,15 @@ a:hover > .arrowIcon, button:hover > .arrowIcon { transform: translate(2px,-2px)
   .studioCopy h2 { font-size: 38px; }
   .faqLayout { grid-template-columns: 1fr; gap: 40px; }
   .faqIntro { position: static; }
-  .contactLayout { grid-template-columns: 1fr; gap: 38px; }
+  .contactLayout { grid-template-columns: 1fr; gap: 48px; }
+  .contactExpectGrid { grid-template-columns: 1fr; }
   .footerTop { grid-template-columns: 1fr; gap: 24px; }
   .footerCta { grid-column: auto; flex-direction: row; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
 }
 
 @media (max-width: 740px) {
+  .contactDirectHub { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .contactDirectDivider { display: none; }
   .studioSpecsRow { grid-template-columns: 1fr; gap: 14px; }
   .capabilitiesPillRow { gap: 8px; }
   .transitionTitle { font-size: clamp(24px, 6vw, 34px); }

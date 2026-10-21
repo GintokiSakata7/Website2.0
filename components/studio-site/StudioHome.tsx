@@ -789,16 +789,71 @@ export default function StudioHome() {
         <section className={styles.contactSection} id="contact">
           <div className={styles.container}>
             <div className={styles.contactLayout}>
-              <div className={styles.contactIntro} data-reveal>
-                <div className={styles.contactEyebrow}>HAVE A PROJECT IN MIND?</div>
-                <h2>Let&apos;s make it <span className={styles.editorialSerif}>happen.</span></h2>
-                <p>Tell us what you&apos;re trying to build, improve, or automate. We&apos;ll take it from there.</p>
-                <div className={styles.contactDirect}>
-                  <span>Prefer email?</span>
-                  <a href="mailto:hello@majin.studio">hello@majin.studio <ArrowIcon diagonal /></a>
+              <div className={styles.contactLeftPanel} data-reveal>
+                <div>
+                  <div className={styles.contactEyebrow}>
+                    <span className={styles.contactPulseDot} />
+                    <span>START A CONVERSATION · INTAKE OPEN</span>
+                  </div>
+
+                  <h2 className={styles.contactTitle}>
+                    Have a project in mind?<br />
+                    <span className={styles.heroGlowWord}>Let&apos;s make it real.</span>
+                  </h2>
+
+                  <p className={styles.contactLead}>
+                    Tell us what you&apos;re trying to build, automate, or scale. We review every brief personally and reply within 24 hours with practical technical and architectural direction.
+                  </p>
+
+                  {/* What to Expect / Studio Guarantees */}
+                  <div className={styles.contactExpectGrid}>
+                    <div className={styles.expectCard}>
+                      <div className={styles.expectIcon}>⚡</div>
+                      <div>
+                        <strong>Direct Founder Review</strong>
+                        <p>Zero junior account managers. You speak directly with senior engineers and designers from day one.</p>
+                      </div>
+                    </div>
+
+                    <div className={styles.expectCard}>
+                      <div className={styles.expectIcon}>🎯</div>
+                      <div>
+                        <strong>Pragmatic Scope &amp; Tech</strong>
+                        <p>We help prioritize what is worth building first to prevent weeks of wasted engineering and decorative complexity.</p>
+                      </div>
+                    </div>
+
+                    <div className={styles.expectCard}>
+                      <div className={styles.expectIcon}>🛡️</div>
+                      <div>
+                        <strong>Full IP Ownership</strong>
+                        <p>Strict confidentiality and mutual NDA upfront. You retain 100% intellectual property ownership of all deliverables.</p>
+                      </div>
+                    </div>
+
+                    <div className={styles.expectCard}>
+                      <div className={styles.expectIcon}>🚀</div>
+                      <div>
+                        <strong>Fast Sprint Cadence</strong>
+                        <p>From agreed brief to working production deployments in focused, weekly staging checkpoints.</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className={styles.contactLocation}>
-                  <span className={styles.locationDot} />Based in Hyderabad, India <i /> Working with teams remotely
+
+                {/* Direct Connect & Availability Hub */}
+                <div className={styles.contactDirectHub}>
+                  <div className={styles.contactDirectItem}>
+                    <span>DIRECT INBOX</span>
+                    <a href="mailto:hello@majin.studio" className={styles.directEmailLink}>
+                      hello@majin.studio <ArrowIcon diagonal />
+                    </a>
+                  </div>
+                  <div className={styles.contactDirectDivider} />
+                  <div className={styles.contactDirectItem}>
+                    <span>STUDIO LOCATION</span>
+                    <span className={styles.directLocationText}>Hyderabad, India · Working Globally</span>
+                  </div>
                 </div>
               </div>
 

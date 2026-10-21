@@ -279,30 +279,84 @@ export default function StudioHome() {
         });
       }
 
-      // 6. Process Timeline Fill
+      // 6. Process Timeline Fill & Interactive Scroll-Driven Steps
       const processFill = root.querySelector<HTMLElement>('.' + styles.processTrackFill);
       const processTimeline = root.querySelector<HTMLElement>('.' + styles.processTimeline);
-      if (processFill && processTimeline) {
-        gsap.fromTo(processFill, { scaleY: 0 }, {
-          scaleY: 1, ease: 'none',
-          scrollTrigger: { trigger: processTimeline, start: 'top 72%', end: 'bottom 42%', scrub: 0.55 },
-        });
-      }
-
       const processSteps = Array.from(root.querySelectorAll<HTMLElement>('[data-process-step]'));
-      processSteps.forEach((step, index) => {
+
+      if (processTimeline && processSteps.length > 0) {
+        const updateSteps = (progress: number) => {
+          const p = Math.max(0, Math.min(1, progress));
+          if (processFill) {
+            gsap.set(processFill, { scaleY: p, transformOrigin: 'top center' });
+          }
+
+          // Step thresholds for 4 steps:
+          // Step 0: [0, 0.25)
+          // Step 1: [0.25, 0.58)
+          // Step 2: [0.58, 0.88)
+          // Step 3: [0.88, 1.0]
+          let activeIdx = 0;
+          if (p >= 0.88) activeIdx = 3;
+          else if (p >= 0.58) activeIdx = 2;
+          else if (p >= 0.25) activeIdx = 1;
+          else activeIdx = 0;
+
+          processSteps.forEach((step, idx) => {
+            const isActive = idx === activeIdx;
+            const isPassed = idx < activeIdx || (idx === activeIdx && p > 0.05);
+
+            step.dataset.active = isActive ? 'true' : 'false';
+            step.dataset.passed = isPassed ? 'true' : 'false';
+            if (isActive) {
+              step.style.setProperty('--step-index', String(idx));
+            }
+          });
+        };
+
+        // Initialize first step as active
+        updateSteps(0);
+
         ScrollTrigger.create({
-          trigger: step,
-          start: 'top 66%', end: 'bottom 38%',
-          onToggle: (self) => {
-            step.dataset.active = self.isActive ? 'true' : 'false';
-            if (self.isActive) step.style.setProperty('--step-index', String(index));
+          trigger: processTimeline,
+          start: 'top 75%',
+          end: 'bottom 45%',
+          scrub: 0.35,
+          onUpdate: (self) => {
+            updateSteps(self.progress);
           },
         });
-      });
+
+        // Interactive click allows user to focus directly on any step
+        processSteps.forEach((step, idx) => {
+          step.addEventListener('click', () => {
+            processSteps.forEach((s, i) => {
+              s.dataset.active = i === idx ? 'true' : 'false';
+              s.dataset.passed = i <= idx ? 'true' : 'false';
+            });
+            if (processFill) {
+              const targetScale = idx === 0 ? 0 : idx === 1 ? 0.33 : idx === 2 ? 0.66 : 1;
+              gsap.to(processFill, { scaleY: targetScale, duration: 0.4, ease: 'power2.out' });
+            }
+          });
+        });
+      }
     }, root);
 
+    // Refresh ScrollTrigger as dynamic images/canvases/fonts finish loading
+    const refreshST = () => ScrollTrigger.refresh();
+    const t1 = setTimeout(refreshST, 150);
+    const t2 = setTimeout(refreshST, 600);
+    const t3 = setTimeout(refreshST, 1500);
+    window.addEventListener('load', refreshST);
+    window.addEventListener('resize', refreshST);
+
     return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      window.removeEventListener('load', refreshST);
+      window.removeEventListener('resize', refreshST);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handlePointerMove);
       context.revert();
@@ -654,10 +708,16 @@ export default function StudioHome() {
               title={<>One clear sequence. <span className={styles.editorialSerif}>No disconnected hand-offs.</span></>}
               copy="A good process makes the work clearer, not heavier. Here’s how we move from an open business question to a finished, verified deployment."
             />
-            <div className={styles.processTimeline}>
+            <div className={styles.processTimeline} data-reveal>
               <div className={styles.processTrack} aria-hidden="true"><span className={styles.processTrackFill} /></div>
               {steps.map((step, index) => (
-                <article className={styles.processStep} key={step.number} data-process-step data-active={index === 0 ? 'true' : 'false'} data-reveal>
+                <article
+                  className={styles.processStep}
+                  key={step.number}
+                  data-process-step
+                  data-active={index === 0 ? 'true' : 'false'}
+                  data-passed="false"
+                >
                   <div className={styles.processMarker}><span>{step.number}</span><i /></div>
                   <div className={styles.processCopy}>
                     <span className={styles.processCaption}>{step.caption}</span>
